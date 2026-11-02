@@ -14,8 +14,10 @@ A field of fine grey grains, like firn, covers the white page. One canvas
 behind the content draws it. The pointer pushes the grains aside like
 wind, and they drift back. When the pointer or the keyboard focus rests on
 a project, its nearest grains line up as a dotted outline in the colour of
-its logo, and its card lifts. The projects sit on top as a row of white
-cards. Each card shows the project's logo, name, kind, one line, and link,
+its logo, and its card lifts. The projects sit on top as a row of translucent
+cards, so that the grains show softly behind the text. Decision 13 chooses
+between a frosted and a plain translucent style. The
+header shows the name "Firna" in a modern serif. Each card shows the project's logo, name, kind, one line, and link,
 and the whole card is the link. With reduced motion, the field is still.
 Without JavaScript, the page shows the cards on white. The prototype and
 its refinements are in `.context/firna-home/claude/` of the Conductor
@@ -60,6 +62,16 @@ workspace "Firna Homepage Design", on the `futex-ai/skills` repository.
   Bowser a command prompt on plum. They come from the Glimpse direction of
   round 2, which the user named. The alternative was a different logo set
   in each direction.
+- **Refining the chosen design (2026-11-02).** The user asked to start
+  refining option M. Three refinements each change one part of it, so that
+  they combine: Clearings, Drift, and Freeze. Open decision 12 holds the
+  choice.
+- **Firna name in a modern serif (2026-11-02).** The user asked for the
+  name mark "in a modern serif font". The alternative was the sans
+  wordmark of the earlier rounds.
+- **No hard white behind text (2026-11-02).** The user asked that the text
+  "use opacity or blur background" in place of "a hard white background".
+  Open decision 13 holds the choice between the two.
 - **A separate Firna logo (2026-11-02).** The user asked for a Firna logo
   "like a firn or fern" that does not include the letter F. Every page
   shows one shared logo file, so that the choice changes one file. Open
@@ -79,9 +91,17 @@ for the grain field date from 2026-11-02.
   draws the field on one canvas and loads on the page after the content.
   It needs no framework runtime. The page works without it. The
   alternative was a React island, which ships a runtime for one canvas.
-- **The field never sits under text.** The cards are opaque white, and the
-  logo, the email, and the footer sit on white plates, so all text keeps
-  AA contrast on white.
+- **The field runs under the text, softened.** The cards and the plates
+  behind the logo, the email, and the footer are translucent panels over
+  the grains, in the style that decision 13 chooses. Every text keeps AA
+  contrast, measured over the densest grains that can sit under it. With
+  reduced transparency, the panels fall back to almost opaque white. This
+  call replaces the opaque white panels of 2026-11-02, after the user's
+  request.
+- **Instrument Serif for the name (2026-11-02).** The wordmark sets
+  "Firna" in Instrument Serif, drawn as paths. It is the serif partner of
+  Instrument Sans, the sans of the page. The alternatives were Fraunces,
+  Newsreader, Gloock, Young Serif, Source Serif 4, and DM Serif Display.
 - **The field's budget.** The loop runs only while grains move. It stops
   when they rest, when the tab is hidden, and when the field is off
   screen. Script work stays near 2 ms per frame.
@@ -107,8 +127,8 @@ for the grain field date from 2026-11-02.
 
 The options check of 2026-11-02 changed decisions 3 and 6 and found
 decisions 7 and 8. Its report is in `.context/firna-homepage/`.
-Decisions 10 and 11 came from the design rounds of 2026-11-02. An
-options check of 2026-11-02 changed both. Its report is in
+Decisions 10 to 13 came from the design rounds of 2026-11-02. An
+options check of 2026-11-02 changed decisions 10 and 11. Its report is in
 `.context/firna-home/reports/` of the review workspace.
 
 ### 3. How the site goes live on Cloudflare
@@ -271,6 +291,62 @@ options check of 2026-11-02 changed both. Its report is in
 - **Recommendation:** G. It is the simplest image of firn grains, it is crisp at 16 px, and its one ink stays quiet beside the project logos. Its grains also match the grain field. B or I fits better if a distinctive mark matters more, because dot clusters are common. The first recommendation was A.
 - **Action:** ask the user, because a logo is a choice of taste, and the user asked to choose it.
 
+### 12. Which refinements of the chosen design to keep
+
+- **Severity:** Medium. **Effort:** Medium.
+- **Source:** Design. The options check added options E and F and a better root question.
+- **Category:** Mockup.
+- **Location:** None. The refinements are in `.context/firna-home/claude/cursor-clearings/`, `cursor-drift/`, and `cursor-freeze/` of the review workspace.
+- **Terms:**
+  - **Clearing:** a soft area around a project's logo and text, where a fading panel softens the grains, with no edge.
+- **Background:** The user asked to refine the chosen design. Each refinement changes one part of it, so they can be combined. Clearings removes the card boxes. Drift adds a short snowfall on load and drifts on the cards. Freeze turns the hover outline into a crisp line with a glint. All three change the hover, and Drift's drifts need the card edges that Clearings removes, so a combination is a new page that nobody has seen yet.
+- **Problem:** The final design needs the user's choice of refinements.
+- **Impact if no action:** The page stays as the chosen design.
+- **Root question:** Which one page, built from the chosen design and its refinements, should the site use, so that the projects stay front and center and the page stays simple?
+- **Options:** the user can combine A, B, and C.
+  - **A.** Clearings: no card boxes. Each project sits in the snow, and a soft ring replaces the dotted outline on hover. Effort: Small.
+  - **B.** Drift: a snowfall on load, and drifts on the cards. With A, the drifts must rest on the clearing rims, because there are no card edges. Its script is about twice the size of the chosen design's, with a known limit on phones. Effort: Medium.
+  - **C.** Freeze: the grains fuse into a crisp line with a glint on hover. With A, the line follows the soft rim of the clearing. Effort: Small alone, Medium with A.
+  - **D.** Keep the chosen design as it is. Effort: Small.
+  - **E.** Build the combination that the user keeps as one page, and show it beside the chosen design before the approval. It settles one hover where A and C both replace the outline. Effort: Medium.
+  - **F.** Refine more parts in one more round first, such as the colour of the hover outline and the touch effect on a phone. Effort: Medium.
+- **Left out:** A refinement that only removes parts of the design, because the wind and the outline are the effect that the user asked for.
+- **Wider fix:** None. This is a choice of taste.
+- **Previous examples:** Round 3 tried other hover effects.
+- **Related:** Decision 13: every refinement carries the panel style that decision 13 chooses.
+- **Recommendation:** A and C, built as one page through E. Clearings makes the page simpler and more unique, and Freeze makes the hover a stronger moment. The first recommendation was A and C without E.
+- **Action:** ask the user, because each refinement is a choice of taste.
+
+### 13. Frosted or plain text backgrounds
+
+- **Severity:** Medium. **Effort:** Medium.
+- **Source:** Design. The options check added option D and changed the recommendation.
+- **Category:** Mockup.
+- **Location:** None. It is the background behind every text on the page.
+- **Terms:**
+  - **Panel:** the translucent background behind text: each card, and the plates behind the Firna name, the email, and the footer.
+  - **Frosted:** a translucent white over a backdrop blur of the grains.
+- **Background:** On 2026-11-02 the user asked for "opacity or blur background" in place of hard white behind the text. Every page now shows frosted panels by default and plain translucent panels with `?bg=opacity`. Both keep AA contrast over the densest grains. The four pages use different levels: 30 to 55 % white for frosted, and 74 to 88 % for plain. In headless Chrome without a GPU, the blur raises the time between frames while grains move, from about 19 to 21 ms to about 28 to 37 ms. At rest it costs nothing, because the animation loop stops. No page measured the blur at phone size. The round 2 brief excluded glass effects, and the user's request overrides it.
+- **Problem:** The page needs one panel style.
+- **Impact if no action:** The frosted default stays, and its cost on real laptops and phones is unknown.
+- **Root question:** Which background behind the text shows the grains best and keeps the page smooth?
+- **Options:**
+  - **A.** Frosted, the current default. The grains show as a soft mottle. It costs compositor time while grains move. Effort: Small.
+  - **B.** Plain translucent. The grains show as faint, sharp dots. It costs nothing measurable. Effort: Small.
+  - **C.** Frost drawn inside the canvas: the field itself blurs and fades the grains behind each panel. It looks like A without the compositor cost on any device, but the field script grows. Effort: Medium.
+  - **D.** Frosted with a mouse or a trackpad, and plain on touch screens, with one media query. The style then differs by device, and a slow laptop still pays for the blur. Effort: Small.
+- **Left out:**
+  - Solid white, because the user asked to drop the hard white background.
+  - A stronger blur, because it hides the grains that the user wants to see under the text.
+  - A halo around each letter, or darker text on the bare field, because both fail the request for an opacity or blur background.
+  - Frost only at rest, because the panels would flicker at each pointer move.
+  - A fixed frost texture, because the panel would no longer show the field behind it.
+- **Wider fix:** C. When every effect draws through one painter, one contrast limit holds for all effects, in place of a guard and a measurement for each new effect.
+- **Previous examples:** None found.
+- **Related:** Decision 12: every refinement uses the chosen panel style.
+- **Recommendation:** C. It keeps the frosted look, which the user can judge on the pages now, with no compositor cost on any device. B stays the choice if the user prefers the plain look. The first recommendation was A.
+- **Action:** ask the user, because the panel look is a choice of taste, and the user named both looks.
+
 ## Milestone 1: Mockups
 
 Tags: mockup
@@ -284,6 +360,9 @@ sizes.
 - [ ] Refine the "Cursor" prototype with the user until the user approves
       it. Record each refinement that the user chooses as a decision in
       this plan.
+- [ ] Build one merged prototype from the refinements that the user keeps,
+      with one set of panel values and colours. Show it beside the chosen
+      design, and get the user's approval.
 - [ ] Copy the approved prototype into the branch as the source for the
       screen.
 - [ ] Add `package.json` with npm, `.nvmrc` with Node 24, and `.gitignore`

@@ -9,13 +9,17 @@ footer that UK law requires. Cloudflare hosts the site, and each push to
 `main` deploys it. A blog can come later. This change does not build the
 blog, analytics, or a privacy page, because the page sets no cookies.
 
-The page follows the "Firn, projects" design: white, Schibsted Grotesk and
-IBM Plex Mono, ink with one grey and one orange accent. The projects are
-layers: an orange cap on the top rule, hairlines between the rows, and an
-ink "bedrock" rule under the last row. Each row shows the project's logo,
-name, kind, one line, and link, and the whole row is the link. The design
-exploration is in `.context/design-options/` on the workspace machine. Its
-final page is `claude/firn-projects/`, with screenshots in its `shots/`.
+The page follows the "Cursor" design, option M of the third design round.
+A field of fine grey grains, like firn, covers the white page. One canvas
+behind the content draws it. The pointer pushes the grains aside like
+wind, and they drift back. When the pointer or the keyboard focus rests on
+a project, its nearest grains line up as a dotted outline in the colour of
+its logo, and its card lifts. The projects sit on top as a row of white
+cards. Each card shows the project's logo, name, kind, one line, and link,
+and the whole card is the link. With reduced motion, the field is still.
+Without JavaScript, the page shows the cards on white. The prototype and
+its refinements are in `.context/firna-home/claude/` of the Conductor
+workspace "Firna Homepage Design", on the `futex-ai/skills` repository.
 
 ## Decisions
 
@@ -23,12 +27,23 @@ final page is `claude/firn-projects/`, with screenshots in its `shots/`.
   proxy answered `model_not_found` for `gpt-6-astra`. The user chose to run
   the brief on Codex `gpt-6.1-sol` at max effort. The alternatives were to
   fix the proxy first, or to skip Codex. Later the proxy accepted Astra,
-  and the user asked for an Astra run too. Both runs added directions.
+  and the user asked for an Astra run too. Both runs added directions. In
+  the later rounds, Codex Astra designed beside Claude.
 - **Design direction (2026-11-01).** The user chose "Firn, white" and
   asked for the projects only: no hero, and no "British company" line. The
   alternatives were four full Claude directions, three other white Claude
   directions, three Codex Sol directions, three Codex Astra directions, and
   a copy of instinct.com, which the user rejected.
+- **Design direction, changed (2026-11-02).** The user restarted the design
+  with a new brief: interesting and unique but simple, the projects front
+  and center, and a logo for each project. Round 2 showed eight options.
+  The user removed Wayfinding, its white-panel version, Gallery, and Big
+  Type as "terrible". Round 3 added the user's own ideas: blocks with a fun
+  hover, a game, and a cool pointer effect, each built by Claude and by
+  Codex Astra. The user chose M, "Cursor" by Claude, the grain field. The
+  other options were Glimpse, Stamps, Intervals, Branch, a mix, the round 1
+  "Firn, projects" page, Blocks by Claude and by Astra, Game by Claude and
+  by Astra, and Cursor by Astra.
 - **What the page says about Firna (2026-11-01).** The page has no
   statement about Firna. It shows the logo and the projects. The user asked
   not to say "British company". The alternatives were a neutral sentence, a
@@ -37,25 +52,48 @@ final page is `claude/firn-projects/`, with screenshots in its `shots/`.
   (`https://mokly.ai`), Bookfolio (`https://bookfolio.net`), Redloop
   (`https://github.com/futex-ai/redloop`), and Bowser
   (`https://github.com/futex-ai/bowser`), in that order. Firna UI is not
-  listed. The user gave this list. Mokly and Bookfolio keep their real
-  logos. Redloop and Bowser get new logos, as the user asked.
+  listed. The user gave this list. Open decision 10 asks whether Firna UI
+  joins it, because the user's message of 2026-11-02 names Firna UI.
+- **Common project logos (2026-11-02).** Every design uses one set of
+  project logos. Mokly and Bookfolio keep their real logos. Firna UI is a
+  white switch on blue, Redloop a loop around a job on brick red, and
+  Bowser a command prompt on plum. They come from the Glimpse direction of
+  round 2, which the user named. The alternative was a different logo set
+  in each direction.
+- **A separate Firna logo (2026-11-02).** The user asked for a Firna logo
+  "like a firn or fern" that does not include the letter F. Every page
+  shows one shared logo file, so that the choice changes one file. Open
+  decision 11 holds the candidates.
 
 ## Design calls
 
-These are my calls, made on 2026-11-01.
+These are my calls. The round 1 calls date from 2026-11-01, and the calls
+for the grain field date from 2026-11-02.
 
 - **One set of components for the mockup and the site.** React components
   make the page. Mokly renders them in the mockup catalogue, and Astro
-  renders the same components to static HTML with no client JavaScript.
-  So the mockup and the site cannot drift apart. The alternative was Astro
-  components plus a second copy in the mockups.
+  renders the same components to static HTML. So the mockup and the site
+  cannot drift apart. The alternative was Astro components plus a second
+  copy in the mockups.
+- **The grain field is one client script.** A plain TypeScript module
+  draws the field on one canvas and loads on the page after the content.
+  It needs no framework runtime. The page works without it. The
+  alternative was a React island, which ships a runtime for one canvas.
+- **The field never sits under text.** The cards are opaque white, and the
+  logo, the email, and the footer sit on white plates, so all text keeps
+  AA contrast on white.
+- **The field's budget.** The loop runs only while grains move. It stops
+  when they rest, when the tab is hidden, and when the field is off
+  screen. Script work stays near 2 ms per frame.
 - **One typed project list** in a TypeScript module that the page and the
-  mockup both import. A new project is one entry and one logo component.
-  Astro content collections stay for the future blog.
-- **Logos as inline SVG components,** so that the Astro and the Mokly asset
-  pipelines treat them the same way.
-- **Self-hosted fonts** from Fontsource, so that the page makes no
-  third-party requests.
+  mockup both import. A new project is one entry and one logo. Each entry
+  carries its logo colour for the outline. Astro content collections stay
+  for the future blog.
+- **Logos as SVG files in one shared set,** rendered as inline SVG
+  components, so that the Astro and the Mokly asset pipelines treat them
+  the same way.
+- **Self-hosted fonts** from Fontsource: Instrument Sans and Geist Mono,
+  the fonts of the chosen design. The page makes no third-party requests.
 - **Tooling** follows the `typescript` skill: `strict: true`, ESLint with
   the `typescript-eslint` recommended configuration, and Prettier.
 - **Names.** The site address is `https://firna.ai`, because the domain is
@@ -69,6 +107,9 @@ These are my calls, made on 2026-11-01.
 
 The options check of 2026-11-02 changed decisions 3 and 6 and found
 decisions 7 and 8. Its report is in `.context/firna-homepage/`.
+Decisions 10 and 11 came from the design rounds of 2026-11-02. An
+options check of 2026-11-02 changed both. Its report is in
+`.context/firna-home/reports/` of the review workspace.
 
 ### 3. How the site goes live on Cloudflare
 
@@ -163,25 +204,105 @@ decisions 7 and 8. Its report is in `.context/firna-homepage/`.
 - **Recommendation:** A, unless Firna Ltd is VAT-registered. Then B.
 - **Action:** Ask the user, because only the user knows the VAT status.
 
+### 10. Whether Firna UI is on the page
+
+- **Severity:** Medium. **Effort:** Small.
+- **Source:** Design. The options check changed the recommendation.
+- **Category:** Docs or spec.
+- **Location:** None. It is the project list of the page.
+- **Terms:**
+  - **Firna UI:** the npm package `@firna/ui`, under the MIT license. It is the shared React and React Native component library of Firna's apps.
+- **Background:** On 2026-11-01 the user gave the launch list: Mokly, Bookfolio, Redloop, and Bowser. The user gave it after round 1 had recommended "Mokly and Firna UI only". The user's message of 2026-11-02 says that Firna owns "mokly, firna ui, etc". Those words repeat the first message of 2026-11-01. Every design of rounds 2 and 3 shows Firna UI as the third project, so that the layout is tested with it.
+- **Problem:** The recorded list and the later message disagree.
+- **Impact if no action:** The page can show a project that the user wants to keep off it, or leave out one that the user wants on it.
+- **Root question:** Which projects does the homepage show at launch?
+- **Options:**
+  - **A.** Five projects: Mokly, Bookfolio, Firna UI, Redloop, and Bowser. Firna UI links to `https://github.com/futex-ai/ui`. Effort: Small.
+  - **B.** The recorded four, without Firna UI. The card grid then needs `auto-fit` or a centred row, so that four cards fill the width. Effort: Small.
+  - **C.** Another list or order that the user gives. Effort: Small.
+- **Left out:**
+  - A smaller place for Firna UI, such as a line under the cards. It breaks the chosen design, which gives each project one equal card.
+  - A hidden entry for Firna UI. B is better on every point, because adding it later is one entry and one existing logo file.
+  - A list built from GitHub or npm. It fails the goal, because someone must still choose the projects.
+- **Wider fix:** None. The list is one data file.
+- **Previous examples:** The decision "Projects at launch" of 2026-11-01 above.
+- **Related:** Decision 11: the logo row of the header test uses the same five projects.
+- **Recommendation:** B. The user gave the recorded list after round 1 recommended Firna UI, and the words of 2026-11-02 only repeat the first message. The first recommendation was A.
+- **Action:** ask the user, because only the user knows whether the words of 2026-11-02 reopen the list.
+
+### 11. Which Firna logo to use
+
+- **Severity:** Medium. **Effort:** Small.
+- **Source:** Design. The options check added option N and a better root question.
+- **Category:** Mockup.
+- **Location:** None. The candidates are in `.context/firna-home/firna-logo/` of the review workspace. The chosen lockup becomes the shared Firna logo file.
+- **Terms:**
+  - **Firn:** old granular snow that has lasted at least one summer, on its way to becoming glacier ice.
+  - **Mark:** the Firna symbol alone, as in a browser tab.
+  - **Lockup:** the mark with the word "Firna", as in the page header.
+- **Background:** The user asked for a logo "like a firn or fern" with no letter F. Claude drew A to F and Codex Astra drew G to L, each without the other's work. Each candidate has a mark and a lockup. The lockups set the word in different typefaces and sizes, so a second header test sets every mark beside one word, "Firna" in Instrument Sans. The chosen design fills the page with grains of firn.
+- **Problem:** The homepage needs one Firna logo.
+- **Impact if no action:** The page keeps a placeholder wordmark.
+- **Root question:** Which mark, alone at 16 px and beside the word "Firna" in the header, best stands for Firna as the parent of its projects?
+- **Options:**
+  - **A.** Frost, by Claude: ice that grows like a fern frond. It joins both words. It is soft at 16 px on a standard screen. Effort: Small.
+  - **B.** Settle, by Claude: grains pressed into ice. It is sharp at 16 px, but it can look like a keyboard key. Claude's designer recommends it. Effort: Small.
+  - **C.** Strata, by Claude: a disc of ice-core layers. It is calm, but striped discs are common. Effort: Small.
+  - **D.** Print, by Claude: a white fern on a blue disc. It is warm, but it is close to the New Zealand silver fern. Effort: Small.
+  - **E.** Coil, by Claude: a young fern coil drawn as rings. It is bold, but it can read as a target. Effort: Small.
+  - **F.** Frond, by Claude: fern leaflets with no stem. It has a good story, but it is the weakest at 16 px. Effort: Small.
+  - **G.** Névé, by Codex Astra: seven snow grains in a cluster. It is a handful of the grains that fill the page. It is close to common dot icons. Effort: Small.
+  - **H.** Layers, by Codex Astra: three soft layers. It is clear, but it is close to a database icon. Effort: Small.
+  - **I.** Pressure, by Codex Astra: three grains that merge into one body. It is abstract. Astra recommends it. Effort: Small.
+  - **J.** Pinna, by Codex Astra: a full fern frond. It is friendly, but it is close to generic plant logos. Effort: Small.
+  - **K.** Sori, by Codex Astra: spore capsules in two rows. It is hard to read as a fern. Effort: Small.
+  - **L.** Venation, by Codex Astra: a fern vein that divides twice. It can read as a trident or as the Greek letter psi. Effort: Small.
+  - **M.** A mix, such as one mark with another wordmark, or a new round. Effort: Medium.
+  - **N.** A shortlist of one to three marks, each shown in the header of the refined page with one word at one size, and as a favicon on a light and a dark tab. Then the user chooses. The logo waits for the refined page. Effort: Medium.
+- **Left out:**
+  - A square tile behind the mark, because it looks like a sixth project.
+  - A spiral fiddlehead, because it reads as the Māori koru, and at 16 px as a lowercase f, which breaks the no-F rule.
+  - A generic leaf, because a leaf is not a fern, and a snowflake, because it is fresh snow, not firn. A snowflake is also close to the logo of the software company Snowflake.
+  - A live mark that the grain field draws, because the favicon and the page without JavaScript need a static mark.
+  - A wordmark with no mark, because it fails the request for a logo like a firn or fern.
+- **Wider fix:** None. This is a one-time brand choice.
+- **Previous examples:** The logos of rounds 1 and 2 used the letter F.
+- **Related:** Decision 10: the header test shows the five project logos.
+- **Recommendation:** G. It is the simplest image of firn grains, it is crisp at 16 px, and its one ink stays quiet beside the project logos. Its grains also match the grain field. B or I fits better if a distinctive mark matters more, because dot clusters are common. The first recommendation was A.
+- **Action:** ask the user, because a logo is a choice of taste, and the user asked to choose it.
+
 ## Milestone 1: Mockups
 
 Tags: mockup
 
 Depends on: none
 
-Set up the Mokly catalogue, and build the homepage screen from shared
-components, at desktop and mobile sizes.
+Refine the chosen design with the user, set up the Mokly catalogue, and
+build the homepage screen from shared components, at desktop and mobile
+sizes.
 
+- [ ] Refine the "Cursor" prototype with the user until the user approves
+      it. Record each refinement that the user chooses as a decision in
+      this plan.
+- [ ] Copy the approved prototype into the branch as the source for the
+      screen.
 - [ ] Add `package.json` with npm, `.nvmrc` with Node 24, and `.gitignore`
       entries for `node_modules/`, `dist/`, `.astro/`, `mokly-static/`, and
       `.mokly-export-reservations/`.
 - [ ] Add `@mokly/mokly`, React 19, and `mokly.config.json`. The catalogue
       reads `docs/mockups/`.
 - [ ] Add the shared components: the header with the Firna logo and the
-      email, the project list and its rows, the four project logos, and
-      the footer. Add the shared stylesheet and the typed project list.
+      email, the project list and its cards, and the footer. Add the shared
+      stylesheet, the typed project list, and the logo files of the listed
+      projects.
+- [ ] Add the grain field as one TypeScript module, ported from the
+      prototype. Check whether the Mokly catalogue runs it. When it does
+      not, the screen shows the field drawn once, and the screen notes say
+      so.
 - [ ] Add the homepage screen to `docs/mockups/`. Mokly renders it at
-      mobile and desktop sizes.
+      mobile and desktop sizes. It shows the Firna logo from the answer
+      to decision 11, or the placeholder until then.
+- [ ] Remove the prototype copy when the screen matches it.
 - [ ] Run the mockup check. Smoke-test the catalogue pages.
 - [ ] Update the design and the TODOs of this plan for each problem that
       the mockups show.
@@ -194,7 +315,8 @@ Depends on: 1
       symlink to it.
 - [ ] Add `docs/protocol/homepage.md`: the page content, the legal
       disclosure, the contact route, the accessibility level, the
-      no-JavaScript and no-third-party rules, and the deploy trigger.
+      no-JavaScript and no-third-party rules, the reduced-motion rule for
+      the grain field, and the deploy trigger.
 - [ ] Rewrite `README.md`: what the site is, the commands, how to add a
       project, and how a deploy works.
 
@@ -208,16 +330,21 @@ Depends on: 2
       `strict: true`.
 - [ ] Add ESLint with the `typescript-eslint` recommended configuration,
       and Prettier.
-- [ ] Render the homepage from the shared components, with no client
-      JavaScript. Add the fonts, the favicon, the page title, the
-      description, and the canonical address.
+- [ ] Render the homepage from the shared components. Load the grain field
+      module as the page's only client script. Add the fonts, the page
+      title, the description, and the canonical address.
 - [ ] Add a render test: each project appears with its link, and the footer
       holds the legal details. See each test fail once.
+- [ ] Add a browser test of the field: it stops when the grains rest, it
+      draws once with reduced motion, and the page works without
+      JavaScript. Run it 10 times, as the `testing` skill says.
 - [ ] Add the complete gate to `package.json` and `AGENTS.md`: typecheck,
       lint, format check, tests, build, and the mockup check.
 - [ ] Set the contact email from the answer to decision 6. Send a test
       email to it before the merge.
 - [ ] Add the VAT number to the footer when the answer to decision 8 is B.
+- [ ] Set the Firna logo and the favicon from the answer to decision 11.
+      Give the favicon a light version for dark browser tabs.
 - [ ] Smoke-test the built site, and compare it with the mockup at 1440 px
       and 390 px wide.
 

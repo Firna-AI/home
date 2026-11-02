@@ -253,7 +253,7 @@ options check of 2026-11-02 changed decisions 10 and 11. Its report is in
 ### 11. Which Firna logo to use
 
 - **Severity:** Medium. **Effort:** Small.
-- **Source:** Design. The options check added option N and a better root question.
+- **Source:** Design. The options check added option N and a better root question. On 2026-11-02 the user asked for marks "more to do with firn", which added options O to X.
 - **Category:** Mockup.
 - **Location:** None. The candidates are in `.context/firna-home/firna-logo/` of the review workspace. The chosen lockup becomes the shared Firna logo file.
 - **Terms:**
@@ -279,6 +279,16 @@ options check of 2026-11-02 changed decisions 10 and 11. Its report is in
   - **L.** Venation, by Codex Astra: a fern vein that divides twice. It can read as a trident or as the Greek letter psi. Effort: Small.
   - **M.** A mix, such as one mark with another wordmark, or a new round. Effort: Medium.
   - **N.** A shortlist of one to three marks, each shown in the header of the refined page with one word at one size, and as a favicon on a light and a dark tab. Then the user chooses. The logo waits for the refined page. Effort: Medium.
+  - **O.** Pore, by Claude: the space between three touching grains. It is bold and sharp at 16 px, but at small sizes it looks like the Vercel triangle. Claude's designer recommends it. Effort: Small.
+  - **P.** Neck, by Claude: two grains that bond at a soft neck, the first step from snow to ice. It can read as a peanut. Effort: Small.
+  - **Q.** Seal, by Claude: three grains that seal a bubble of air. It can read as a club or a flower. Effort: Small.
+  - **R.** Air, by Claude: a grain of ice with two air bubbles. It can read as a bowling ball. Effort: Small.
+  - **S.** Depth, by Claude: grains that grow and fuse with depth. It turns grey at 16 px. Effort: Small.
+  - **T.** Sinter, by Codex Astra: a large and a small grain joined at a neck. It is close to P. Astra recommends it. Effort: Small.
+  - **U.** Passage, by Codex Astra: an open passage between bonded grains. It is hard to read. Effort: Small.
+  - **V.** Density, by Codex Astra: the air space narrows with depth. It reads as the letter U or V. Effort: Small.
+  - **W.** Close-off, by Codex Astra: a rounded form with one pocket of air. It is clear, but close to a washer or a nut icon. Effort: Small.
+  - **X.** Firn line, by Codex Astra: one line along the edge of old snow. It reads as a squiggle. Effort: Small.
 - **Left out:**
   - A square tile behind the mark, because it looks like a sixth project.
   - A spiral fiddlehead, because it reads as the Māori koru, and at 16 px as a lowercase f, which breaks the no-F rule.
@@ -288,7 +298,7 @@ options check of 2026-11-02 changed decisions 10 and 11. Its report is in
 - **Wider fix:** None. This is a one-time brand choice.
 - **Previous examples:** The logos of rounds 1 and 2 used the letter F.
 - **Related:** Decision 10: the header test shows the five project logos.
-- **Recommendation:** G. It is the simplest image of firn grains, it is crisp at 16 px, and its one ink stays quiet beside the project logos. Its grains also match the grain field. B or I fits better if a distinctive mark matters more, because dot clusters are common. The first recommendation was A.
+- **Recommendation:** P. Two grains that bond are the moment that snow becomes firn, and the mark is simple, friendly, and clear at 16 px beside the serif word. The earlier recommendations were A, then G.
 - **Action:** ask the user, because a logo is a choice of taste, and the user asked to choose it.
 
 ### 12. Which refinements of the chosen design to keep

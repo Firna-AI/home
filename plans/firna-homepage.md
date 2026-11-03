@@ -17,7 +17,7 @@ a project, its nearest grains line up as a dotted outline in the colour of
 its logo, and its card lifts. The projects sit on top as a row of translucent
 cards, so that the grains show softly behind the text. Decision 13 chooses
 between a frosted and a plain translucent style. The
-header shows the name "Firna" in a modern serif. Each card shows the project's logo, name, kind, one line, and link,
+header shows the Firna logo: the Close-off mark and the name in Lora. Each card shows the project's logo, name, kind, one line, and link,
 and the whole card is the link. With reduced motion, the field is still.
 Without JavaScript, the page shows the cards on white. The prototype and
 its refinements are in `.context/firna-home/claude/` of the Conductor
@@ -72,10 +72,16 @@ workspace "Firna Homepage Design", on the `futex-ai/skills` repository.
 - **No hard white behind text (2026-11-02).** The user asked that the text
   "use opacity or blur background" in place of "a hard white background".
   Open decision 13 holds the choice between the two.
+- **The Firna logo (2026-11-03).** The user chose option W of decision 11,
+  "Close-off" by Codex Astra, with the name in Lora: "11W. Close-off with
+  Lora". The mark is a rounded form with one pocket of air, the air that
+  firn keeps when it turns to ice. The alternatives were 23 other marks,
+  from frost ferns to grain clusters, and seven other serif fonts for the
+  name, including Instrument Serif, which the pages showed until then.
 - **A separate Firna logo (2026-11-02).** The user asked for a Firna logo
   "like a firn or fern" that does not include the letter F. Every page
-  shows one shared logo file, so that the choice changes one file. Open
-  decision 11 holds the candidates.
+  shows one shared logo file, so that the choice changes one file.
+  Decision 11 held the candidates, and the user chose on 2026-11-03.
 
 ## Design calls
 
@@ -98,10 +104,12 @@ for the grain field date from 2026-11-02.
   reduced transparency, the panels fall back to almost opaque white. This
   call replaces the opaque white panels of 2026-11-02, after the user's
   request.
-- **Instrument Serif for the name (2026-11-02).** The wordmark sets
-  "Firna" in Instrument Serif, drawn as paths. It is the serif partner of
-  Instrument Sans, the sans of the page. The alternatives were Fraunces,
-  Newsreader, Gloock, Young Serif, Source Serif 4, and DM Serif Display.
+- **The name drawn as paths (2026-11-03).** The logo sets "Firna" in Lora
+  at weight 500, drawn as paths with the font's own kerning, so that the
+  page loads no font for it. On 2026-11-02 my call was Instrument Serif,
+  until the user chose Lora.
+- **The favicon (2026-11-03).** The favicon is the Close-off mark in ink,
+  with a light version when the browser uses a dark theme, in one SVG.
 - **The field's budget.** The loop runs only while grains move. It stops
   when they rest, when the tab is hidden, and when the field is off
   screen. Script work stays near 2 ms per frame.
@@ -127,8 +135,9 @@ for the grain field date from 2026-11-02.
 
 The options check of 2026-11-02 changed decisions 3 and 6 and found
 decisions 7 and 8. Its report is in `.context/firna-homepage/`.
-Decisions 10 to 13 came from the design rounds of 2026-11-02. An
-options check of 2026-11-02 changed decisions 10 and 11. Its report is in
+Decisions 10, 12, and 13 came from the design rounds of 2026-11-02. An
+options check of 2026-11-02 changed decisions 10, 12, and 13. Decision 11
+is closed: the user chose the Firna logo on 2026-11-03. Its report is in
 `.context/firna-home/reports/` of the review workspace.
 
 ### 3. How the site goes live on Cloudflare
@@ -246,60 +255,8 @@ options check of 2026-11-02 changed decisions 10 and 11. Its report is in
   - A list built from GitHub or npm. It fails the goal, because someone must still choose the projects.
 - **Wider fix:** None. The list is one data file.
 - **Previous examples:** The decision "Projects at launch" of 2026-11-01 above.
-- **Related:** Decision 11: the logo row of the header test uses the same five projects.
 - **Recommendation:** B. The user gave the recorded list after round 1 recommended Firna UI, and the words of 2026-11-02 only repeat the first message. The first recommendation was A.
 - **Action:** ask the user, because only the user knows whether the words of 2026-11-02 reopen the list.
-
-### 11. Which Firna logo to use
-
-- **Severity:** Medium. **Effort:** Small.
-- **Source:** Design. The options check added option N and a better root question. On 2026-11-02 the user asked for marks "more to do with firn", which added options O to X.
-- **Category:** Mockup.
-- **Location:** None. The candidates are in `.context/firna-home/firna-logo/` of the review workspace. The chosen lockup becomes the shared Firna logo file.
-- **Terms:**
-  - **Firn:** old granular snow that has lasted at least one summer, on its way to becoming glacier ice.
-  - **Mark:** the Firna symbol alone, as in a browser tab.
-  - **Lockup:** the mark with the word "Firna", as in the page header.
-- **Background:** The user asked for a logo "like a firn or fern" with no letter F. Claude drew A to F and Codex Astra drew G to L, each without the other's work. Each candidate has a mark and a lockup. The lockups set the word in different typefaces and sizes, so a second header test sets every mark beside one word, "Firna" in Instrument Sans. The chosen design fills the page with grains of firn.
-- **Problem:** The homepage needs one Firna logo.
-- **Impact if no action:** The page keeps a placeholder wordmark.
-- **Root question:** Which mark, alone at 16 px and beside the word "Firna" in the header, best stands for Firna as the parent of its projects?
-- **Options:**
-  - **A.** Frost, by Claude: ice that grows like a fern frond. It joins both words. It is soft at 16 px on a standard screen. Effort: Small.
-  - **B.** Settle, by Claude: grains pressed into ice. It is sharp at 16 px, but it can look like a keyboard key. Claude's designer recommends it. Effort: Small.
-  - **C.** Strata, by Claude: a disc of ice-core layers. It is calm, but striped discs are common. Effort: Small.
-  - **D.** Print, by Claude: a white fern on a blue disc. It is warm, but it is close to the New Zealand silver fern. Effort: Small.
-  - **E.** Coil, by Claude: a young fern coil drawn as rings. It is bold, but it can read as a target. Effort: Small.
-  - **F.** Frond, by Claude: fern leaflets with no stem. It has a good story, but it is the weakest at 16 px. Effort: Small.
-  - **G.** Névé, by Codex Astra: seven snow grains in a cluster. It is a handful of the grains that fill the page. It is close to common dot icons. Effort: Small.
-  - **H.** Layers, by Codex Astra: three soft layers. It is clear, but it is close to a database icon. Effort: Small.
-  - **I.** Pressure, by Codex Astra: three grains that merge into one body. It is abstract. Astra recommends it. Effort: Small.
-  - **J.** Pinna, by Codex Astra: a full fern frond. It is friendly, but it is close to generic plant logos. Effort: Small.
-  - **K.** Sori, by Codex Astra: spore capsules in two rows. It is hard to read as a fern. Effort: Small.
-  - **L.** Venation, by Codex Astra: a fern vein that divides twice. It can read as a trident or as the Greek letter psi. Effort: Small.
-  - **M.** A mix, such as one mark with another wordmark, or a new round. Effort: Medium.
-  - **N.** A shortlist of one to three marks, each shown in the header of the refined page with one word at one size, and as a favicon on a light and a dark tab. Then the user chooses. The logo waits for the refined page. Effort: Medium.
-  - **O.** Pore, by Claude: the space between three touching grains. It is bold and sharp at 16 px, but at small sizes it looks like the Vercel triangle. Claude's designer recommends it. Effort: Small.
-  - **P.** Neck, by Claude: two grains that bond at a soft neck, the first step from snow to ice. It can read as a peanut. Effort: Small.
-  - **Q.** Seal, by Claude: three grains that seal a bubble of air. It can read as a club or a flower. Effort: Small.
-  - **R.** Air, by Claude: a grain of ice with two air bubbles. It can read as a bowling ball. Effort: Small.
-  - **S.** Depth, by Claude: grains that grow and fuse with depth. It turns grey at 16 px. Effort: Small.
-  - **T.** Sinter, by Codex Astra: a large and a small grain joined at a neck. It is close to P. Astra recommends it. Effort: Small.
-  - **U.** Passage, by Codex Astra: an open passage between bonded grains. It is hard to read. Effort: Small.
-  - **V.** Density, by Codex Astra: the air space narrows with depth. It reads as the letter U or V. Effort: Small.
-  - **W.** Close-off, by Codex Astra: a rounded form with one pocket of air. It is clear, but close to a washer or a nut icon. Effort: Small.
-  - **X.** Firn line, by Codex Astra: one line along the edge of old snow. It reads as a squiggle. Effort: Small.
-- **Left out:**
-  - A square tile behind the mark, because it looks like a sixth project.
-  - A spiral fiddlehead, because it reads as the Māori koru, and at 16 px as a lowercase f, which breaks the no-F rule.
-  - A generic leaf, because a leaf is not a fern, and a snowflake, because it is fresh snow, not firn. A snowflake is also close to the logo of the software company Snowflake.
-  - A live mark that the grain field draws, because the favicon and the page without JavaScript need a static mark.
-  - A wordmark with no mark, because it fails the request for a logo like a firn or fern.
-- **Wider fix:** None. This is a one-time brand choice.
-- **Previous examples:** The logos of rounds 1 and 2 used the letter F.
-- **Related:** Decision 10: the header test shows the five project logos.
-- **Recommendation:** P. Two grains that bond are the moment that snow becomes firn, and the mark is simple, friendly, and clear at 16 px beside the serif word. The earlier recommendations were A, then G.
-- **Action:** ask the user, because a logo is a choice of taste, and the user asked to choose it.
 
 ### 12. Which refinements of the chosen design to keep
 
@@ -389,8 +346,8 @@ sizes.
       not, the screen shows the field drawn once, and the screen notes say
       so.
 - [ ] Add the homepage screen to `docs/mockups/`. Mokly renders it at
-      mobile and desktop sizes. It shows the Firna logo from the answer
-      to decision 11, or the placeholder until then.
+      mobile and desktop sizes. It shows the Firna logo: the Close-off
+      mark with the name in Lora.
 - [ ] Remove the prototype copy when the screen matches it.
 - [ ] Run the mockup check. Smoke-test the catalogue pages.
 - [ ] Update the design and the TODOs of this plan for each problem that
@@ -432,8 +389,9 @@ Depends on: 2
 - [ ] Set the contact email from the answer to decision 6. Send a test
       email to it before the merge.
 - [ ] Add the VAT number to the footer when the answer to decision 8 is B.
-- [ ] Set the Firna logo and the favicon from the answer to decision 11.
-      Give the favicon a light version for dark browser tabs.
+- [ ] Add the Firna logo and the favicon: the Close-off mark with the
+      name in Lora, and the mark with a light version for dark browser
+      tabs.
 - [ ] Smoke-test the built site, and compare it with the mockup at 1440 px
       and 390 px wide.
 

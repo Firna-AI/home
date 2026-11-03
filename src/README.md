@@ -18,6 +18,9 @@ repository [README](../README.md#key-code) lists the entry points.
 - The grain field in `field/` imports no React. It also imports
   `components/projectListContract.ts`, so that module imports no React
   either. The field is the only script of the page.
+- The page `pages/index.astro` owns the document: the head, the stylesheet,
+  and one `<script>` that loads `field/main.ts`. It renders the components
+  with no `client:*` directive, so that the page ships no React runtime.
 - The field finds the project list, and reads the logo colour of each card,
   only through the names in `components/projectListContract.ts`. Keep that
   contract when you change the list or its cards.

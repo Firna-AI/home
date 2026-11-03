@@ -155,6 +155,14 @@ for the grain field date from 2026-11-02.
   until the user chose Lora.
 - **The favicon (2026-11-03).** The favicon is the Close-off mark in ink,
   with a light version when the browser uses a dark theme, in one SVG.
+  A 32 px ICO of the ink mark is the fallback for browsers that show no
+  SVG favicon, such as Safari before 26. Chrome still takes the SVG. A
+  light tile behind the mark stays out, because it changes the approved
+  look.
+- **The CSS browser target (2026-11-03).** The build writes CSS for
+  Vite's default browsers: Chrome and Edge 111, Firefox 114, and Safari
+  16.4. Without an explicit target, the CSS minifier dropped the
+  `-webkit-backdrop-filter` that Safari 16.4 to 17 needs for the frost.
 - **The field's budget.** The loop runs only while grains move. It stops
   when they rest, when the tab is hidden, and when the field is off
   screen. Script work stays near 2 ms per frame. The reference setup
@@ -281,7 +289,7 @@ Depends on: 2
       `strict: true`.
 - [x] Add ESLint with the `typescript-eslint` recommended configuration,
       and Prettier.
-- [ ] Render the homepage from the shared components. Load the grain field
+- [x] Render the homepage from the shared components. Load the grain field
       module as the page's only client script. Add the fonts, the page
       title, the description, and the canonical address
       `https://firna.dev/`.
@@ -293,14 +301,19 @@ Depends on: 2
       JavaScript. Run it 10 times, as the `testing` skill says.
 - [ ] Add the complete gate to `package.json` and `AGENTS.md`: typecheck,
       lint, format check, tests, build, and the mockup check.
-- [ ] Show the contact email `hello@firna.ai`. Send a test email to it
-      before the merge.
-- [ ] Add the VAT number GB191373695 to the legal footer.
-- [ ] Add the Firna logo and the favicon: the Close-off mark with the
+- [x] Show the contact email `hello@firna.ai`.
+- [ ] Send a test email to `hello@firna.ai` before the merge. Only the
+      user can send it, after the user adds the address in Google
+      Workspace.
+- [x] Add the VAT number GB191373695 to the legal footer.
+- [x] Add the Firna logo and the favicon: the Close-off mark with the
       name in Lora, and the mark with a light version for dark browser
       tabs.
-- [ ] Smoke-test the built site, and compare it with the mockup at 1440 px
+- [x] Smoke-test the built site, and compare it with the mockup at 1440 px
       and 390 px wide.
+
+Evidence: `.context/firna-homepage/m3/` holds the page's smoke test, the
+comparison with the mockup, and the contrast measurement.
 
 ## Milestone 4: Deploy
 
@@ -318,9 +331,10 @@ Depends on: 3
       `main`, the build command, the output folder `dist`, and Node 24.
       Then add `firna.dev` and `www.firna.dev`, with `www` redirected to the
       bare domain. Then check that Email Address Obfuscation is off for
-      `firna.dev`, and that Cloudflare adds no script to the page, such as
-      Web Analytics or Rocket Loader. Each would break the no-JavaScript,
-      one-script, or no-third-party rule of the protocol doc.
+      `firna.dev`, and that Cloudflare adds no script or cookie to the
+      page, such as Web Analytics, Rocket Loader, or Bot Fight Mode. Each
+      would break the no-JavaScript, one-script, no-third-party, or
+      no-cookie rule of the protocol doc.
 
 ## Milestone 5: Verification, commit, review, and pull request
 

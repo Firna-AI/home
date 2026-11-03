@@ -80,10 +80,17 @@ gives the rules and the decisions.
 
 ## Key code
 
-- `astro.config.mjs`: the site address, static output, and React renderer
-  for static HTML.
-- `src/pages/index.astro`: the Astro page that renders the shared homepage
-  component with the company and project data.
+- `astro.config.mjs`: the site address, static output, the browsers that
+  the built CSS supports, and the React renderer for static HTML.
+- `src/pages/index.astro`: the Astro page. It sets the head, imports the
+  shared stylesheet, renders the shared homepage component with the company
+  and project data, and loads the grain field as the page's only script.
+  Its description names the projects from `src/projects.ts`.
+- `public/favicon.svg`: the favicon, the Close-off mark in ink. It turns
+  light when the browser uses a dark theme.
+- `public/favicon.ico`: the same mark in ink at 32 × 32 px, for browsers
+  that show no SVG favicon, such as Safari before version 26. Render it
+  again from `favicon.svg` when the mark changes.
 - `src/projects.ts`: the projects, in the order that the page shows them,
   and the `Project` type.
 - `src/company.ts`: the contact email and the legal details of Firna Ltd.

@@ -2,7 +2,7 @@
 
 This repository, `Firna-AI/home`, holds the homepage of Firna Ltd: one
 static page at `https://firna.dev` that lists Firna's projects. The stack
-is TypeScript and React. React components make the page and render to
+uses Astro, TypeScript, and React. Astro renders the React components to
 static HTML. A plain TypeScript script draws the grain field: a layer of
 fine grey grains behind the content. The data, the components, the logos,
 the styles, and the field are under `src/`. The mockup screen is under
@@ -47,7 +47,18 @@ skill at that moment instead of guessing the rule.
 
 ## Commands
 
-- Typecheck: `npm run typecheck`
+- Development server: `npm run dev`. It serves the Astro page and shows
+  each change while it runs.
+- Build: `npm run build`. It writes the static site to `dist/`.
+- Preview: `npm run preview`. It serves the built site from `dist/`.
+- Typecheck: `npm run typecheck`. It checks Astro, TypeScript, and React
+  files in strict mode. It generates Astro types under `.astro/`.
+- Lint: `npm run lint`. It checks the code with the recommended ESLint
+  and `typescript-eslint` rules.
+- Format: `npm run format`. It formats code, styles, and configuration
+  files with Prettier. It leaves Markdown out.
+- Format check: `npm run format:check`. It checks the same files without
+  changing them.
 - Mockup check: `npm run mockups:check`. It builds the catalogue into
   `mokly-static/` and fails on any warning.
 - Mockup catalogue: `npm run mockups`. It serves the catalogue and prints

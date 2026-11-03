@@ -8,6 +8,9 @@ snow. The pointer pushes the grains aside like wind. A card under the
 pointer or the keyboard focus gathers an outline of grains in the colour of
 its logo.
 
+Astro renders the shared React components to static HTML. TypeScript
+checks the code. The built page loads no React runtime.
+
 [docs/protocol/homepage.md](docs/protocol/homepage.md) holds the
 requirements and the decisions in force.
 
@@ -19,7 +22,9 @@ this repository to Cloudflare Pages.
 1. Use the Node version that `.nvmrc` names.
 2. Run `npm ci` to install the dependencies. npm can warn that it did not
    run the install script of `esbuild`. The commands work without it.
-3. Run `npm run mockups`, and open the address that it prints. There,
+3. Run `npm run dev`, and open the address that it prints. Astro serves
+   the page and shows each change while it runs.
+4. Run `npm run mockups`, and open the address that it prints. There,
    Mokly serves the mockup catalogue: the screens of the product as static
    pages. It shows the Homepage screen at desktop and phone sizes.
 
@@ -28,12 +33,20 @@ at rest.
 
 ## Commands
 
+- `npm run dev` serves the Astro page. It shows each change while it runs.
+- `npm run build` writes the static site to `dist/`.
+- `npm run preview` serves the built site from `dist/`.
+- `npm run typecheck` checks Astro, TypeScript, and React files in strict
+  mode. It generates Astro types under `.astro/`.
+- `npm run lint` checks the code with the recommended ESLint and
+  `typescript-eslint` rules.
+- `npm run format` formats code, styles, and configuration files with
+  Prettier. It leaves Markdown out.
+- `npm run format:check` checks the same files without changing them.
 - `npm run mockups` serves the mockup catalogue. It shows each change to a
   screen while it runs.
 - `npm run mockups:check` builds the catalogue into `mokly-static/`. It
   fails on any warning.
-- `npm run typecheck` checks the types of `src/` and `docs/mockups/` in
-  strict mode. It writes no files.
 
 ## Add a project
 
@@ -49,7 +62,9 @@ at rest.
    list of the projects and their order is a requirement, so it changes
    with the page.
 5. Run `npm run mockups`, and check the Homepage screen at both sizes.
-6. Run `npm run typecheck` and `npm run mockups:check`.
+6. Run `npm run format`.
+7. Run `npm run typecheck`, `npm run lint`, `npm run format:check`,
+   `npm run build`, and `npm run mockups:check`.
 
 ## Deploy
 
@@ -65,6 +80,10 @@ gives the rules and the decisions.
 
 ## Key code
 
+- `astro.config.mjs`: the site address, static output, and React renderer
+  for static HTML.
+- `src/pages/index.astro`: the Astro page that renders the shared homepage
+  component with the company and project data.
 - `src/projects.ts`: the projects, in the order that the page shows them,
   and the `Project` type.
 - `src/company.ts`: the contact email and the legal details of Firna Ltd.

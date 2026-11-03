@@ -277,9 +277,9 @@ Tags: ui
 
 Depends on: 2
 
-- [ ] Add Astro with `@astrojs/react`, static output, and TypeScript with
+- [x] Add Astro with `@astrojs/react`, static output, and TypeScript with
       `strict: true`.
-- [ ] Add ESLint with the `typescript-eslint` recommended configuration,
+- [x] Add ESLint with the `typescript-eslint` recommended configuration,
       and Prettier.
 - [ ] Render the homepage from the shared components. Load the grain field
       module as the page's only client script. Add the fonts, the page

@@ -14,12 +14,13 @@ A field of fine grey grains, like firn, covers the white page. One canvas
 behind the content draws it. The pointer pushes the grains aside like
 wind, and they drift back. When the pointer or the keyboard focus rests on
 a project, its nearest grains line up as a dotted outline in the colour of
-its logo, and its card lifts. The projects sit on top as a row of translucent
-cards, so that the grains show softly behind the text. Decision 13 chooses
-between a frosted and a plain translucent style. The
-header shows the Firna logo: the Close-off mark and the name in Lora. Each card shows the project's logo, name, kind, one line, and link,
-and the whole card is the link. With reduced motion, the field is still.
-Without JavaScript, the page shows the cards on white. The prototype is
+its logo, and its card lifts. The projects sit on top as a row of
+translucent cards, so that the grains show softly behind the text.
+Decision 13 chooses between a frosted and a plain translucent style. The
+header shows the Firna logo: the Close-off mark and the name in Lora. Each
+card shows the project's logo, name, kind, one line, and link, and the
+whole card is the link. With reduced motion, the field is still. Without
+JavaScript, the page shows the cards on white. The prototype is
 `.context/firna-home/claude/cursor/` of the Conductor workspace "Firna
 Homepage Design", on the `futex-ai/skills` repository.
 

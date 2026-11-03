@@ -22,3 +22,7 @@
 - **Previous examples:** None found.
 - **Recommendation:** A. It protects the domain with no risk of lost mail, and the reports show any sender that is missing.
 - **Action:** Ask the user, because only the user can change the DNS zone and knows which services send mail for `firna.ai`.
+- **Decision (2026-11-03):** The user chose A. The user adds the records in the Cloudflare DNS of `firna.ai`:
+  - A TXT record at `firna.ai`: `v=spf1 include:_spf.google.com ~all`. When another service also sends mail as `firna.ai`, such as the Firna product, its include goes into the same record.
+  - A DMARC record at `_dmarc.firna.ai`: `v=DMARC1; p=none; rua=mailto:<report address>`. Cloudflare's DMARC Management, under Email in the dashboard, can add it with a Cloudflare report address.
+  - After a few weeks of clean reports, `p=none` becomes `p=quarantine`.

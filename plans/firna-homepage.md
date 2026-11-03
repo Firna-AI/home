@@ -199,8 +199,8 @@ sizes.
 
 - [x] Confirm the prototype with the user. The user chose it as it is, with
       frosted panels, on 2026-11-03.
-- [ ] Copy the approved prototype into the branch as the source for the
-      screen.
+- [x] Copy the approved prototype into the branch as the source for the
+      screen. It is in `docs/prototype/`, with its notes and logos.
 - [ ] Add `package.json` with npm, `.nvmrc` with Node 24, and `.gitignore`
       entries for `node_modules/`, `dist/`, `.astro/`, `mokly-static/`, and
       `.mokly-export-reservations/`.

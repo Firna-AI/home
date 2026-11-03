@@ -118,6 +118,11 @@ Homepage Design", on the `futex-ai/skills` repository.
   the follow-up item `plans/follow-ups/firna-ai-mail-spoofing-records.md`:
   an SPF record and a report-only DMARC record. The user adds them in the
   Cloudflare DNS of firna.ai.
+- **Models for the build (2026-11-03).** The user chose to follow the
+  `models` skill: "we should follow the /model skill". The build uses the
+  model of each action in its table, with no override. The alternatives
+  were Codex Astra for the non-UI work and the first review pass, or for
+  the first review pass only.
 - **A separate Firna logo (2026-11-02).** The user asked for a Firna logo
   "like a firn or fern" that does not include the letter F. Every page
   shows one shared logo file, so that the choice changes one file.

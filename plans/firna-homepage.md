@@ -144,7 +144,8 @@ decisions 7 and 8. Its report is in `.context/firna-homepage/`.
 Decisions 10 and 13 came from the design rounds of 2026-11-02. An options
 check of 2026-11-02 changed both. Decisions 11 and 12 are closed: the user
 chose the Firna logo and the design as it is on 2026-11-03. Its report is in
-`.context/firna-home/reports/` of the review workspace.
+`.context/firna-home-records/review-records/reports/` of the review
+workspace.
 
 ### 3. How the site goes live on Cloudflare
 

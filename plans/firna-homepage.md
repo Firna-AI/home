@@ -19,9 +19,9 @@ cards, so that the grains show softly behind the text. Decision 13 chooses
 between a frosted and a plain translucent style. The
 header shows the Firna logo: the Close-off mark and the name in Lora. Each card shows the project's logo, name, kind, one line, and link,
 and the whole card is the link. With reduced motion, the field is still.
-Without JavaScript, the page shows the cards on white. The prototype and
-its refinements are in `.context/firna-home/claude/` of the Conductor
-workspace "Firna Homepage Design", on the `futex-ai/skills` repository.
+Without JavaScript, the page shows the cards on white. The prototype is
+`.context/firna-home/claude/cursor/` of the Conductor workspace "Firna
+Homepage Design", on the `futex-ai/skills` repository.
 
 ## Decisions
 

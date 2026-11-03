@@ -157,7 +157,19 @@ for the grain field date from 2026-11-02.
   with a light version when the browser uses a dark theme, in one SVG.
 - **The field's budget.** The loop runs only while grains move. It stops
   when they rest, when the tab is hidden, and when the field is off
-  screen. Script work stays near 2 ms per frame.
+  screen. Script work stays near 2 ms per frame. The reference setup
+  (2026-11-03) is the prototype's measurement: headless Chrome at
+  1440 × 900 and a pixel ratio of 2, during a 3 s pointer sweep, with a
+  mean of 2.25 ms.
+- **The accessibility level (2026-11-03).** The page meets WCAG 2.2 at
+  level AA. Milestone 2 asks the protocol doc for the level, and the
+  design already keeps AA contrast over the grains. WCAG 2.2 is the
+  current version.
+- **The title and the description (2026-11-03).** The title is "Firna",
+  as in the prototype. The description is "Firna's projects: Mokly,
+  Bookfolio, Firna UI, Redloop, and Bowser.", built from the typed project
+  list, so that a new project changes it. Neither says more about Firna,
+  because the user asked that the page make no statement about Firna.
 - **One typed project list** in a TypeScript module that the page and the
   mockup both import. A new project is one entry and one logo. Each entry
   carries its logo colour for the outline. Astro content collections stay
@@ -247,14 +259,17 @@ check, and the field comparison with the prototype.
 
 Depends on: 1
 
-- [ ] Add `AGENTS.md` from the `agents-md` template, and `CLAUDE.md` as a
+- [x] Add `AGENTS.md` from the `agents-md` template, and `CLAUDE.md` as a
       symlink to it.
-- [ ] Add `docs/protocol/homepage.md`: the page content, the legal
+- [x] Add `docs/protocol/homepage.md`: the page content, the legal
       disclosure, the contact route, the accessibility level, the
       no-JavaScript and no-third-party rules, the reduced-motion rule for
       the grain field, and the deploy trigger.
-- [ ] Rewrite `README.md`: what the site is, the commands, how to add a
+- [x] Rewrite `README.md`: what the site is, the commands, how to add a
       project, and how a deploy works.
+- [x] Add `src/README.md` with the rules for work on the code, and point
+      the screen's related doc at the protocol doc, because the pull
+      request deletes this plan.
 
 ## Milestone 3: Astro site
 
@@ -302,7 +317,10 @@ Depends on: 3
       to a Cloudflare Pages project `firna-home`, with production branch
       `main`, the build command, the output folder `dist`, and Node 24.
       Then add `firna.dev` and `www.firna.dev`, with `www` redirected to the
-      bare domain.
+      bare domain. Then check that Email Address Obfuscation is off for
+      `firna.dev`, and that Cloudflare adds no script to the page, such as
+      Web Analytics or Rocket Loader. Each would break the no-JavaScript,
+      one-script, or no-third-party rule of the protocol doc.
 
 ## Milestone 5: Verification, commit, review, and pull request
 

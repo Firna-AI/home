@@ -8,9 +8,5 @@
     "strict": true,
     "noEmit": true
   },
-  "files": [
-    "node_modules/@types/react/index.d.ts",
-    "node_modules/@types/react-dom/index.d.ts"
-  ],
   "include": ["src/**/*", "docs/mockups/**/*"]
 }

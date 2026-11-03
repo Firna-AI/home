@@ -162,9 +162,23 @@ for the grain field date from 2026-11-02.
   mockup both import. A new project is one entry and one logo. Each entry
   carries its logo colour for the outline. Astro content collections stay
   for the future blog.
-- **Logos as SVG files in one shared set,** rendered as inline SVG
-  components, so that the Astro and the Mokly asset pipelines treat them
-  the same way.
+- **Logos as inline SVG components (2026-11-03).** Each logo is one TSX
+  component in `src/logos/` that holds the logo's SVG markup, so that the
+  Astro and the Mokly asset pipelines treat them the same way. A
+  `README.md` beside them gives the source of each logo. The project marks
+  are decorative, because each card names its project. On 2026-11-01 my
+  call said SVG files, but Astro and Mokly would each need their own
+  loader to inline a file.
+- **The field reads the cards through a contract (2026-11-03).** The
+  project list renders an id, and each card carries its logo colour as a
+  CSS custom property. One small module without React holds both names,
+  and the list and the field import it. The field finds no element by a
+  class name of the components, as the `typescript` skill asks.
+- **The mockup draws the field once (2026-11-03).** The Mokly catalogue
+  runs no scripts in its preview frames. So the screen draws the field at
+  rest from the field's own layout function, as a repeating SVG tile, and
+  its notes say so. The site draws the field with its canvas, and shows
+  plain white without JavaScript.
 - **Self-hosted fonts** from Fontsource: Instrument Sans and Geist Mono,
   the fonts of the chosen design. The page makes no third-party requests.
 - **Tooling** follows the `typescript` skill: `strict: true`, ESLint with
@@ -201,26 +215,33 @@ sizes.
       frosted panels, on 2026-11-03.
 - [x] Copy the approved prototype into the branch as the source for the
       screen. It is in `docs/prototype/`, with its notes and logos.
-- [ ] Add `package.json` with npm, `.nvmrc` with Node 24, and `.gitignore`
+- [x] Add `package.json` with npm, `.nvmrc` with Node 24, and `.gitignore`
       entries for `node_modules/`, `dist/`, `.astro/`, `mokly-static/`, and
       `.mokly-export-reservations/`.
-- [ ] Add `@mokly/mokly`, React 19, and `mokly.config.json`. The catalogue
+- [x] Add `@mokly/mokly`, React 19, and `mokly.config.json`. The catalogue
       reads `docs/mockups/`.
-- [ ] Add the shared components: the header with the Firna logo and the
+- [x] Add TypeScript with `strict: true` and the React types, so that the
+      shared components typecheck from the start. TypeScript stays on 6.0,
+      because `typescript-eslint` and the Astro check do not support
+      TypeScript 7.
+- [x] Add the shared components: the header with the Firna logo and the
       email, the project list and its cards, and the footer. Add the shared
       stylesheet, the typed project list of the five projects, and their
       logo files.
-- [ ] Add the grain field as one TypeScript module, ported from the
+- [x] Add the grain field as one TypeScript module, ported from the
       prototype. Check whether the Mokly catalogue runs it. When it does
       not, the screen shows the field drawn once, and the screen notes say
       so.
-- [ ] Add the homepage screen to `docs/mockups/`. Mokly renders it at
+- [x] Add the homepage screen to `docs/mockups/`. Mokly renders it at
       mobile and desktop sizes. It shows the Firna logo: the Close-off
       mark with the name in Lora.
-- [ ] Remove the prototype copy when the screen matches it.
-- [ ] Run the mockup check. Smoke-test the catalogue pages.
-- [ ] Update the design and the TODOs of this plan for each problem that
+- [x] Remove the prototype copy when the screen matches it.
+- [x] Run the mockup check. Smoke-test the catalogue pages.
+- [x] Update the design and the TODOs of this plan for each problem that
       the mockups show.
+
+Evidence: `.context/firna-homepage/m1/` holds the screenshots, the script
+check, and the field comparison with the prototype.
 
 ## Milestone 2: Documentation and protocol
 

@@ -1,0 +1,19 @@
+{
+  "name": "firna-home",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "mockups": "mokly serve",
+    "mockups:check": "mokly build --strict --no-changes",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@mokly/mokly": "^0.18.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "~6.0.3"
+  }
+}

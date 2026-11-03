@@ -1,1 +1,6 @@
 .context/
+node_modules/
+dist/
+.astro/
+mokly-static/
+.mokly-export-reservations/

@@ -1,0 +1,4 @@
+{
+  "$schema": "./node_modules/@mokly/mokly/config.schema.json",
+  "roots": [{ "dir": "docs/mockups" }]
+}

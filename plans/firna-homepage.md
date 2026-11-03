@@ -63,9 +63,14 @@ workspace "Firna Homepage Design", on the `futex-ai/skills` repository.
   round 2, which the user named. The alternative was a different logo set
   in each direction.
 - **Refining the chosen design (2026-11-02).** The user asked to start
-  refining option M. Three refinements each change one part of it, so that
-  they combine: Clearings, Drift, and Freeze. Open decision 12 holds the
-  choice.
+  refining option M. Three refinements each changed one part of it:
+  Clearings, Drift, and Freeze.
+- **No refinements (2026-11-03).** The user chose option D of decision 12,
+  the chosen design as it is: "go with 9M remove the others". The
+  alternatives were Clearings, which removes the card boxes, Drift, which
+  adds a snowfall and drifts, Freeze, which turns the hover outline into a
+  line of ice, any combination of them, and one more round of
+  refinements.
 - **Firna name in a modern serif (2026-11-02).** The user asked for the
   name mark "in a modern serif font". The alternative was the sans
   wordmark of the earlier rounds.
@@ -135,9 +140,9 @@ for the grain field date from 2026-11-02.
 
 The options check of 2026-11-02 changed decisions 3 and 6 and found
 decisions 7 and 8. Its report is in `.context/firna-homepage/`.
-Decisions 10, 12, and 13 came from the design rounds of 2026-11-02. An
-options check of 2026-11-02 changed decisions 10, 12, and 13. Decision 11
-is closed: the user chose the Firna logo on 2026-11-03. Its report is in
+Decisions 10 and 13 came from the design rounds of 2026-11-02. An options
+check of 2026-11-02 changed both. Decisions 11 and 12 are closed: the user
+chose the Firna logo and the design as it is on 2026-11-03. Its report is in
 `.context/firna-home/reports/` of the review workspace.
 
 ### 3. How the site goes live on Cloudflare
@@ -258,32 +263,6 @@ is closed: the user chose the Firna logo on 2026-11-03. Its report is in
 - **Recommendation:** B. The user gave the recorded list after round 1 recommended Firna UI, and the words of 2026-11-02 only repeat the first message. The first recommendation was A.
 - **Action:** ask the user, because only the user knows whether the words of 2026-11-02 reopen the list.
 
-### 12. Which refinements of the chosen design to keep
-
-- **Severity:** Medium. **Effort:** Medium.
-- **Source:** Design. The options check added options E and F and a better root question.
-- **Category:** Mockup.
-- **Location:** None. The refinements are in `.context/firna-home/claude/cursor-clearings/`, `cursor-drift/`, and `cursor-freeze/` of the review workspace.
-- **Terms:**
-  - **Clearing:** a soft area around a project's logo and text, where a fading panel softens the grains, with no edge.
-- **Background:** The user asked to refine the chosen design. Each refinement changes one part of it, so they can be combined. Clearings removes the card boxes. Drift adds a short snowfall on load and drifts on the cards. Freeze turns the hover outline into a crisp line with a glint. All three change the hover, and Drift's drifts need the card edges that Clearings removes, so a combination is a new page that nobody has seen yet.
-- **Problem:** The final design needs the user's choice of refinements.
-- **Impact if no action:** The page stays as the chosen design.
-- **Root question:** Which one page, built from the chosen design and its refinements, should the site use, so that the projects stay front and center and the page stays simple?
-- **Options:** the user can combine A, B, and C.
-  - **A.** Clearings: no card boxes. Each project sits in the snow, and a soft ring replaces the dotted outline on hover. Effort: Small.
-  - **B.** Drift: a snowfall on load, and drifts on the cards. With A, the drifts must rest on the clearing rims, because there are no card edges. Its script is about twice the size of the chosen design's, with a known limit on phones. Effort: Medium.
-  - **C.** Freeze: the grains fuse into a crisp line with a glint on hover. With A, the line follows the soft rim of the clearing. Effort: Small alone, Medium with A.
-  - **D.** Keep the chosen design as it is. Effort: Small.
-  - **E.** Build the combination that the user keeps as one page, and show it beside the chosen design before the approval. It settles one hover where A and C both replace the outline. Effort: Medium.
-  - **F.** Refine more parts in one more round first, such as the colour of the hover outline and the touch effect on a phone. Effort: Medium.
-- **Left out:** A refinement that only removes parts of the design, because the wind and the outline are the effect that the user asked for.
-- **Wider fix:** None. This is a choice of taste.
-- **Previous examples:** Round 3 tried other hover effects.
-- **Related:** Decision 13: every refinement carries the panel style that decision 13 chooses.
-- **Recommendation:** A and C, built as one page through E. Clearings makes the page simpler and more unique, and Freeze makes the hover a stronger moment. The first recommendation was A and C without E.
-- **Action:** ask the user, because each refinement is a choice of taste.
-
 ### 13. Frosted or plain text backgrounds
 
 - **Severity:** Medium. **Effort:** Medium.
@@ -310,7 +289,6 @@ is closed: the user chose the Firna logo on 2026-11-03. Its report is in
   - A fixed frost texture, because the panel would no longer show the field behind it.
 - **Wider fix:** C. When every effect draws through one painter, one contrast limit holds for all effects, in place of a guard and a measurement for each new effect.
 - **Previous examples:** None found.
-- **Related:** Decision 12: every refinement uses the chosen panel style.
 - **Recommendation:** C. It keeps the frosted look, which the user can judge on the pages now, with no compositor cost on any device. B stays the choice if the user prefers the plain look. The first recommendation was A.
 - **Action:** ask the user, because the panel look is a choice of taste, and the user named both looks.
 
@@ -324,12 +302,8 @@ Refine the chosen design with the user, set up the Mokly catalogue, and
 build the homepage screen from shared components, at desktop and mobile
 sizes.
 
-- [ ] Refine the "Cursor" prototype with the user until the user approves
-      it. Record each refinement that the user chooses as a decision in
-      this plan.
-- [ ] Build one merged prototype from the refinements that the user keeps,
-      with one set of panel values and colours. Show it beside the chosen
-      design, and get the user's approval.
+- [ ] Set the panel style of the prototype from the answer to decision 13.
+      Then confirm the prototype with the user.
 - [ ] Copy the approved prototype into the branch as the source for the
       screen.
 - [ ] Add `package.json` with npm, `.nvmrc` with Node 24, and `.gitignore`

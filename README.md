@@ -22,9 +22,10 @@ this repository to Cloudflare Pages.
 1. Use the Node version that `.nvmrc` names.
 2. Run `npm ci` to install the dependencies. npm can warn that it did not
    run the install script of `esbuild`. The commands work without it.
-3. Run `npm run dev`, and open the address that it prints. Astro serves
+3. Run `npx playwright install chromium` to install the browser for the tests.
+4. Run `npm run dev`, and open the address that it prints. Astro serves
    the page and shows each change while it runs.
-4. Run `npm run mockups`, and open the address that it prints. There,
+5. Run `npm run mockups`, and open the address that it prints. There,
    Mokly serves the mockup catalogue: the screens of the product as static
    pages. It shows the Homepage screen at desktop and phone sizes.
 
@@ -36,6 +37,13 @@ at rest.
 - `npm run dev` serves the Astro page. It shows each change while it runs.
 - `npm run build` writes the static site to `dist/`.
 - `npm run preview` serves the built site from `dist/`.
+- `npm test` builds the site, then runs the render and browser tests with
+  Playwright Test. The render tests run in Node without a browser.
+  Playwright starts `astro preview` for the browser tests.
+- `npm test -- tests/homepage.render.spec.tsx` runs the render tests.
+- `npm test -- tests/homepage.browser.spec.ts` runs the browser tests.
+  After a build, `npx playwright test tests/homepage.browser.spec.ts`
+  runs them without another build.
 - `npm run typecheck` checks Astro, TypeScript, and React files in strict
   mode. It generates Astro types under `.astro/`.
 - `npm run lint` checks the code with the recommended ESLint and
@@ -47,6 +55,11 @@ at rest.
   screen while it runs.
 - `npm run mockups:check` builds the catalogue into `mokly-static/`. It
   fails on any warning.
+- `npm run gate` runs typecheck, lint, format check, build, tests, and the
+  mockup check, in that order. It stops at the first failed command.
+  `npm test` owns the build, so the gate builds once.
+  A test failure names the case and shows the failed assertion.
+  Playwright saves its failure trace under `test-results/`.
 
 ## Add a project
 
@@ -63,8 +76,7 @@ at rest.
    with the page.
 5. Run `npm run mockups`, and check the Homepage screen at both sizes.
 6. Run `npm run format`.
-7. Run `npm run typecheck`, `npm run lint`, `npm run format:check`,
-   `npm run build`, and `npm run mockups:check`.
+7. Run `npm run gate`.
 
 ## Deploy
 
@@ -107,6 +119,11 @@ gives the rules and the decisions.
 - `src/logos/`: one component for each logo.
 - `docs/mockups/homepage.mockup.tsx`: the Homepage screen of the
   catalogue. `docs/mockups/StillField.tsx` draws its grain field at rest.
+- `tests/homepage.render.spec.tsx`: the project links, legal details,
+  and contact link of the shared homepage component, rendered in Node.
+- `tests/homepage.browser.spec.ts`: the grain field, reduced motion,
+  the page without JavaScript, and requests to the page's own origin.
+- `playwright.config.ts`: the test runner and the preview server.
 
 ## Related docs
 

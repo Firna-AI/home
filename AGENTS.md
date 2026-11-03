@@ -51,6 +51,15 @@ skill at that moment instead of guessing the rule.
   each change while it runs.
 - Build: `npm run build`. It writes the static site to `dist/`.
 - Preview: `npm run preview`. It serves the built site from `dist/`.
+- Browser install: `npx playwright install chromium`. Run it after
+  `npm ci` before the first browser test.
+- Tests: `npm test`. It builds the site, then runs the render and browser
+  tests with Playwright Test. The render tests run in Node without a browser.
+  Playwright starts `astro preview` for the browser tests.
+- Targeted render tests: `npm test -- tests/homepage.render.spec.tsx`.
+- Targeted browser tests: `npm test -- tests/homepage.browser.spec.ts`.
+  After a build, use `npx playwright test tests/homepage.browser.spec.ts`
+  to run them without another build.
 - Typecheck: `npm run typecheck`. It checks Astro, TypeScript, and React
   files in strict mode. It generates Astro types under `.astro/`.
 - Lint: `npm run lint`. It checks the code with the recommended ESLint
@@ -63,6 +72,12 @@ skill at that moment instead of guessing the rule.
   `mokly-static/` and fails on any warning.
 - Mockup catalogue: `npm run mockups`. It serves the catalogue and prints
   its address.
+- Complete gate: `npm run gate`. It runs typecheck, lint, format check,
+  build, tests, and the mockup check, in that order. `npm test` owns the
+  build, so the gate builds once. The gate stops at the first failed command.
+  A failure returns a nonzero exit status and names the failed check.
+  A test failure names the case and shows the failed assertion.
+  Playwright saves its failure trace under `test-results/`.
 
 ## CI
 

@@ -11,6 +11,8 @@ export default defineConfig(
     ".astro/",
     "mokly-static/",
     ".mokly-export-reservations/",
+    "test-results/",
+    "playwright-report/",
   ]),
   {
     files: ["**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,astro}"],

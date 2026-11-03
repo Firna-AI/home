@@ -7,12 +7,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test": "npm run build && playwright test",
     "typecheck": "astro check",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "mockups": "mokly serve",
-    "mockups:check": "mokly build --strict --no-changes"
+    "mockups:check": "mokly build --strict --no-changes",
+    "gate": "npm run typecheck && npm run lint && npm run format:check && npm test && npm run mockups:check"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
@@ -21,6 +23,7 @@
     "@fontsource/geist-mono": "^5.3.0",
     "@fontsource/instrument-sans": "^5.3.0",
     "@mokly/mokly": "^0.18.0",
+    "@playwright/test": "^1.64.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "astro": "^7.4.5",

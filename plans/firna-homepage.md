@@ -293,13 +293,13 @@ Depends on: 2
       module as the page's only client script. Add the fonts, the page
       title, the description, and the canonical address
       `https://firna.dev/`.
-- [ ] Add a render test: each project appears with its link, and the footer
+- [x] Add a render test: each project appears with its link, and the footer
       holds the legal details, with the VAT number GB191373695. See each
       test fail once.
-- [ ] Add a browser test of the field: it stops when the grains rest, it
+- [x] Add a browser test of the field: it stops when the grains rest, it
       draws once with reduced motion, and the page works without
       JavaScript. Run it 10 times, as the `testing` skill says.
-- [ ] Add the complete gate to `package.json` and `AGENTS.md`: typecheck,
+- [x] Add the complete gate to `package.json` and `AGENTS.md`: typecheck,
       lint, format check, tests, build, and the mockup check.
 - [x] Show the contact email `hello@firna.ai`.
 - [ ] Send a test email to `hello@firna.ai` before the merge. Only the
@@ -314,6 +314,8 @@ Depends on: 2
 
 Evidence: `.context/firna-homepage/m3/` holds the page's smoke test, the
 comparison with the mockup, and the contrast measurement.
+`.context/firna-homepage/m3/tests-gate/` holds the failure proofs of the
+tests and the 10-run result of the browser test.
 
 ## Milestone 4: Deploy
 

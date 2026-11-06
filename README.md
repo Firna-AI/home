@@ -15,8 +15,10 @@ the colour of its logo.
 Astro renders the shared React components to static HTML. TypeScript
 checks the code. The built pages load no React runtime.
 
-[docs/protocol/homepage.md](docs/protocol/homepage.md) holds the
-requirements and the decisions in force.
+The protocol docs hold the requirements and the decisions in force.
+[docs/protocol/homepage.md](docs/protocol/homepage.md) covers the pages,
+and [docs/protocol/deploy.md](docs/protocol/deploy.md) covers the hosting
+and the deploy.
 
 The site is not live yet. A push deploys nothing until someone connects
 this repository to Cloudflare Pages.
@@ -100,8 +102,8 @@ Cloudflare Pages hosts the site. A change goes live in three steps:
 Cloudflare's build runs no checks. When it fails, the live site stays as
 it was. Cloudflare also builds a preview of each other branch at a
 `pages.dev` address, and it links the preview on the pull request. The
-[deploy section](docs/protocol/homepage.md#deploy) of the protocol doc
-gives the rules and the decisions.
+protocol doc [docs/protocol/deploy.md](docs/protocol/deploy.md) gives the
+rules and the decisions.
 
 ### One-time setup
 
@@ -135,9 +137,9 @@ records and its settings.
 #### 2. Check the zone settings
 
 Some Cloudflare features change a page on its way to a visitor. They
-break the rules of the protocol doc on scripts, cookies, other origins,
-and pages without JavaScript. Set these in the zone `firna.dev` before
-you add the domains:
+break the rules of [docs/protocol/homepage.md](docs/protocol/homepage.md)
+on scripts, cookies, other origins, and pages without JavaScript. Set
+these in the zone `firna.dev` before you add the domains:
 
 1. **Security** > **Settings**: turn **Email Address Obfuscation** off.
    Cloudflare turns it on in each new zone. It hides the mail address,
@@ -286,7 +288,9 @@ before `gate` passed.
 ## Related docs
 
 - [docs/protocol/homepage.md](docs/protocol/homepage.md): the requirements
-  and the decisions in force.
+  and the decisions in force for the pages.
+- [docs/protocol/deploy.md](docs/protocol/deploy.md): the requirements and
+  the decisions in force for the hosting and the deploy.
 - [src/README.md](src/README.md): the rules for work on the code.
 - [src/logos/README.md](src/logos/README.md): the source of each logo.
 - [AGENTS.md](AGENTS.md): the rules for agents in this repository.

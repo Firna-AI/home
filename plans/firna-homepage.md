@@ -512,12 +512,15 @@ comparison of the homepage with its baseline, and the contrast values.
 
 Depends on: 4a
 
-- [ ] Update `docs/protocol/homepage.md`: the not-found page at every
+- [x] Update `docs/protocol/homepage.md`: the not-found page at every
       other address, with status 404, from decision 17; the storage rule
       of decision 18; and the favicon rule of decision 19.
-- [ ] Update `README.md`, `src/README.md`, and `AGENTS.md` for the second
+- [x] Update `README.md`, `src/README.md`, and `AGENTS.md` for the second
       page. The mockup showed that they still describe one page and a logo
       that is always the main heading.
+- [x] Move the deploy rules into their own protocol page,
+      `docs/protocol/deploy.md`, because the homepage doc passed its
+      length target.
 
 ## Milestone 4c: The not-found page
 

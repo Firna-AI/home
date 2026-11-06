@@ -2,7 +2,9 @@
 
 This doc holds the requirements and the decisions in force for the site of
 Firna Ltd at `firna.dev`: the homepage and the not-found page. Each
-decision gives the choice, the rejected alternatives, and the reason.
+decision gives the choice, the rejected alternatives, and the reason. The
+[deploy doc](deploy.md) holds the requirements and the decisions for the
+hosting and the deploy of the site.
 
 ## Terms
 
@@ -21,7 +23,6 @@ decision gives the choice, the rejected alternatives, and the reason.
 - **Reduced motion:** the browser setting `prefers-reduced-motion: reduce`.
 - **Reduced transparency:** the browser setting
   `prefers-reduced-transparency: reduce`.
-- **Complete gate:** all the checks of the repository, the tests included.
 - **User:** the owner of this repository, who made the decisions in this
   doc. A person who opens a page of the site is a visitor.
 
@@ -55,9 +56,8 @@ page has three parts, from top to bottom:
 3. The footer: the legal details of the company.
 
 - Each page shows only these three parts.
-- The message has the main heading "Page not found", the line
-  "Firna's projects are on the homepage.", and the link
-  "Go to the homepage".
+- The message has a main heading that names the not-found page, one
+  short line, and a link to the homepage.
 - The not-found page shows no project list.
 - No page has a statement about Firna.
 - No page has a large banner at the top.
@@ -236,35 +236,3 @@ cookies, as the UK rules on storage on a device do. The user rejected the
 rule on cookies alone, a rule that also forbids the browser's cache, and
 an allowance for strictly necessary storage. The user also rejected a lint
 on the browser storage APIs.
-
-## Deploy
-
-- Cloudflare Pages hosts the site.
-- Cloudflare's Git connection builds each push to `main` and deploys it.
-- Cloudflare's build runs no checks.
-- When Cloudflare's build fails, the live site stays as it was.
-- GitHub stores no Cloudflare token.
-- GitHub runs the complete gate on each pull request and on each push to
-  `main`.
-- A change reaches `main` only through a pull request whose complete gate
-  passed.
-- Only the user can bypass that rule, with a direct push to `main` or a
-  merge before the gate passed.
-- A change through the bypass goes live without a passed gate. GitHub
-  still runs the complete gate on it and reports the result.
-- Cloudflare builds a preview of each other branch at a `pages.dev`
-  address.
-
-**Decision:** Cloudflare's Git connection, so that GitHub holds no token
-that can change the Cloudflare account. The user rejected an upload from
-GitHub Actions with a token, also one that only `main` can use, and a
-Cloudflare Worker with static assets.
-
-**Decision:** GitHub runs the complete gate, and a change that fails it
-cannot reach `main`, so it cannot go live. Cloudflare's build cannot start
-a browser, which the complete gate needs, so it runs no checks. The user
-rejected checks in Cloudflare's build, a workflow that moves a production
-branch after the gate, and checks that report but block nothing.
-
-**Decision:** the branch previews stay on, because they help to review a
-pull request, and the site holds no secrets.

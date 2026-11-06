@@ -8,8 +8,9 @@ The stack uses Astro, TypeScript, and React. Astro renders the React
 components to static HTML. A plain TypeScript script draws the grain
 field: a layer of fine grey grains behind the content. The data, the
 components, the logos, the styles, and the field are under `src/`. The
-mockup screens are under `docs/mockups/`, and the requirements are in
-`docs/protocol/homepage.md`.
+mockup screens are under `docs/mockups/`. The requirements are in
+`docs/protocol/homepage.md` for the pages and in
+`docs/protocol/deploy.md` for the hosting and the deploy.
 
 This file holds the rules that are specific to this repository. The
 always-on rules and the detailed procedures live in the shared skills from
@@ -105,8 +106,9 @@ skill at that moment instead of guessing the rule.
 
 ## Review focus
 
-- The match with `docs/protocol/homepage.md`, above all the projects, the
-  contact email, and the legal details.
+- The match with `docs/protocol/homepage.md` and
+  `docs/protocol/deploy.md`, above all the projects, the contact email,
+  and the legal details.
 - Page weight: each page ships no React runtime, and its only script is
   the grain field.
 - Each page without JavaScript: all content shows, and every link works.

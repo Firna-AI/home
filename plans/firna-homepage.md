@@ -266,6 +266,15 @@ for the grain field date from 2026-11-02.
   site, because the user chose the frosted panels.
 - **Copy.** Each project's kind and line come from the project's own site
   or README.
+- **The not-found page (2026-11-06).** It is a sibling of the homepage:
+  the same header, frosted panels, legal footer, and grain field. Its one
+  `h1` is "Page not found", and on this page the logo links to the
+  homepage. The line "Firna's projects are on the homepage." and the
+  link "Go to the homepage" give the positive fact and one action, as the
+  `product-ui` copy rules ask. It shows no project list. Its styles live
+  in the site's one stylesheet, as the milestone 1 call says. So the
+  homepage's stylesheet grows by about 90 compressed bytes, and the
+  homepage renders the same.
 
 ## Open decisions
 
@@ -418,13 +427,16 @@ Depends on: 3
 Decision 17 adds a second page. So the mockup milestone comes first among
 the new milestones, as the `plans` skill says.
 
-- [ ] Add the not-found screen to `docs/mockups/`, built from the shared
+- [x] Add the not-found screen to `docs/mockups/`, built from the shared
       components, at mobile and desktop sizes: the header, a short
       message, a link to the homepage, and the legal footer.
-- [ ] Run the mockup check. Smoke-test the catalogue pages, and check
+- [x] Run the mockup check. Smoke-test the catalogue pages, and check
       that the homepage screen did not change.
-- [ ] Update the design and the TODOs of this plan for each problem that
+- [x] Update the design and the TODOs of this plan for each problem that
       the mockup shows.
+
+Evidence: `.context/firna-homepage/m4a/` holds the screenshots, the
+comparison of the homepage with its baseline, and the contrast values.
 
 ## Milestone 4b: Documentation for decisions 17 to 19
 
@@ -433,7 +445,9 @@ Depends on: 4a
 - [ ] Update `docs/protocol/homepage.md`: the not-found page at every
       other address, with status 404, from decision 17; the storage rule
       of decision 18; and the favicon rule of decision 19.
-- [ ] Update `README.md` and `src/README.md` for the second page.
+- [ ] Update `README.md`, `src/README.md`, and `AGENTS.md` for the second
+      page. The mockup showed that they still describe one page and a logo
+      that is always the main heading.
 
 ## Milestone 4c: The not-found page
 

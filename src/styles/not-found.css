@@ -1,0 +1,41 @@
+/*
+ * The not-found page's message: its heading, its line, and its link home.
+ * The message sits on one panel, in the place of the project list.
+ */
+.notice {
+  align-self: flex-start;
+}
+
+.notice h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.notice p {
+  margin: 8px 0 0;
+  color: var(--text);
+}
+
+/* The link home has a paragraph of its own, below the line. */
+.notice p:last-child {
+  margin-top: 18px;
+}
+
+/*
+ * The link gets the padding of a panel, with no fill, so that its hit area
+ * and its focus ring match the email's. The text does not move.
+ */
+.home {
+  padding: 6px 10px;
+  margin: 0 -10px;
+  border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+  .notice h1 {
+    font-size: 26px;
+  }
+}

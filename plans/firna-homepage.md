@@ -530,12 +530,16 @@ Depends on: 4b
 
 - [x] Render the not-found page from the shared components as the site's
       `404.html`, as its mockup shows.
-- [ ] Add a test: an unknown address answers with status 404 and the
+- [x] Add a test: an unknown address answers with status 404 and the
       not-found page, with its link to the homepage. See it fail once.
-- [ ] Add a test of decision 18: no response sets a cookie, and the page
+- [x] Add a test of decision 18: no response sets a cookie, and the page
       writes no other site data on the device. See it fail once.
 - [x] Smoke-test the built not-found page, and compare it with its mockup
       at 1440 px and 390 px wide.
+
+Evidence: `.context/firna-homepage/m4c/` holds the smoke test, the
+comparison with the mockup, the rerun of the field comparison, and the
+10-run results of the new tests.
 
 ## Milestone 5: Verification, commit, review, and pull request
 

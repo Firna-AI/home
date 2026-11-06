@@ -15,7 +15,7 @@ declare global {
 }
 
 /** Observe the browser boundary without reading the field's internal state. */
-export async function openField(page: Page) {
+export async function openField(page: Page, path = "/") {
   // Freeze time before load so machine speed cannot change the frame order.
   // Count requests, runs, and cancellations to distinguish rest from a stopped clock.
   await page.clock.install({ time: new Date("2026-11-03T12:00:00Z") });
@@ -45,7 +45,7 @@ export async function openField(page: Page) {
       cancel(id);
     };
   });
-  await page.goto("/");
+  await page.goto(path);
   // Font readiness prevents a late layout change from rebuilding the canvas.
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator("canvas")).toBeAttached();

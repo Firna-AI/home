@@ -1,0 +1,14 @@
+---
+import { company } from "../company";
+import { NotFoundPage } from "../components/NotFoundPage";
+import Page from "../layouts/Page.astro";
+
+// Astro builds this page as 404.html. The host serves that file, with status
+// 404, at every address that has no page or file. So the page has no address
+// of its own, and it gives no description and no canonical address. The link
+// home starts with "/", so that each branch preview links to its own homepage.
+---
+
+<Page title="Page not found · Firna">
+  <NotFoundPage company={company} homeHref="/" />
+</Page>

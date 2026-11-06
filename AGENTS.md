@@ -61,9 +61,9 @@ skill at that moment instead of guessing the rule.
   tests with Playwright Test. The render tests run in Node without a browser.
   Playwright starts `astro preview` for the browser tests.
 - Targeted render tests: `npm test -- tests/homepage.render.spec.tsx`.
-- Targeted browser tests: `npm test -- tests/homepage.browser.spec.ts`.
-  After a build, use `npx playwright test tests/homepage.browser.spec.ts`
-  to run them without another build.
+- Targeted browser tests: `npm test -- tests/*.browser.spec.ts`. After a
+  build, use `npx playwright test tests/*.browser.spec.ts` to run them
+  without another build.
 - Typecheck: `npm run typecheck`. It checks Astro, TypeScript, and React
   files in strict mode. It generates Astro types under `.astro/`.
 - Lint: `npm run lint`. It checks the code with the recommended ESLint

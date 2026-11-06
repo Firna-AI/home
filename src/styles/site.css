@@ -1,7 +1,7 @@
 /*
- * The site's stylesheet. The Astro page and the mockup screens import this
- * file. It brings the self-hosted fonts, the card styles, and the styles of
- * the not-found page.
+ * The site's stylesheet. The page layout `src/layouts/Page.astro` and the
+ * mockup screens import this file. It brings the self-hosted fonts, the
+ * card styles, and the styles of the not-found page.
  */
 @import "@fontsource/instrument-sans/400.css";
 @import "@fontsource/instrument-sans/500.css";

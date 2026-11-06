@@ -11,8 +11,8 @@ export interface HomepageProps {
 
 /**
  * The homepage: the header, the projects, and the legal footer. It renders
- * the content of the page's body. The page owns the body, the stylesheet,
- * and the grain field's script.
+ * the content of the page's body. The page layout `src/layouts/Page.astro`
+ * owns the body, the stylesheet, and the grain field's script.
  */
 export function Homepage({ company, projects }: HomepageProps) {
   return (

@@ -285,6 +285,10 @@ for the grain field date from 2026-11-02.
   homepage doc states the not-found message as a rule. The mockup holds
   its words, because the user decided only "a short message, and a link
   to the homepage".
+- **The setup in its own doc (2026-11-06).** The one-time setup of the
+  deploy moves from the README into `docs/deploy-setup.md`, word for
+  word, and the README links to it. With the second page, the README
+  would pass the limit of 300 lines that the always-on rules set.
 
 ## Open decisions
 
@@ -303,8 +307,9 @@ holds the full text of decisions 16 to 19.
 - **Severity:** Medium. **Effort:** Small.
 - **Source:** Implementation.
 - **Category:** Process.
-- **Location:** `README.md`, the one-time setup, step "Protect `main` in
-  GitHub", and the deploy rules of the protocol doc.
+- **Location:** `docs/deploy-setup.md`, the one-time setup, step
+  "Protect `main` in GitHub", and the deploy rules of
+  `docs/protocol/deploy.md`.
 - **Terms:**
   - **Up-to-date rule:** the ruleset setting "Require branches to be up to
     date before merging", under "Require status checks to pass".
@@ -312,8 +317,8 @@ holds the full text of decisions 16 to 19.
   GitHub runs the gate of a pull request on its code merged with the
   `main` of that moment. When `main` moves later, that result still
   counts. The up-to-date rule lets a pull request merge only when it holds
-  the latest `main`. The README leaves the setting as the ruleset form
-  sets it. The form most likely leaves the rule off.
+  the latest `main`. The setup doc leaves the setting as the ruleset
+  form sets it. The form most likely leaves the rule off.
 - **Problem:** Without the rule, two pull requests can each pass, and
   their combined result on `main` can still fail a check. Cloudflare then
   deploys that `main`, unless the failure also breaks the build.
@@ -322,7 +327,7 @@ holds the full text of decisions 16 to 19.
 - **Root question:** Must the gate pass on the exact code that `main`
   gets?
 - **Options:**
-  - **A.** Keep the form's default in the README. It most likely acts as
+  - **A.** Keep the form's default in the setup doc. It most likely acts as
     C, and the protocol doc must then say that a pair of pull requests
     can reach `main` untested. Effort: Small.
   - **B.** Tell the owner to turn the up-to-date rule on. When `main`
@@ -560,10 +565,11 @@ Depends on: every other milestone
 
 ## Post-merge follow-up (non-blocking)
 
-- [ ] The user connects `Firna-AI/home` to Cloudflare Pages, as the README
-      says, and adds the domains `firna.dev` and `www.firna.dev`.
-- [ ] The user sets up the GitHub settings of decision 16, as the README
-      says: the gate as a required check for `main`, and a ruleset that
+- [ ] The user connects `Firna-AI/home` to Cloudflare Pages, as
+      `docs/deploy-setup.md` says, and adds the domains `firna.dev` and
+      `www.firna.dev`.
+- [ ] The user sets up the GitHub settings of decision 16, as
+      `docs/deploy-setup.md` says: the gate as a required check for `main`, and a ruleset that
       blocks direct pushes to `main`, with the user's own bypass. An agent
       may set them only after the user confirms.
 - [ ] Check the first production deploy at its `pages.dev` address, then

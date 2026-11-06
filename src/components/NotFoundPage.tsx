@@ -11,8 +11,8 @@ export interface NotFoundPageProps {
 /**
  * The page for an address that has no page: the header, a short message with
  * a link to the homepage, and the legal footer. Like `Homepage`, it renders
- * the content of the page's body. The page owns the body, the stylesheet, and
- * the grain field's script.
+ * the content of the page's body. The page layout `src/layouts/Page.astro`
+ * owns the body, the stylesheet, and the grain field's script.
  */
 export function NotFoundPage({ company, homeHref }: NotFoundPageProps) {
   return (

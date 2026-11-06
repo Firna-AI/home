@@ -129,11 +129,13 @@ the checks of the setup.
   address with no page or file. So the page has no address of its own. It
   renders the shared not-found component in the layout, and it gives the
   layout only its title. Its link to the homepage is `/`.
-- `public/favicon.svg`: the favicon, the Close-off mark in ink. It turns
-  light when the browser uses a dark theme.
-- `public/favicon.ico`: the same mark in ink at 32 × 32 px, for browsers
-  that show no SVG favicon, such as Safari before version 26. Render it
-  again from `favicon.svg` when the mark changes.
+- `public/favicon.svg`: the main favicon, the Close-off mark in ink. The
+  file also holds a light version of the mark for a dark theme. The theme
+  rules of the favicon are in
+  [docs/protocol/homepage.md](docs/protocol/homepage.md#page-metadata).
+- `public/favicon.ico`: the fallback favicon, the same mark in ink at
+  32 × 32 px, for browsers that show no SVG favicon, such as Safari before
+  version 26. Render it again from `favicon.svg` when the mark changes.
 - `src/projects.ts`: the projects, in the order that the homepage shows
   them, and the `Project` type.
 - `src/company.ts`: the contact email and the legal details of Firna Ltd.
@@ -166,6 +168,9 @@ the checks of the setup.
 - `tests/site.browser.spec.ts`: the not-found page at an unknown address,
   with status 404 and its link to the homepage. It also checks that both
   pages set no cookie and write no other site data.
+- `tests/homepage-field.browser.spec.ts`: the outline under the resting
+  pointer and the keyboard focus, after each input and a resize, and the
+  wind outside the card that holds the outline.
 - `playwright.config.ts`: the test runner and the preview server.
 - `.github/workflows/gate.yml`: the GitHub Actions workflow "Gate". It runs
   `npm run gate` on each pull request and each push to `main`.

@@ -163,6 +163,12 @@ browser feature.
 - Keyboard focus on a card gives the same outline and lift.
 - When the pointer or the focus leaves the card, the grains of the outline
   drift back.
+- One card at a time holds the outline.
+- When the pointer rests on one card and keyboard focus is on another,
+  the later of the two inputs gives the outline. When that input ends,
+  the other input gives the outline back.
+- While the pointer rests on the card that holds the outline, the pointer
+  causes no wind.
 - On a touch screen, the grains part around a finger and follow its drag.
   They drift back when the finger lifts.
 - A touch does not block scrolling. A tap on a card opens the project.

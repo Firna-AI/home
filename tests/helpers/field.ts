@@ -121,3 +121,64 @@ export async function canvasState(page: Page, remember = false) {
     return { grains, changedPixels, width: image.width, height: image.height };
   }, remember);
 }
+
+export function projectCard(page: Page, project: "Mokly" | "Bookfolio") {
+  return page.getByRole("listitem").filter({
+    has: page.getByRole("link", { name: project, exact: true }),
+  });
+}
+
+export async function outlinePixels(
+  page: Page,
+  project: "Mokly" | "Bookfolio",
+) {
+  // Literal colours from the approved prototype, independent of product code.
+  const colours = { Mokly: "#2f5945", Bookfolio: "#4f7864" };
+  const box = await projectCard(page, project).boundingBox();
+  if (!box) throw new Error(`${project} needs a visible card.`);
+
+  // The decorative outline has no accessible handle. Read its rendered pixels.
+  return page.locator("canvas").evaluate(
+    (canvas: HTMLCanvasElement, { box, colour }) => {
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("The grain field needs a 2D canvas.");
+      const bounds = canvas.getBoundingClientRect();
+      const sx = canvas.width / bounds.width;
+      const sy = canvas.height / bounds.height;
+      const left = Math.max(0, Math.floor((box.x - bounds.x - 20) * sx));
+      const top = Math.max(0, Math.floor((box.y - bounds.y - 20) * sy));
+      const right = Math.min(
+        canvas.width,
+        Math.ceil((box.x + box.width - bounds.x + 20) * sx),
+      );
+      const bottom = Math.min(
+        canvas.height,
+        Math.ceil((box.y + box.height - bounds.y + 20) * sy),
+      );
+      const { data } = context.getImageData(
+        left,
+        top,
+        right - left,
+        bottom - top,
+      );
+      const rgb = [1, 3, 5].map((start) =>
+        parseInt(colour.slice(start, start + 2), 16),
+      );
+      let pixels = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        // getImageData returns unpremultiplied RGB. Allow rounding from alpha,
+        // and ignore nearly transparent edges where that rounding dominates.
+        if (
+          data[i + 3] >= 64 &&
+          rgb.every(
+            (channel, offset) => Math.abs(data[i + offset] - channel) <= 4,
+          )
+        ) {
+          pixels++;
+        }
+      }
+      return pixels;
+    },
+    { box, colour: colours[project] },
+  );
+}

@@ -4,9 +4,9 @@
 import { build } from "./build";
 import { addCanvas } from "./canvas";
 import { createGrains, index } from "./grains";
+import { listenToCards } from "./holder";
 import { layOutGrains } from "./layout";
 import { kick, stop } from "./motion";
-import { gather, release } from "./outline";
 import type { Field } from "./state";
 import { PRESS } from "./tuning";
 
@@ -61,8 +61,8 @@ export function startField({ host, list }: FieldTargets) {
     tint: [],
     goal: [],
     current: -1,
-    hovered: -1,
-    intent: 0,
+    input: { resting: -1, focused: -1, latest: "pointer", intent: 0 },
+    windless: false,
     raf: 0,
     last: 0,
     lag: 0,
@@ -74,43 +74,16 @@ export function startField({ host, list }: FieldTargets) {
   listenToPage(f, list, reduce);
 }
 
-/** The pointer resting on a card, or the keyboard focus, gathers its outline. */
-function listenToCards(f: Field) {
-  f.cardElements.forEach((el, k) => {
-    el.addEventListener("pointerenter", (e) => {
-      if (e.pointerType === "touch") return;
-      f.hovered = k;
-      window.clearTimeout(f.intent);
-      f.intent = window.setTimeout(() => gather(f, k), 60);
-    });
-    el.addEventListener("pointerleave", (e) => {
-      if (e.pointerType === "touch") return;
-      window.clearTimeout(f.intent);
-      if (f.hovered === k) f.hovered = -1;
-      if (f.current === k) release(f, k);
-    });
-    el.addEventListener("focusin", (e) => {
-      const target = e.target;
-      if (target instanceof Element && target.matches(":focus-visible")) {
-        gather(f, k);
-      }
-    });
-    el.addEventListener("focusout", () => {
-      if (f.current === k && f.hovered !== k) release(f, k);
-    });
-  });
-}
-
 /** A moving pointer, or a finger that is down, blows the grains aside. */
 function listenToPointer(f: Field) {
   const ptr = f.pointer;
-  // Over a gathered card there is no wind, so the outline stays calm.
+  // While the pointer rests on the card that holds the outline, it causes no
+  // wind, so that the outline stays calm.
   window.addEventListener(
     "pointermove",
     (e) => {
       if (e.pointerType === "touch") return;
-      const calmHere = f.current >= 0;
-      if (ptr.on && !calmHere) {
+      if (ptr.on && !f.windless) {
         ptr.ax += e.clientX - ptr.cx;
         ptr.ay += e.clientY - ptr.cy;
       }
@@ -119,7 +92,7 @@ function listenToPointer(f: Field) {
       ptr.x = e.pageX;
       ptr.y = e.pageY;
       ptr.on = true;
-      if (!calmHere) kick(f);
+      if (!f.windless) kick(f);
     },
     { passive: true },
   );
@@ -171,14 +144,6 @@ function listenToPage(
   list: HTMLElement | null,
   reduce: MediaQueryList,
 ) {
-  // A page that comes back from the back-forward cache drops a stale outline.
-  window.addEventListener("pageshow", (e) => {
-    if (e.persisted) {
-      f.hovered = -1;
-      release(f, f.current);
-    }
-  });
-
   // Pause when the tab is hidden or the field is off screen.
   document.addEventListener("visibilitychange", () => {
     f.shown = !document.hidden;

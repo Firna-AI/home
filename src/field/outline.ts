@@ -1,6 +1,8 @@
 // The outline of a card: its nearest grains line up as an even, dotted line
 // in the colour of its logo, and the other grains close by clear a narrow
-// moat around it. When the card is released, the grains drift home.
+// moat around it. When the card is released, the grains drift home. Only
+// `updateOutline` in `holder.ts` calls `gather` and `release`, so that one
+// rule decides which card holds the outline.
 
 import {
   arc,

@@ -5,8 +5,8 @@
 import { logoColorProperty } from "../components/projectListContract";
 import { shownClass } from "./canvas";
 import { createGrains, index } from "./grains";
+import { updateOutline } from "./holder";
 import { grainPixels, layOutGrains } from "./layout";
-import { gather } from "./outline";
 import { paint } from "./paint";
 import type { Card, Field } from "./state";
 
@@ -25,7 +25,9 @@ export function build(f: Field) {
   f.bins.dirty.fill(1);
   paint(f);
   f.canvas.classList.add(shownClass);
-  if (f.hovered >= 0) gather(f, f.hovered);
+  // The new grains hold no outline. The resting pointer or the keyboard focus
+  // gives it back.
+  updateOutline(f);
 }
 
 /** Reads the cards and the size of the host. */

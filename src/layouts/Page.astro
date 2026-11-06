@@ -29,8 +29,10 @@ const { title, description, canonical } = Astro.props;
       <meta name="description" content={description} />
     )}
     {canonical !== undefined && <link rel="canonical" href={canonical} />}
-    {/* The ICO is for browsers that read no SVG favicon. With its sizes, the
-         other browsers still pick the SVG and its dark-theme mark. */}
+    {/* The SVG is the main favicon. The ICO is the fallback for browsers that
+         show no SVG favicon. With `sizes="32x32"` on the ICO link, Chrome
+         fetches only the SVG. The theme rules of the favicon are in the
+         section "Page metadata" of `docs/protocol/homepage.md`. */}
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>

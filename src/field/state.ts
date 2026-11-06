@@ -29,6 +29,18 @@ export interface Pointer {
   press: number;
 }
 
+/** The two inputs that give a card the outline. */
+export interface CardInput {
+  /** The card that the pointer rests on, or -1. */
+  resting: number;
+  /** The card whose link has keyboard focus, or -1. */
+  focused: number;
+  /** The input that came to a card last. */
+  latest: "pointer" | "focus";
+  /** The timer that waits for the pointer to rest on a card. */
+  intent: number;
+}
+
 export interface Field {
   /** The element that the field covers. Its top-left is the field's origin. */
   readonly host: HTMLElement;
@@ -55,10 +67,13 @@ export interface Field {
   goal: number[];
   /** The card whose outline is gathered, or -1. */
   current: number;
-  /** The card under the pointer, or -1. */
-  hovered: number;
-  /** The timer that gathers an outline when the pointer rests on a card. */
-  intent: number;
+  /** The resting pointer and the keyboard focus on the cards. */
+  readonly input: CardInput;
+  /**
+   * True while the pointer rests on the card that holds the outline. The
+   * pointer then causes no wind.
+   */
+  windless: boolean;
   /** The pending animation frame, or 0 while the loop rests. */
   raf: number;
   /** The time of the last frame, or 0 when the loop starts again. */

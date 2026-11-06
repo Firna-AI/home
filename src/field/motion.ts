@@ -73,8 +73,9 @@ function step(f: Field, first: boolean) {
   ptr.wx = ptr.wx * 0.6 + ax * 0.4;
   ptr.wy = ptr.wy * 0.6 + ay * 0.4;
   const speed = Math.min(Math.hypot(ptr.wx, ptr.wy), 30);
-  let busy = (f.current < 0 && speed > 0.05) || ptr.press > 0;
-  if (ptr.on && f.current < 0 && (speed > 0.2 || ptr.press)) {
+  // No wind while the pointer rests on the card that holds the outline.
+  let busy = (!f.windless && speed > 0.05) || ptr.press > 0;
+  if (ptr.on && !f.windless && (speed > 0.2 || ptr.press)) {
     blow(f, ptr.x, ptr.y, ptr.wx, ptr.wy, speed * PUSH + ptr.press);
   }
 

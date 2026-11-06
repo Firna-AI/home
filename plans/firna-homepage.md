@@ -443,9 +443,6 @@ Depends on: 2
 - [x] Add the complete gate to `package.json` and `AGENTS.md`: typecheck,
       lint, format check, tests, build, and the mockup check.
 - [x] Show the contact email `hello@firna.ai`.
-- [ ] Send a test email to `hello@firna.ai` before the merge. Only the
-      user can send it, after the user adds the address in Google
-      Workspace.
 - [x] Add the VAT number GB191373695 to the legal footer.
 - [x] Add the Firna logo and the favicon: the Close-off mark with the
       name in Lora, and the mark with a light version for dark browser
@@ -552,11 +549,16 @@ Depends on: every other milestone
 
 - [x] Run the targeted tests and the complete gate named in `AGENTS.md`.
 - [x] Commit with Conventional Commits and push the branch.
-- [ ] Review the complete local diff against `origin/main` with the
+- [x] Review the complete local diff against `origin/main` with the
       `implementation-review` skill after the push. Report the findings,
       then apply the fix rule: fix the `fix now` findings, record
       follow-up items under `plans/follow-ups/` for the rest, re-review
       once, and report.
+      Round 1 of `695a0a4` found findings 1 to 3, fixed in `e06de7c`.
+      Round 2 of `e06de7c` found finding 4, fixed in `54809f2`. The fix
+      of findings 1 and 2 found one rare limit, recorded as the follow-up
+      item `mouse-rest-blocks-finger-wind`. The reports are in
+      `.context/reviews/calummoore/firna-astro-website/`.
 - [ ] Delete this plan when the `plans` skill says, under "Deleting the
       plan".
 - [ ] Open the pull request. Its description gives the decisions and the
@@ -576,3 +578,8 @@ Depends on: every other milestone
       at `https://firna.dev`.
 - [ ] The user adds the SPF and DMARC records of firna.ai, as the follow-up
       item `plans/follow-ups/firna-ai-mail-spoofing-records.md` says.
+- [ ] The user sends a test email to `hello@firna.ai`, after the user adds
+      the address in Google Workspace. Do it before the merge when
+      possible, and at the latest before the Cloudflare connection puts
+      the site live. It moved here from milestone 3 on 2026-11-06,
+      because only the user can send it.

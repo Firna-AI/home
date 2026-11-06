@@ -163,6 +163,8 @@ the checks of the setup.
   and its link to the homepage open the Homepage screen.
 - `tests/homepage.render.spec.tsx`: the project links, legal details,
   and contact link of the shared homepage component, rendered in Node.
+- `tests/page-metadata.spec.ts`: the metadata and icon requests of both
+  built pages, and the SVG favicon's colours in light and dark themes.
 - `tests/homepage.browser.spec.ts`: the grain field, reduced motion,
   the page without JavaScript, and requests to the page's own origin.
 - `tests/site.browser.spec.ts`: the not-found page at an unknown address,

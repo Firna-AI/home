@@ -275,8 +275,8 @@ for the grain field date from 2026-11-02.
   in the site's one stylesheet, as the milestone 1 call says. So the
   homepage's stylesheet grows by about 90 compressed bytes, and the
   homepage renders the same.
-- **The head of the not-found page (2026-11-06).** Its title names the
-  page, as WCAG 2.2 AA asks of each page. It has no description and no
+- **The head of the not-found page (2026-11-06).** Its title, "Page not
+  found · Firna", names the page, as WCAG 2.2 AA asks of each page. It has no description and no
   canonical link, because the address has no page. It has the same
   favicon links, stylesheet, and script as the homepage.
 - **Two protocol pages (2026-11-06).** The deploy rules move into their

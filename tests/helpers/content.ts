@@ -14,3 +14,6 @@ export const expectedLegalDetails = [
   "Registered office: 26 John Hogan V C Road, Manchester, M40 7QU",
   "VAT number GB191373695",
 ];
+
+// Use the same nested missing address for the page body and metadata checks.
+export const unknownAddress = "/no-such-page/at/any/depth";

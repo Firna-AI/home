@@ -1,8 +1,7 @@
 import { expect, test, type Response } from "@playwright/test";
 
+import { unknownAddress } from "./helpers/content";
 import { openField, settleField, sweepPointer } from "./helpers/field";
-
-const unknownAddress = "/no-such-page/at/any/depth";
 
 test("An unknown address returns the not-found page with status 404 and a link home", async ({
   page,

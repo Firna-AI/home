@@ -378,7 +378,7 @@ tests and the 10-run result of the browser test.
 
 Depends on: 3
 
-- [ ] Add a GitHub Actions workflow that runs the complete gate, the
+- [x] Add a GitHub Actions workflow that runs the complete gate, the
       browser test included, on each pull request and each push to
       `main`. Cloudflare's build command is the build alone,
       `npm run build`, as decision 16 says. The workflow replaces the npm
@@ -390,7 +390,7 @@ Depends on: 3
       check stops the deploy. It cannot: decision 16 holds the evidence
       and the options. Evidence:
       `.context/firna-homepage/m4/cloudflare-browser-evidence.md`.
-- [ ] Describe the one-time setup in the README: connect `Firna-AI/home`
+- [x] Describe the one-time setup in the README: connect `Firna-AI/home`
       to a Cloudflare Pages project `firna-home`, with production branch
       `main`, the build command `npm run build`, the output folder `dist`,
       and Node 24. Then add `firna.dev` and `www.firna.dev`, with `www`
@@ -402,9 +402,12 @@ Depends on: 3
       the GitHub settings of decision 16: the gate as a required check for
       `main`, and a ruleset that blocks direct pushes to `main`, with the
       user's own bypass.
-- [ ] Update the deploy rules of `docs/protocol/homepage.md` for decision
+- [x] Update the deploy rules of `docs/protocol/homepage.md` for decision
       16: GitHub runs the complete gate, the required check keeps a
       failing change off `main`, and Cloudflare only builds.
+
+The workflow runs for the first time on the pull request of this change.
+Milestone 5 watches that run.
 
 ## Milestone 4a: Mockup of the not-found page
 

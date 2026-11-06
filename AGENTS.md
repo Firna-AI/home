@@ -81,6 +81,9 @@ skill at that moment instead of guessing the rule.
 
 ## CI
 
+- GitHub Actions runs the workflow "Gate", `.github/workflows/gate.yml`,
+  on each pull request and each push to `main`. It runs `npm run gate`,
+  and GitHub names its check `gate`.
 - Agent merges: off
 
 ## Repository rules

@@ -1,8 +1,9 @@
 # Site source
 
-`src/` holds the source of the homepage: the data, the shared React
-components, the logos, the stylesheets, and the grain field. The
-repository [README](../README.md#key-code) lists the entry points.
+`src/` holds the source of the site: the data, the shared React
+components, the logos, the stylesheets, and the grain field. The site has
+two pages: the homepage and the not-found page. The repository
+[README](../README.md#key-code) lists the entry points.
 
 ## Rules
 
@@ -10,17 +11,29 @@ repository [README](../README.md#key-code) lists the entry points.
   `company.ts` and `projects.ts`, they import only the types.
 - The components import no CSS, so that a test can render them in Node.
   Node cannot import CSS.
-- The mockup screen and the site render these components with the same
+- The mockup screens and the site render these components with the same
   data and `styles/site.css`. Do not copy a component for one of them.
-- The mockup screen imports the components, the data, the stylesheet, and
-  the grain layout of the field. So a change in `src/` can change the
-  screen. Check the screen in the catalogue after each change.
+- Each mockup screen imports the components, the data, the stylesheet,
+  and the grain layout of the field. So a change in `src/` can change
+  each screen. Check each screen in the catalogue after each change.
+- `Homepage` and `NotFoundPage` each render the content of one page. Both
+  use `SiteHeader` and `LegalFooter`, so the pages share the header and
+  the footer. Build a new page from them. Do not copy them.
+- On the homepage, `SiteHeader` gets no `homeHref`, so the logo is the
+  page's `h1`. On every other page, pass `homeHref`. The logo then links
+  to the homepage, and the page renders its own `h1`.
+- `styles/site.css` is the one stylesheet of each page and each screen.
+  Put the styles of one page in a file of their own. Import that file in
+  `site.css`, as `cards.css` and `not-found.css` are. Each page loads
+  every rule. So give the classes of one page names that no other page
+  uses.
 - The grain field in `field/` imports no React. It also imports
   `components/projectListContract.ts`, so that module imports no React
-  either. The field is the only script of the page.
-- The page `pages/index.astro` owns the document: the head, the stylesheet,
-  and one `<script>` that loads `field/main.ts`. It renders the components
-  with no `client:*` directive, so that the page ships no React runtime.
+  either. The field is the only script of each page.
+- Each page in `pages/`, such as `pages/index.astro`, owns its document:
+  the head, the stylesheet, and one `<script>` that loads `field/main.ts`.
+  It renders the components with no `client:*` directive, so that the page
+  ships no React runtime.
 - The field finds the project list, and reads the logo colour of each card,
   only through the names in `components/projectListContract.ts`. Keep that
   contract when you change the list or its cards.

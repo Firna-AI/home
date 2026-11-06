@@ -1,17 +1,20 @@
 # Homepage
 
-This doc holds the requirements and the decisions in force for the
-homepage of Firna Ltd. Each decision gives the choice, the rejected
-alternatives, and the reason.
+This doc holds the requirements and the decisions in force for the site of
+Firna Ltd at `firna.dev`: the homepage and the not-found page. Each
+decision gives the choice, the rejected alternatives, and the reason.
 
 ## Terms
 
-- **Grain field:** the layer of fine grey grains that covers the page
+- **Homepage:** the page that lists Firna's projects.
+- **Not-found page:** the page that says that an address has no page.
+- **Grain field:** the layer of fine grey grains that covers each page
   behind the content. The grains look like firn, which is old, granular
   snow.
 - **Card:** the box of one project in the project list.
 - **Panel:** a translucent background behind text. Each card is a panel.
-  The logo, the email, and the footer each sit on a small panel too.
+  The logo, the email, the footer, and the message of the not-found page
+  each sit on a small panel too.
 - **Outline:** the dotted line of grains that gathers around a card.
 - **Pointer:** a mouse, a trackpad, or a pen. A finger on a touch screen is
   not a pointer in this doc.
@@ -20,36 +23,51 @@ alternatives, and the reason.
   `prefers-reduced-transparency: reduce`.
 - **Complete gate:** all the checks of the repository, the tests included.
 - **User:** the owner of this repository, who made the decisions in this
-  doc. A person who opens the page is a visitor.
+  doc. A person who opens a page of the site is a visitor.
 
 ## Address
 
 - The site lives at `https://firna.dev`.
 - `https://www.firna.dev` redirects to `https://firna.dev`.
+- The homepage is at `https://firna.dev/`.
+- An address with no page or file of the site answers with status 404 and
+  shows the not-found page.
 
 **Decision:** the homepage lives at `firna.dev`, because `firna.ai` serves
 the Firna product site, and the homepage must not replace it. The user
 rejected a subdomain or a path of `firna.ai`, another domain, and a move of
 the product away from `firna.ai`.
 
+**Decision:** an address with no page or file gets the not-found page with
+status 404. So a visitor and a search engine both learn that the address
+has no page. The user rejected the homepage with status 200, which is
+Cloudflare's default, the homepage with status 404, and a redirect to the
+homepage.
+
 ## Page content
 
-The site is one static page. The page has three parts, from top to bottom:
+The site has two static pages: the homepage and the not-found page. Each
+page has three parts, from top to bottom:
 
-1. The header: the Firna logo as the main heading, and the contact email.
-2. The project list: one card for each project.
+1. The header: the Firna logo and the contact email.
+2. The main part: the project list on the homepage, and a short message
+   with a link to the homepage on the not-found page.
 3. The footer: the legal details of the company.
 
-- The page shows only these three parts.
-- The page has no statement about Firna.
-- The page has no large banner at the top.
-- The layout, the type, and the colours follow the Homepage screen of the
-  [mockup catalogue](../../README.md#get-started), at desktop and at phone
-  widths.
+- Each page shows only these three parts.
+- The message has the main heading "Page not found", the line
+  "Firna's projects are on the homepage.", and the link
+  "Go to the homepage".
+- The not-found page shows no project list.
+- No page has a statement about Firna.
+- No page has a large banner at the top.
+- The layout, the type, and the colours follow the Homepage and Not-found
+  page screens of the [mockup catalogue](../../README.md#get-started), at
+  desktop and at phone widths.
 
-**Decision:** the page shows the projects, with no statement about Firna.
-The user rejected a neutral sentence about Firna, a sentence that leads
-with AI, and a "British company" line.
+**Decision:** the homepage shows the projects, with no statement about
+Firna. The user rejected a neutral sentence about Firna, a sentence that
+leads with AI, and a "British company" line.
 
 ## Firna logo
 
@@ -57,8 +75,9 @@ with AI, and a "British company" line.
   serif font.
 - The Close-off mark is a rounded form with one pocket of air. It holds no
   letter F.
-- The logo is the main heading of the page. Its text alternative is
-  "Firna".
+- On the homepage, the logo is the main heading.
+- On the not-found page, the logo is a link to the homepage.
+- The text alternative of the logo is "Firna".
 
 **Decision:** the user asked for a logo like firn or a fern, with no letter
 F, and chose Close-off with Lora. The user rejected 23 other marks, the
@@ -67,7 +86,7 @@ Instrument Serif.
 
 ## Projects
 
-The page lists these projects, in this order:
+The homepage lists these projects, in this order:
 
 | Project | Link | Logo |
 | --- | --- | --- |
@@ -117,15 +136,26 @@ number. The user confirmed the registration and gave the number.
 
 ## Page metadata
 
-- The page has a title and a description.
+- The homepage has a title and a description.
 - The title and the description make no statement about Firna.
-- The canonical address of the page is `https://firna.dev/`.
-- The favicon is the Close-off mark in ink.
+- The canonical address of the homepage is `https://firna.dev/`.
+- The favicon of each page is the Close-off mark in ink.
 - When the browser uses a dark theme, the favicon is light.
+- A browser that cannot change a favicon with its theme shows the mark in
+  ink.
+
+**Decision:** in such a browser, the ink mark is the intended favicon,
+also in a dark theme. The rule names that ability, not SVG support,
+because Safari 26 and later show an SVG favicon but ignore its theme rule.
+The user rejected no rule, a rule for browsers without SVG favicons only,
+and a light tile behind the mark, which changes the approved look. The
+user also rejected a general rule for every requirement that needs a
+browser feature.
 
 ## Grain field
 
-- The grain field covers the white page behind all content.
+- On each page, the grain field covers the white background behind all
+  content.
 - A moving pointer pushes the grains near it aside, like wind. The grains
   then drift back to their places.
 - When the pointer rests on a card, the nearest grains gather into an
@@ -157,47 +187,55 @@ frost that the field draws itself, and frost on pointer devices only.
 
 With reduced motion:
 
-- The page draws the field once, and the field stays still.
+- Each page draws the field once, and the field stays still.
 - No outline gathers.
 - A hovered or focused card gets a flat tint of its logo colour and a
   stronger border. It does not lift.
 
 ## Without JavaScript
 
-- The page works without the grain field.
-- Without JavaScript, the page shows no field, and the cards sit on white.
+- Each page works without the grain field.
+- Without JavaScript, a page shows no field, and its content sits on
+  white.
 - All content and every link work without JavaScript.
 
 ## Accessibility
 
-- The page meets WCAG 2.2 at level AA.
+- Each page meets WCAG 2.2 at level AA.
 - Every text keeps AA contrast, measured over the densest grains that can
   sit under it.
 - Keyboard focus is visible on every link.
-- The page hides the grain field from assistive technology.
-- The project logos are decorative. The page hides them from assistive
+- Each page hides the grain field from assistive technology.
+- The project logos are decorative. The homepage hides them from assistive
   technology, because each card names its project.
 
 ## Scripts and requests
 
-- The page loads one script: the grain field.
-- The page loads no framework runtime, such as React.
-- The page loads every resource from its own origin, fonts included.
+- Each page loads one script: the grain field.
+- No page loads a framework runtime, such as React.
+- Each page loads every resource from its own origin, fonts included.
 
 **Decision:** the grain field is a plain script. A React component that
 runs in the browser is out, because it ships the React runtime for one
 canvas.
 
-**Decision:** the page hosts its fonts itself, so that it makes no request
-to another origin. A font service, such as Google Fonts, is out.
+**Decision:** the site hosts its fonts itself, so that no page makes a
+request to another origin. A font service, such as Google Fonts, is out.
 
 ## Privacy
 
-- The page sets no cookies.
-- The page has no analytics.
+- No response of the site sets a cookie.
+- No page writes other site data on the visitor's device, such as local
+  storage, session storage, IndexedDB, or a service worker.
+- The browser's cache of the site's own files is allowed.
+- The site has no analytics.
 
 **Decision:** the site has no privacy page and no cookie banner, because
-the page sets no cookies.
+it writes no site data on a visitor's device. The rule covers more than
+cookies, as the UK rules on storage on a device do. The user rejected the
+rule on cookies alone, a rule that also forbids the browser's cache, and
+an allowance for strictly necessary storage. The user also rejected a lint
+on the browser storage APIs.
 
 ## Deploy
 
@@ -229,4 +267,4 @@ rejected checks in Cloudflare's build, a workflow that moves a production
 branch after the gate, and checks that report but block nothing.
 
 **Decision:** the branch previews stay on, because they help to review a
-pull request, and the page holds no secrets.
+pull request, and the site holds no secrets.

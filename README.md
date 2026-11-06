@@ -1,15 +1,19 @@
 # Firna homepage
 
-This repository holds the homepage of Firna Ltd: one static page at
-`https://firna.dev`. The page shows the Firna logo, the contact email, the
-list of Firna's projects, and the legal details of the company. A field of
-fine grey grains covers the white page, like firn, which is old, granular
-snow. The pointer pushes the grains aside like wind. A card under the
-pointer or the keyboard focus gathers an outline of grains in the colour of
-its logo.
+This repository holds the static site of Firna Ltd at `https://firna.dev`.
+It has two pages. The homepage shows the Firna logo, the contact email, the
+list of Firna's projects, and the legal details of the company. At every
+address with no page or file, the site shows the not-found page with
+status 404. That page has the same header and footer, a short message, and
+a link to the homepage.
+
+A field of fine grey grains covers the white pages, like firn, which is
+old, granular snow. The pointer pushes the grains aside like wind. A card
+under the pointer or the keyboard focus gathers an outline of grains in
+the colour of its logo.
 
 Astro renders the shared React components to static HTML. TypeScript
-checks the code. The built page loads no React runtime.
+checks the code. The built pages load no React runtime.
 
 [docs/protocol/homepage.md](docs/protocol/homepage.md) holds the
 requirements and the decisions in force.
@@ -24,17 +28,18 @@ this repository to Cloudflare Pages.
    run the install script of `esbuild`. The commands work without it.
 3. Run `npx playwright install chromium` to install the browser for the tests.
 4. Run `npm run dev`, and open the address that it prints. Astro serves
-   the page and shows each change while it runs.
+   the site and shows each change while it runs.
 5. Run `npm run mockups`, and open the address that it prints. There,
    Mokly serves the mockup catalogue: the screens of the product as static
-   pages. It shows the Homepage screen at desktop and phone sizes.
+   pages. It shows the Homepage screen and the Not-found page screen, each
+   at desktop and phone sizes.
 
-The catalogue runs no scripts. So the screen draws the grain field once,
+The catalogue runs no scripts. So each screen draws the grain field once,
 at rest.
 
 ## Commands
 
-- `npm run dev` serves the Astro page. It shows each change while it runs.
+- `npm run dev` serves the site. It shows each change while it runs.
 - `npm run build` writes the static site to `dist/`.
 - `npm run preview` serves the built site from `dist/`.
 - `npm test` builds the site, then runs the render and browser tests with
@@ -73,7 +78,7 @@ at rest.
 4. Add the project to the list in
    [docs/protocol/homepage.md](docs/protocol/homepage.md#projects). That
    list of the projects and their order is a requirement, so it changes
-   with the page.
+   with the homepage.
 5. Run `npm run mockups`, and check the Homepage screen at both sizes.
 6. Run `npm run format`.
 7. Run `npm run gate`.
@@ -129,9 +134,9 @@ records and its settings.
 
 #### 2. Check the zone settings
 
-Some Cloudflare features change the page on its way to a visitor. They
+Some Cloudflare features change a page on its way to a visitor. They
 break the rules of the protocol doc on scripts, cookies, other origins,
-and the page without JavaScript. Set these in the zone `firna.dev` before
+and pages without JavaScript. Set these in the zone `firna.dev` before
 you add the domains:
 
 1. **Security** > **Settings**: turn **Email Address Obfuscation** off.
@@ -218,52 +223,65 @@ before `gate` passed.
 
 1. In **Deployments** of the project, the first production build passed.
    Its log shows the Node version of `.nvmrc`.
-2. `https://firna-home.pages.dev/` shows the page.
+2. `https://firna-home.pages.dev/` shows the homepage.
 3. `curl -sI https://firna.dev/` shows status 200 and no `set-cookie`
    header.
-4. `curl -sI https://www.firna.dev/` shows status 301 and a `location`
+4. `curl -sI https://firna.dev/no-such-page` shows status 404 and no
+   `set-cookie` header.
+5. `curl -sI https://www.firna.dev/` shows status 301 and a `location`
    header that points to `https://firna.dev`.
-5. `curl -sI http://firna.dev/` shows a redirect to `https://firna.dev/`.
-6. `curl -s https://firna.dev/ | grep -o '<script[^>]*>'` prints one
+6. `curl -sI http://firna.dev/` shows a redirect to `https://firna.dev/`.
+7. `curl -s https://firna.dev/ | grep -o '<script[^>]*>'` prints one
    line: the script of the grain field, under `/_astro/`.
-7. `curl -s https://firna.dev/ | grep -o 'href="mailto:[^"]*"'` prints
+8. `curl -s https://firna.dev/ | grep -o 'href="mailto:[^"]*"'` prints
    `href="mailto:hello@firna.ai"`.
-8. The next pull request lists `gate` as a required check.
+9. The next pull request lists `gate` as a required check.
 
 ## Key code
 
 - `astro.config.mjs`: the site address, static output, the browsers that
   the built CSS supports, and the React renderer for static HTML.
-- `src/pages/index.astro`: the Astro page. It sets the head, imports the
-  shared stylesheet, renders the shared homepage component with the company
-  and project data, and loads the grain field as the page's only script.
-  Its description names the projects from `src/projects.ts`.
+- `src/pages/index.astro`: the Astro page of the homepage. It sets the
+  head and imports the shared stylesheet. It renders the shared homepage
+  component with the company and project data. It loads the grain field as
+  the page's only script. Its description names the projects from
+  `src/projects.ts`.
 - `public/favicon.svg`: the favicon, the Close-off mark in ink. It turns
   light when the browser uses a dark theme.
 - `public/favicon.ico`: the same mark in ink at 32 × 32 px, for browsers
   that show no SVG favicon, such as Safari before version 26. Render it
   again from `favicon.svg` when the mark changes.
-- `src/projects.ts`: the projects, in the order that the page shows them,
-  and the `Project` type.
+- `src/projects.ts`: the projects, in the order that the homepage shows
+  them, and the `Project` type.
 - `src/company.ts`: the contact email and the legal details of Firna Ltd.
-- `src/components/Homepage.tsx`: the content of the page: the header, the
-  project list, and the footer. It takes the company and the projects as
-  props.
+- `src/components/Homepage.tsx`: the content of the homepage: the header,
+  the project list, and the footer. It takes the company and the projects
+  as props.
+- `src/components/NotFoundPage.tsx`: the content of the not-found page:
+  the header, a short message with a link to the homepage, and the footer.
+  It takes the company and the address of the homepage as props. In its
+  header, the logo is a link to the homepage.
 - `src/components/projectListContract.ts`: the id of the project list and
   the name of the colour property of a card. The grain field finds the
   cards through them.
 - `src/field/main.ts`: the entry module of the grain field, the only script
-  of the page.
-- `src/styles/site.css`: the shared stylesheet. It imports the fonts and
-  `src/styles/cards.css`, the styles of the project list.
+  of each page.
+- `src/styles/site.css`: the shared stylesheet. It imports the fonts,
+  `src/styles/cards.css` for the project list, and
+  `src/styles/not-found.css` for the message of the not-found page.
 - `src/logos/`: one component for each logo.
 - `docs/mockups/homepage.mockup.tsx`: the Homepage screen of the
-  catalogue. `docs/mockups/StillField.tsx` draws its grain field at rest.
+  catalogue. `docs/mockups/StillField.tsx` draws the grain field of each
+  screen at rest.
+- `docs/mockups/not-found.mockup.tsx`: the Not-found page screen. Its logo
+  and its link to the homepage open the Homepage screen.
 - `tests/homepage.render.spec.tsx`: the project links, legal details,
   and contact link of the shared homepage component, rendered in Node.
 - `tests/homepage.browser.spec.ts`: the grain field, reduced motion,
   the page without JavaScript, and requests to the page's own origin.
 - `playwright.config.ts`: the test runner and the preview server.
+- `.github/workflows/gate.yml`: the GitHub Actions workflow "Gate". It runs
+  `npm run gate` on each pull request and each push to `main`.
 
 ## Related docs
 

@@ -1,12 +1,15 @@
 # A guide for agents
 
-This repository, `Firna-AI/home`, holds the homepage of Firna Ltd: one
-static page at `https://firna.dev` that lists Firna's projects. The stack
-uses Astro, TypeScript, and React. Astro renders the React components to
-static HTML. A plain TypeScript script draws the grain field: a layer of
-fine grey grains behind the content. The data, the components, the logos,
-the styles, and the field are under `src/`. The mockup screen is under
-`docs/mockups/`, and the requirements are in `docs/protocol/homepage.md`.
+This repository, `Firna-AI/home`, holds the static site of Firna Ltd at
+`https://firna.dev`. The homepage lists Firna's projects. At every address
+with no page or file, the site shows the not-found page with status 404.
+
+The stack uses Astro, TypeScript, and React. Astro renders the React
+components to static HTML. A plain TypeScript script draws the grain
+field: a layer of fine grey grains behind the content. The data, the
+components, the logos, the styles, and the field are under `src/`. The
+mockup screens are under `docs/mockups/`, and the requirements are in
+`docs/protocol/homepage.md`.
 
 This file holds the rules that are specific to this repository. The
 always-on rules and the detailed procedures live in the shared skills from
@@ -47,8 +50,8 @@ skill at that moment instead of guessing the rule.
 
 ## Commands
 
-- Development server: `npm run dev`. It serves the Astro page and shows
-  each change while it runs.
+- Development server: `npm run dev`. It serves the site and shows each
+  change while it runs.
 - Build: `npm run build`. It writes the static site to `dist/`.
 - Preview: `npm run preview`. It serves the built site from `dist/`.
 - Browser install: `npx playwright install chromium`. Run it after
@@ -104,17 +107,17 @@ skill at that moment instead of guessing the rule.
 
 - The match with `docs/protocol/homepage.md`, above all the projects, the
   contact email, and the legal details.
-- Page weight: the page ships no React runtime, and its only script is the
-  grain field.
-- The page without JavaScript: all content shows, and every link works.
-- Requests: the page loads every resource, fonts included, from its own
+- Page weight: each page ships no React runtime, and its only script is
+  the grain field.
+- Each page without JavaScript: all content shows, and every link works.
+- Requests: each page loads every resource, fonts included, from its own
   origin.
 - The frame loop of the field stops when the grains rest, when the tab is
   hidden, and when the field is off screen.
 - Reduced motion, reduced transparency, and the AA contrast of the text
   over the densest grains.
-- The mockup screen and the site render the same components with the same
-  data.
+- The mockup screens and the site render the same components with the
+  same data.
 
 ## Status
 

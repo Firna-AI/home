@@ -8,9 +8,11 @@ on:
 permissions:
   contents: read
 
+# A new push to a pull request cancels the older run of that pull request.
+# Each push to main keeps its own run, so that every push to main is gated.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   gate:

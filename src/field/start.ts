@@ -14,13 +14,17 @@ import { PRESS } from "./tuning";
 export interface FieldTargets {
   /** The element that the field covers: the page's body. */
   readonly host: HTMLElement;
-  /** The project list. Each child element of the list is one card. */
-  readonly list: HTMLElement;
+  /**
+   * The project list, or null on a page without one. Each child element of
+   * the list is one card.
+   */
+  readonly list: HTMLElement | null;
 }
 
 /**
  * Starts the grain field behind the content of `host`. Without a 2D canvas
- * or ResizeObserver, it adds nothing, and the page shows the cards on white.
+ * or ResizeObserver, it adds nothing, and the page shows its content on
+ * white.
  */
 export function startField({ host, list }: FieldTargets) {
   const surface = addCanvas(host);
@@ -29,9 +33,9 @@ export function startField({ host, list }: FieldTargets) {
   const grains = createGrains(layOutGrains(0, 0), []);
   const f: Field = {
     host,
-    cardElements: Array.from(list.children).filter(
-      (el) => el instanceof HTMLElement,
-    ),
+    cardElements: list
+      ? Array.from(list.children).filter((el) => el instanceof HTMLElement)
+      : [],
     canvas: surface.canvas,
     ctx: surface.ctx,
     pointer: {
@@ -162,7 +166,11 @@ function listenToPointer(f: Field) {
 }
 
 /** The field pauses while it cannot be seen, and builds again on a resize. */
-function listenToPage(f: Field, list: HTMLElement, reduce: MediaQueryList) {
+function listenToPage(
+  f: Field,
+  list: HTMLElement | null,
+  reduce: MediaQueryList,
+) {
   // A page that comes back from the back-forward cache drops a stale outline.
   window.addEventListener("pageshow", (e) => {
     if (e.persisted) {
@@ -197,7 +205,8 @@ function listenToPage(f: Field, list: HTMLElement, reduce: MediaQueryList) {
     });
   };
   const sizes = new ResizeObserver(rebuild);
-  [f.host, list].forEach((el) => sizes.observe(el));
+  sizes.observe(f.host);
+  if (list) sizes.observe(list);
   reduce.addEventListener("change", () => {
     f.calm = reduce.matches;
     rebuild();

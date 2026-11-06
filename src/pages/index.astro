@@ -1,8 +1,8 @@
 ---
 import { company } from "../company";
 import { Homepage } from "../components/Homepage";
+import Page from "../layouts/Page.astro";
 import { projects } from "../projects";
-import "../styles/site.css";
 
 // The description names the projects from the list, so that a new project
 // changes it. Like the title, it makes no statement about Firna.
@@ -13,25 +13,6 @@ const description = `Firna's projects: ${projectNames}.`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
-    <title>Firna</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    {/* The ICO is for browsers that read no SVG favicon. With its sizes, the
-         other browsers still pick the SVG and its dark-theme mark. */}
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  </head>
-  <body>
-    <Homepage company={company} projects={projects} />
-    <script>
-      // The grain field: the page's only client script.
-      import "../field/main";
-    </script>
-  </body>
-</html>
+<Page title="Firna" description={description} canonical={canonical}>
+  <Homepage company={company} projects={projects} />
+</Page>

@@ -1,9 +1,9 @@
 # Site source
 
-`src/` holds the source of the site: the data, the shared React
-components, the logos, the stylesheets, and the grain field. The site has
-two pages: the homepage and the not-found page. The repository
-[README](../README.md#key-code) lists the entry points.
+`src/` holds the source of the site: the pages and their layout, the data,
+the shared React components, the logos, the stylesheets, and the grain
+field. The site has two pages: the homepage and the not-found page. The
+repository [README](../README.md#key-code) lists the entry points.
 
 ## Rules
 
@@ -30,12 +30,21 @@ two pages: the homepage and the not-found page. The repository
 - The grain field in `field/` imports no React. It also imports
   `components/projectListContract.ts`, so that module imports no React
   either. The field is the only script of each page.
-- Each page in `pages/`, such as `pages/index.astro`, owns its document:
-  the head, the stylesheet, and one `<script>` that loads `field/main.ts`.
-  It renders the components with no `client:*` directive, so that the page
-  ships no React runtime.
+- `layouts/Page.astro` holds the document of each page: the head, the
+  stylesheet, the body, and one `<script>` that loads `field/main.ts`.
+  Each page in `pages/` renders its content in that layout. The page gives
+  its own title. A page with an address of its own also gives its
+  description and its canonical address. Give the layout a prop for each
+  new difference between the pages.
+- Each page renders the components with no `client:*` directive, so that
+  the page ships no React runtime.
+- Astro builds `pages/404.astro` as `404.html`. The host serves that file
+  at every address with no page or file, at any depth, such as `/a/b/c/`.
+  So the not-found page uses no relative address. Each of its links and
+  resources starts with `/` or is a full address.
 - The field finds the project list, and reads the logo colour of each card,
   only through the names in `components/projectListContract.ts`. Keep that
-  contract when you change the list or its cards.
+  contract when you change the list or its cards. On a page without the
+  list, the field runs with no cards.
 - [logos/README.md](logos/README.md) gives the rules for the logo
   components and the source of each logo.

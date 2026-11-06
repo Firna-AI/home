@@ -5,9 +5,13 @@ Status: Active. On branch `calummoore/firna-astro-website`, no pull request yet.
 Firna Ltd needs a company homepage. The repository `Firna-AI/home` holds
 only a README. The change builds a static Astro site with one page: the
 Firna logo, the contact email, the list of Firna's projects, and the legal
-footer that UK law requires. Cloudflare hosts the site at
-`https://firna.dev`, and each push to `main` deploys it. A blog can come later. This change does not build the
-blog, analytics, or a privacy page, because the page sets no cookies.
+footer that UK law requires. Every other address of the site shows a
+"page not found" page with status 404. Cloudflare hosts the site at
+`https://firna.dev`, and each push to `main` deploys it. GitHub runs the
+complete gate on each pull request and each push to `main`, and a
+required check keeps a failing change off `main`. A blog can come later. This change does not build the
+blog, analytics, or a privacy page, because the site stores nothing on a
+visitor's device.
 
 The page follows the "Cursor" design, option M of the third design round.
 A field of fine grey grains, like firn, covers the white page. One canvas
@@ -128,6 +132,55 @@ Homepage Design", on the `futex-ai/skills` repository.
   shows one shared logo file, so that the choice changes one file.
   Decision 11 held the candidates, and the user chose on 2026-11-03.
 
+- **The checks run in GitHub (2026-11-06).** The user chose option B of
+  decision 16, in the words that the user saw: "GitHub runs the complete
+  gate on each pull request and each push to `main`. You make it a
+  required check and block direct pushes to `main`. You can let yourself
+  bypass that block. Cloudflare only builds. A change that fails a check
+  cannot reach `main`, so it cannot go live." So Cloudflare's build
+  command is the build alone, with no checks. The plan's text of B had
+  Cloudflare's build run the gate without the browser test. The user
+  chose the version with no check in Cloudflare's build, after asking:
+  "why do you want to run tests in the build process?" This changes how
+  the decision "A failed check stops the deploy" works: a failed check
+  still keeps a change from going live, but the required check on `main`
+  does it now. The reason: Cloudflare's build image cannot start a
+  browser, so it cannot run the browser test. The alternatives were A,
+  the gate in Cloudflare's build as planned; C, an upload from GitHub
+  with a Cloudflare token; D, a Chromium that carries its own libraries;
+  E, the browser test in the local gate only; F, a deploy hook after the
+  gate; G, a workflow that moves a production branch after the gate; H,
+  a Cloudflare build that waits for the GitHub check; I, Chromium's
+  libraries unpacked in Cloudflare's build; J, a hosted browser; and K,
+  Cloudflare only builds, and a GitHub workflow reports the checks but
+  blocks nothing. The recommendation was G, then B. Setting up the
+  required check, the ruleset that blocks direct pushes to `main`, and
+  the user's bypass are repository settings. An agent changes them only
+  after the user confirms.
+- **A page for other addresses (2026-11-06).** The user chose option C of
+  decision 17: a "page not found" page with status 404, a short message,
+  and a link to the homepage. It is a new screen, so it needs a mockup
+  first. The alternatives were A, Cloudflare's default, which shows the
+  homepage with status 200 at every address; B, the homepage with status
+  404; and D, a redirect of each unknown address through a Pages
+  Function.
+- **What the site may store (2026-11-06).** The user chose option C of
+  decision 18: no response of the site sets a cookie, and the page writes
+  no other site data on the device, such as local storage, session
+  storage, IndexedDB, or a service worker. The browser's cache of the
+  site's own files stays allowed. The alternatives were A, nothing on
+  the device, which also forbids the browser's cache; B, the rule on
+  cookies alone; D, only storage that UK rules treat as strictly
+  necessary; and E, C with a lint on the browser storage APIs.
+- **The favicon where the theme cannot change it (2026-11-06).** The user
+  chose option C of decision 19: a browser that cannot change a favicon
+  with its theme shows the mark in ink. The user wrote only "C" on the
+  fourth line of the answer, and it answers decision 19. The
+  alternatives were A, no rule; B, the same rule for browsers without SVG
+  favicons only; D, the fallback icon on a light tile; E, the mark on a
+  light tile in every browser; and F, C with a general rule for every
+  requirement that needs a browser feature.
+
 ## Design calls
 
 These are my calls. The round 1 calls date from 2026-11-01, and the calls
@@ -216,281 +269,14 @@ for the grain field date from 2026-11-02.
 
 ## Open decisions
 
-The user answered every decision of the planning rounds on 2026-11-03.
-The reports of their options checks are in `.context/firna-homepage/` of
-the round 1 workspace and in
+None. The user answered every decision of the planning rounds on
+2026-11-03, and decisions 16 to 19 of the implementation on 2026-11-06.
+The reports of the options checks of the planning rounds are in
+`.context/firna-homepage/` of the round 1 workspace and in
 `.context/firna-home-records/review-records/reports/` of the review
-workspace.
-
-The decisions below came up during the implementation, on 2026-11-03.
-They continue the numbers of the earlier decisions. The reports of their
-options checks are in `.context/firna-homepage/m4/` of the build
-workspace.
-
-### 16. The browser test cannot run in Cloudflare's build
-
-- **Severity:** High. **Effort:** Medium.
-- **Source:** Implementation.
-- **Category:** Process.
-- **Location:** `package.json` (the Cloudflare build command), `README.md`
-  (the one-time setup), and `docs/protocol/homepage.md` (the deploy
-  rules).
-- **Terms:**
-  - **Complete gate:** the npm script `gate`: the typecheck, the lint, the
-    format check, the tests, the build, and the mockup check.
-  - **Browser test:** the Playwright test that loads the built page in
-    headless Chromium and checks the grain field and the page without
-    JavaScript.
-  - **Build image:** the container in which Cloudflare Pages runs the build
-    command of a Git connection.
-  - **Required check:** a GitHub ruleset setting that lets a pull request
-    merge into `main` only when a named check passed.
-- **Background:** On 2026-11-03 the user chose that Cloudflare's Git
-  connection builds each push to `main`, so that GitHub stores no
-  Cloudflare token. The user also chose that the deploy runs the complete
-  gate first and stops on a failure, inside Cloudflare's build command.
-  The complete gate holds a browser test. Chromium needs system
-  libraries, such as `libatk-1.0.so.0` and `libnss3.so`.
-- **Problem:** Cloudflare's build image cannot install system libraries.
-  The build user is not root, and `sudo` is blocked. A Cloudflare Pages
-  build log from 2026-11-01 shows that Chromium could not start, because
-  `libatk-1.0.so.0` was missing. Playwright's headless shell needs that
-  same library. So the browser test is expected to fail in Cloudflare's
-  build, and then every deploy stops.
-- **Impact if no action:** The first Cloudflare build fails at the browser
-  test, and the site does not go live until a further change.
-- **Root question:** How does a failed browser check keep a broken page
-  from going live, when Cloudflare's build cannot start a browser?
-- **Options:**
-  - **A.** Keep the plan. The Cloudflare build command runs the complete
-    gate. The user connects Cloudflare Pages before the merge, and the
-    preview build of this branch shows whether Chromium starts. If it does
-    not, this decision comes back. Effort: Small, but the evidence says
-    that it will fail.
-  - **B.** Run the complete gate in GitHub Actions on each pull request
-    and each push to `main`, on a runner where Playwright installs
-    Chromium with its libraries. The user makes that check a required
-    check for `main`, and blocks direct pushes to `main`. Cloudflare's
-    build command runs the gate without the browser test, then the build.
-    GitHub still stores no Cloudflare token. A change that fails the
-    browser test cannot reach `main`, so it cannot deploy. Effort: Small.
-  - **C.** Move the upload to GitHub Actions: the workflow runs the
-    complete gate, then uploads `dist/` with `wrangler pages deploy`. A
-    failed check stops the upload itself. This needs a Cloudflare token
-    in GitHub, which reverses the deploy decision of 2026-11-03. Effort:
-    Medium.
-  - **D.** Give the Cloudflare build a Chromium that carries its own
-    libraries, such as `@sparticuz/chromium`, started through
-    `playwright-core`. It adds a dependency, and the test then runs on a
-    different Chromium in Cloudflare than on a laptop. Nobody has shown it
-    to work in Cloudflare's gVisor container. Effort: Medium.
-  - **E.** Leave the browser test out of the Cloudflare build. The build
-    runs the rest of the gate. The browser test runs only in the local
-    complete gate before a merge. A failed browser check then stops a
-    deploy only when someone runs the gate. Effort: Small.
-  - **F.** Turn off Cloudflare's automatic production deploys. A GitHub
-    workflow runs the complete gate on each push to `main`. When the gate
-    passes, a job calls a Cloudflare deploy hook, and Cloudflare builds
-    `main`. The hook address is a secret in GitHub. It can only start a
-    build, so it cannot change the Cloudflare account. A hook names no
-    commit, so two quick pushes can deploy a commit that has not passed
-    yet. Effort: Medium.
-  - **G.** A GitHub workflow runs the complete gate on each push to
-    `main`, on a runner where Playwright installs Chromium. When the gate
-    passes, a job pushes that exact commit to a production branch, such as
-    `live`. Cloudflare's Git connection builds `live` as production, with
-    the build alone, and keeps previews of the other branches. GitHub
-    stores no Cloudflare credential, and no pull-request gate is added.
-    A ruleset on `live` keeps out direct pushes. One real push must show
-    that Cloudflare sees a push by the workflow. Effort: Medium.
-  - **H.** A GitHub workflow runs the complete gate on each push to
-    `main`. Cloudflare's build command first waits for that check on its
-    own commit, then builds, and fails when the check fails or does not
-    end in time. The repository is public, so it needs no token, but a
-    read-only GitHub token in Cloudflare avoids GitHub's limit of 60
-    requests an hour. The free plan's one build slot stays busy while the
-    build waits. Effort: Medium.
-  - **I.** Cloudflare's build downloads the Ubuntu packages that
-    Playwright lists for Chromium, and unpacks them into a user folder,
-    from where Chromium loads them. The test keeps the same Chromium as on
-    a laptop. It needs the Ubuntu mirrors at build time, and only a real
-    Cloudflare build can show that it works. Effort: Medium.
-  - **J.** Cloudflare's build serves `dist/` on a local port, opens a
-    tunnel to it, and runs the browser test in a hosted browser service.
-    It adds a third-party service and its credential. Effort: Large.
-- **Left out:**
-  - Installing the libraries with `apt` in the build: Cloudflare gives no
-    root and blocks `sudo`.
-  - A test of the live site after each deploy, with a rollback on
-    failure: the broken page is live until the rollback, and the rollback
-    needs a Cloudflare token in GitHub.
-  - Firefox or WebKit in place of Chromium: they also need system
-    libraries, so they fail in the same way.
-- **Wider fix:** G. The whole gate runs in one place that can install
-  what each check needs, and Cloudflare builds only a commit that passed.
-  A later check that Cloudflare's image cannot run then needs no new
-  decision. F and H also cover this class.
-- **Previous examples:** None found.
-- **Recommendation:** G. It runs the complete gate once, on a runner that
-  starts Chromium, and only the exact commit that passed goes live.
-  GitHub holds no Cloudflare credential. The first recommendation was B,
-  but B adds the pull-request gate that the user did not choose on
-  2026-11-03, and it guards the merge, not the deploy.
-- **Action:** ask the user, because option G changes how the deploy
-  decisions of 2026-11-03 work: the production branch and the place of
-  the gate. Both are requirements in `docs/protocol/homepage.md`.
-
-### 17. No rule for other addresses of the site
-
-- **Severity:** Low. **Effort:** Small.
-- **Source:** Implementation.
-- **Category:** Docs or spec.
-- **Location:** `docs/protocol/homepage.md`, section "Address".
-- **Background:** The site is one page at `https://firna.dev/`. When a
-  Cloudflare Pages build has no top-level `404.html`, Pages serves the
-  homepage for every path that has no file, with status 200. The page's
-  canonical link names `https://firna.dev/`.
-- **Problem:** No requirement says what a visitor or a search engine gets
-  at an address that is not the homepage, such as `https://firna.dev/blog`.
-- **Impact if no action:** Every unknown address shows the homepage as a
-  valid page. Search engines can count those addresses as soft 404s. The
-  canonical link limits the harm.
-- **Root question:** What does a visitor or a search engine get at an
-  address of the site that is not the homepage?
-- **Options:**
-  - **A.** Keep Cloudflare's default: every unknown address shows the
-    homepage with status 200. Effort: Small.
-  - **B.** A 404 page that renders the same homepage with status 404. A
-    visitor still sees the projects, and a search engine sees that the
-    address does not exist. Effort: Small.
-  - **C.** A "page not found" page with status 404, a short message, and a
-    link to the homepage. It is a second screen, so it needs a mockup
-    first. Effort: Medium.
-  - **D.** Redirect each address that has no file to `https://firna.dev/`
-    with status 301, through a small Pages Function that acts only where
-    the build has no file. It adds server code to a static site, and
-    search engines can still count such redirects as soft 404s. Effort:
-    Medium.
-- **Left out:** One catch-all redirect rule in a `_redirects` file.
-  Cloudflare Pages applies those rules also to paths that have a file, so
-  the rule would also redirect the stylesheet, the fonts, and the
-  script.
-- **Wider fix:** None.
-- **Previous examples:** None found.
-- **Recommendation:** B. It keeps one design, and it gives search engines
-  the right status.
-- **Action:** ask the user, because each option adds behaviour at the
-  boundary that no requirement covers.
-
-### 18. The privacy rule names cookies only
-
-- **Severity:** Low. **Effort:** Small.
-- **Source:** Implementation.
-- **Category:** Docs or spec.
-- **Location:** `docs/protocol/homepage.md`, section "Privacy".
-- **Background:** The plan builds no privacy page and no cookie banner,
-  because the page sets no cookies. The UK rules on storage on a
-  visitor's device, the Privacy and Electronic Communications
-  Regulations, cover any such storage, such as local storage, not only
-  cookies. The page stores nothing today.
-- **Problem:** The requirement does not say whether other storage on the
-  device is allowed.
-- **Impact if no action:** A later change can use local storage without
-  consent and still meet the written rule.
-- **Root question:** What may the site store on a visitor's device
-  without consent?
-- **Options:**
-  - **A.** Widen the rule: the page stores nothing on the visitor's
-    device. Effort: Small.
-  - **B.** Keep the rule as it is. Effort: Small.
-  - **C.** Widen the rule, and name what it covers: no response of the
-    site sets a cookie, and the page writes no other site data on the
-    device, such as local storage, session storage, IndexedDB, or a
-    service worker. The browser's cache of the site's own files stays
-    allowed, which A's "nothing" forbids. Effort: Small.
-  - **D.** Allow only storage that the UK rules treat as strictly
-    necessary for what the visitor asks for. Each such change then needs
-    a legal judgment that a reviewer cannot make from the code. Effort:
-    Small.
-  - **E.** As C, and add a lint that rejects the browser storage APIs in
-    `src/`, such as `localStorage` and `document.cookie`. It is a new
-    lint, and it cannot see cookies that Cloudflare sets. Effort: Small.
-- **Left out:** A consent banner, because the user chose that the site has
-  none.
-- **Wider fix:** E, a detection fix.
-- **Previous examples:** None found.
-- **Recommendation:** C. It keeps the reason for no banner true for every
-  kind of storage, and a reviewer can check it against the code and the
-  live responses. The first recommendation was A, but "nothing" also
-  forbids the browser's cache of the page's files. E best protects the
-  codebase.
-- **Action:** ask the user, because option C changes a requirement, and no
-  recorded decision covers it.
-
-### 19. The protocol doc has no rule for the favicon fallback
-
-- **Severity:** Low. **Effort:** Small.
-- **Source:** Implementation.
-- **Category:** Docs or spec.
-- **Location:** `docs/protocol/homepage.md`, section "Page metadata".
-- **Background:** The protocol doc says that the favicon is the Close-off
-  mark in ink, and that it is light when the browser uses a dark theme.
-  The page links an SVG favicon whose style turns the mark light in a
-  dark theme. Safari before version 26 shows no SVG favicon. So on
-  2026-11-03 the orchestrator added a 32 px ICO of the ink mark as the
-  fallback, as a design call. Chrome still takes only the SVG.
-- **Problem:** Some browsers cannot change a favicon with their theme.
-  Safari before 26 shows the ink ICO. Safari 26 and later show the SVG,
-  but WebKit bug 309949, confirmed and still open, says that they ignore
-  its dark-theme rule. So every Safari shows the ink mark in a dark
-  theme. The doc does not say what such a browser shows.
-- **Impact if no action:** A review against the doc finds the dark-theme
-  rule broken in every Safari. A reader cannot tell that the ink mark
-  there is intended.
-- **Root question:** What does the tab show when the browser uses a dark
-  theme but cannot change a favicon with its theme?
-- **Options:**
-  - **A.** Change nothing in the doc. Effort: Small.
-  - **B.** Add one requirement to "Page metadata": a browser that cannot
-    show an SVG favicon shows the mark in ink. Safari 26 and later still
-    break the dark-theme rule after B. Effort: Small.
-  - **C.** Add one requirement to "Page metadata": a browser that cannot
-    change a favicon with its theme shows the mark in ink. It covers
-    every Safari, and it stays true when WebKit fixes its bug. Effort:
-    Small.
-  - **D.** Render the fallback ICO as the ink mark on its own light
-    rounded tile, and state the tile in the doc. Safari before 26 then
-    shows the tile in both themes. The user has not seen the tile.
-    Reports say that Safari already draws a white square behind a
-    low-contrast favicon in dark mode, so the gain is unclear until a
-    real Safari shows the tab. Effort: Small.
-  - **E.** One favicon for every browser: the ink mark on a light rounded
-    tile, with no dark-theme version. Every tab shows the mark in both
-    themes. Chrome, Edge, and Firefox lose the bare light mark that they
-    show today, and the user has not seen the look. Effort: Small.
-  - **F.** C, plus one general rule in the protocol doc: a requirement
-    that needs a browser feature holds in each browser that has the
-    feature. A later requirement that some browsers cannot meet then
-    needs no new decision. The rule changes how a reviewer reads every
-    requirement, and a reviewer could excuse a real defect as a missing
-    feature. Effort: Small.
-- **Left out:**
-  - A light ICO: it breaks the ink rule in Safari's default light theme.
-  - A second icon link with a `media` query for a dark theme: WebKit's
-    icon collector ignores `media`.
-  - A script that swaps the icon in a dark theme: it breaks the rule that
-    the grain field is the page's only script, and Safari reportedly
-    keeps the icon of the first load.
-  - No fallback: Safari before 26 then shows no mark at all.
-- **Wider fix:** F. It is a structural default in the doc for every
-  requirement that needs a browser feature.
-- **Previous examples:** None found.
-- **Recommendation:** C. Its condition covers every Safari, so the doc
-  then matches the page in every browser. The first recommendation was
-  B, but B names the file format, so Safari 26 still breaks the rule. F
-  best protects the codebase.
-- **Action:** ask the user, because option C adds a requirement, and the
-  user reviews each new requirement.
+workspace. The reports of the options checks of decisions 16 to 19 are
+in `.context/firna-homepage/m4/` of the build workspace. Commit `308d97b`
+holds the full text of decisions 16 to 19.
 
 ## Milestone 1: Mockups
 
@@ -592,9 +378,12 @@ tests and the 10-run result of the browser test.
 
 Depends on: 3
 
-- [ ] Add one npm script that runs the complete gate and then the build. It
-      is the build command of the Cloudflare Git connection, so a failed
-      check stops the deploy. Blocked: waits for decision 16.
+- [ ] Add a GitHub Actions workflow that runs the complete gate, the
+      browser test included, on each pull request and each push to
+      `main`. Cloudflare's build command is the build alone,
+      `npm run build`, as decision 16 says. The workflow replaces the npm
+      script that would have run the gate and then the build in
+      Cloudflare's build.
 - [x] Check that Cloudflare's build image runs the complete gate, the
       browser test included. When it cannot run the browser test, stop and
       report it with options, because the user's decision is that a failed
@@ -603,14 +392,60 @@ Depends on: 3
       `.context/firna-homepage/m4/cloudflare-browser-evidence.md`.
 - [ ] Describe the one-time setup in the README: connect `Firna-AI/home`
       to a Cloudflare Pages project `firna-home`, with production branch
-      `main`, the build command, the output folder `dist`, and Node 24.
-      Then add `firna.dev` and `www.firna.dev`, with `www` redirected to the
-      bare domain. Then check that Email Address Obfuscation is off for
-      `firna.dev`, and that Cloudflare adds no script or cookie to the
-      page, such as Web Analytics, Rocket Loader, or Bot Fight Mode. Each
-      would break the no-JavaScript, one-script, no-third-party, or
-      no-cookie rule of the protocol doc. Blocked: the build command and
-      the production branch wait for decision 16.
+      `main`, the build command `npm run build`, the output folder `dist`,
+      and Node 24. Then add `firna.dev` and `www.firna.dev`, with `www`
+      redirected to the bare domain. Then check that Email Address
+      Obfuscation is off for `firna.dev`, and that Cloudflare adds no
+      script or cookie to the page, such as Web Analytics, Rocket Loader,
+      or Bot Fight Mode. Each would break the no-JavaScript, one-script,
+      no-third-party, or no-cookie rule of the protocol doc. Then describe
+      the GitHub settings of decision 16: the gate as a required check for
+      `main`, and a ruleset that blocks direct pushes to `main`, with the
+      user's own bypass.
+- [ ] Update the deploy rules of `docs/protocol/homepage.md` for decision
+      16: GitHub runs the complete gate, the required check keeps a
+      failing change off `main`, and Cloudflare only builds.
+
+## Milestone 4a: Mockup of the not-found page
+
+Tags: mockup
+
+Depends on: 3
+
+Decision 17 adds a second page. So the mockup milestone comes first among
+the new milestones, as the `plans` skill says.
+
+- [ ] Add the not-found screen to `docs/mockups/`, built from the shared
+      components, at mobile and desktop sizes: the header, a short
+      message, a link to the homepage, and the legal footer.
+- [ ] Run the mockup check. Smoke-test the catalogue pages, and check
+      that the homepage screen did not change.
+- [ ] Update the design and the TODOs of this plan for each problem that
+      the mockup shows.
+
+## Milestone 4b: Documentation for decisions 17 to 19
+
+Depends on: 4a
+
+- [ ] Update `docs/protocol/homepage.md`: the not-found page at every
+      other address, with status 404, from decision 17; the storage rule
+      of decision 18; and the favicon rule of decision 19.
+- [ ] Update `README.md` and `src/README.md` for the second page.
+
+## Milestone 4c: The not-found page
+
+Tags: ui
+
+Depends on: 4b
+
+- [ ] Render the not-found page from the shared components as the site's
+      `404.html`, as its mockup shows.
+- [ ] Add a test: an unknown address answers with status 404 and the
+      not-found page, with its link to the homepage. See it fail once.
+- [ ] Add a test of decision 18: no response sets a cookie, and the page
+      writes no other site data on the device. See it fail once.
+- [ ] Smoke-test the built not-found page, and compare it with its mockup
+      at 1440 px and 390 px wide.
 
 ## Milestone 5: Verification, commit, review, and pull request
 
@@ -633,6 +468,10 @@ Depends on: every other milestone
 
 - [ ] The user connects `Firna-AI/home` to Cloudflare Pages, as the README
       says, and adds the domains `firna.dev` and `www.firna.dev`.
+- [ ] The user sets up the GitHub settings of decision 16, as the README
+      says: the gate as a required check for `main`, and a ruleset that
+      blocks direct pushes to `main`, with the user's own bypass. An agent
+      may set them only after the user confirms.
 - [ ] Check the first production deploy at its `pages.dev` address, then
       at `https://firna.dev`.
 - [ ] The user adds the SPF and DMARC records of firna.ai, as the follow-up

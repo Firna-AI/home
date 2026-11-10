@@ -1,6 +1,5 @@
 import type { ComponentType } from "react";
 
-import { BookfolioMark } from "./logos/BookfolioMark";
 import { BowserMark } from "./logos/BowserMark";
 import { ConductiveMark } from "./logos/ConductiveMark";
 import { FirnaUiMark } from "./logos/FirnaUiMark";
@@ -41,15 +40,6 @@ export const projects: readonly Project[] = [
     linkLabel: "mokly.ai",
     color: "#2f5945",
     logo: MoklyMark,
-  },
-  {
-    name: "Bookfolio",
-    kind: "Accounting software",
-    line: "UK accounting made simple: books, VAT, payroll, and tax returns, with accountants on hand.",
-    href: "https://bookfolio.net",
-    linkLabel: "bookfolio.net",
-    color: "#4f7864",
-    logo: BookfolioMark,
   },
   {
     name: "Conductive",

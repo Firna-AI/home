@@ -13,7 +13,7 @@ test("Both built pages keep their required metadata and reachable favicons", asy
       status: 200,
       title: "Firna",
       descriptions: [
-        "Firna's projects: Mokly, Bookfolio, Conductive, Firna UI, Redloop, and Bowser.",
+        "Firna's projects: Mokly, Conductive, Firna UI, Redloop, and Bowser.",
       ],
       canonicals: ["https://firna.dev/"],
     },

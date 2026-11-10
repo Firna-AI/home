@@ -91,7 +91,6 @@ The homepage lists these projects, in this order:
 | Project | Link | Logo |
 | --- | --- | --- |
 | Mokly | `https://mokly.ai` | The real Mokly logo |
-| Bookfolio | `https://bookfolio.net` | The real Bookfolio logo |
 | Conductive | `https://conductive.build` | The real Conductive logo |
 | Firna UI | `https://github.com/futex-ai/ui` | A white switch on blue |
 | Redloop | `https://github.com/futex-ai/redloop` | A loop around a job, on brick red |
@@ -103,9 +102,9 @@ The homepage lists these projects, in this order:
 - The whole card is one link to the project.
 - The kind and the line come from the project's own site or README.
 
-**Decision:** the user chose these six projects, in this order. The user
+**Decision:** the user chose these five projects, in this order. The user
 rejected the list without Firna UI, and a card for the Firna product of
-`firna.ai`. The user added Conductive later, after Bookfolio.
+`firna.ai`. The user later added Conductive and removed Bookfolio.
 
 ## Contact
 

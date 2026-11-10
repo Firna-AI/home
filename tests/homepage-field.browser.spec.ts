@@ -12,7 +12,7 @@ import {
 
 test.use({ viewport: { width: 1440, height: 900 } });
 
-async function expectOutline(page: Page, project: "Mokly" | "Bookfolio") {
+async function expectOutline(page: Page, project: "Mokly" | "Firna UI") {
   await expect
     .poll(
       async () => {
@@ -44,13 +44,13 @@ test.beforeEach(async ({ page }) => {
   await openField(page);
 });
 
-test("Mokly's focus outline returns after the pointer leaves Bookfolio", async ({
+test("Mokly's focus outline returns after the pointer leaves Firna UI", async ({
   page,
 }) => {
   await focusMokly(page);
-  await page.getByRole("link", { name: "Bookfolio", exact: true }).hover();
+  await page.getByRole("link", { name: "Firna UI", exact: true }).hover();
   // Wait for coloured grains, so the 60 ms hover intent must have completed.
-  await expectOutline(page, "Bookfolio");
+  await expectOutline(page, "Firna UI");
   expect(await outlinePixels(page, "Mokly")).toBe(0);
 
   await page.mouse.move(80, 200);
@@ -58,7 +58,7 @@ test("Mokly's focus outline returns after the pointer leaves Bookfolio", async (
     page.getByRole("link", { name: "Mokly", exact: true }),
   ).toBeFocused();
   await expectOutline(page, "Mokly");
-  expect(await outlinePixels(page, "Bookfolio")).toBe(0);
+  expect(await outlinePixels(page, "Firna UI")).toBe(0);
 });
 
 test("Mokly's focus outline returns after the field rebuilds on resize", async ({
@@ -81,19 +81,19 @@ test("Mokly's focus outline returns after the field rebuilds on resize", async (
   await expectOutline(page, "Mokly");
 });
 
-test("Bookfolio's hover outline returns after keyboard focus leaves the cards", async ({
+test("Firna UI's hover outline returns after keyboard focus leaves the cards", async ({
   page,
 }) => {
-  await page.getByRole("link", { name: "Bookfolio", exact: true }).hover();
-  await expectOutline(page, "Bookfolio");
+  await page.getByRole("link", { name: "Firna UI", exact: true }).hover();
+  await expectOutline(page, "Firna UI");
   await focusMokly(page);
-  expect(await outlinePixels(page, "Bookfolio")).toBe(0);
+  expect(await outlinePixels(page, "Firna UI")).toBe(0);
 
   await page.keyboard.press("Shift+Tab");
   await expect(
     page.getByRole("link", { name: "hello@firna.ai", exact: true }),
   ).toBeFocused();
-  await expectOutline(page, "Bookfolio");
+  await expectOutline(page, "Firna UI");
   expect(await outlinePixels(page, "Mokly")).toBe(0);
 });
 

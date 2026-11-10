@@ -8,7 +8,6 @@ file.
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `FirnaLogo`      | The Firna logo: the Close-off mark and the name "Firna" in Lora at weight 500, drawn as paths. Its accessible name is "Firna". |
 | `MoklyMark`      | Mokly's real mark, from https://mokly.ai/favicon.svg, with fixed colours.                                                      |
-| `BookfolioMark`  | Bookfolio's real mark, from https://bookfolio.net/favicon.svg, with the "B" as a path.                                         |
 | `ConductiveMark` | Conductive's real mark, from https://conductive.build/favicon.svg.                                                             |
 | `FirnaUiMark`    | Firna UI: a white switch on blue.                                                                                              |
 | `RedloopMark`    | Redloop: a loop around a job, on brick red.                                                                                    |

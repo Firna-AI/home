@@ -1,7 +1,7 @@
 // Literal requirements from the homepage protocol, independent of product data.
 export const expectedProjects = [
-  { name: "Mokly", href: "https://mokly.ai" },
   { name: "Conductive", href: "https://conductive.build" },
+  { name: "Mokly", href: "https://mokly.ai" },
   { name: "Firna UI", href: "https://github.com/futex-ai/ui" },
   { name: "Redloop", href: "https://github.com/futex-ai/redloop" },
   { name: "Bowser", href: "https://github.com/futex-ai/bowser" },

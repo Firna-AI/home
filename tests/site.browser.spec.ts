@@ -31,7 +31,7 @@ test("Both pages keep cookies and other site storage empty", async ({
   context,
 }) => {
   for (const { path, linkName, tabs } of [
-    { path: "/", linkName: "Mokly", tabs: 2 },
+    { path: "/", linkName: "Conductive", tabs: 2 },
     { path: unknownAddress, linkName: "Go to the homepage", tabs: 3 },
   ]) {
     await test.step(path, async () => {

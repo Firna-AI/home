@@ -35,6 +35,10 @@ async function focusMokly(page: Page) {
   ).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
+    page.getByRole("link", { name: "Conductive", exact: true }),
+  ).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(
     page.getByRole("link", { name: "Mokly", exact: true }),
   ).toBeFocused();
   await expectOutline(page, "Mokly");
@@ -89,6 +93,10 @@ test("Firna UI's hover outline returns after keyboard focus leaves the cards", a
   await focusMokly(page);
   expect(await outlinePixels(page, "Firna UI")).toBe(0);
 
+  await page.keyboard.press("Shift+Tab");
+  await expect(
+    page.getByRole("link", { name: "Conductive", exact: true }),
+  ).toBeFocused();
   await page.keyboard.press("Shift+Tab");
   await expect(
     page.getByRole("link", { name: "hello@firna.ai", exact: true }),

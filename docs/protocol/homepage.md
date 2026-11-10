@@ -90,8 +90,8 @@ The homepage lists these projects, in this order:
 
 | Project | Link | Logo |
 | --- | --- | --- |
-| Mokly | `https://mokly.ai` | The real Mokly logo |
 | Conductive | `https://conductive.build` | The real Conductive logo |
+| Mokly | `https://mokly.ai` | The real Mokly logo |
 | Firna UI | `https://github.com/futex-ai/ui` | A white switch on blue |
 | Redloop | `https://github.com/futex-ai/redloop` | A loop around a job, on brick red |
 | Bowser | `https://github.com/futex-ai/bowser` | A command prompt, on plum |
@@ -104,7 +104,8 @@ The homepage lists these projects, in this order:
 
 **Decision:** the user chose these five projects, in this order. The user
 rejected the list without Firna UI, and a card for the Firna product of
-`firna.ai`. The user later added Conductive and removed Bookfolio.
+`firna.ai`. The user later added Conductive as the first project and removed
+Bookfolio.
 
 ## Contact
 

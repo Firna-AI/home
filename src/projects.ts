@@ -33,15 +33,6 @@ export interface Project {
  */
 export const projects: readonly Project[] = [
   {
-    name: "Mokly",
-    kind: "Design tool",
-    line: "Mock up your whole app, so that AI agents build what you designed.",
-    href: "https://mokly.ai",
-    linkLabel: "mokly.ai",
-    color: "#2f5945",
-    logo: MoklyMark,
-  },
-  {
     name: "Conductive",
     kind: "Coding tool",
     line: "Coding agents on cloud computers, in your browser or the Mac app.",
@@ -50,6 +41,15 @@ export const projects: readonly Project[] = [
     linkLabel: "conductive.build",
     color: "#2c2f35",
     logo: ConductiveMark,
+  },
+  {
+    name: "Mokly",
+    kind: "Design tool",
+    line: "Mock up your whole app, so that AI agents build what you designed.",
+    href: "https://mokly.ai",
+    linkLabel: "mokly.ai",
+    color: "#2f5945",
+    logo: MoklyMark,
   },
   {
     name: "Firna UI",

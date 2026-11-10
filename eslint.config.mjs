@@ -11,6 +11,7 @@ export default defineConfig(
     ".astro/",
     "mokly-static/",
     ".mokly-export-reservations/",
+    ".wrangler/",
     "test-results/",
     "playwright-report/",
   ]),

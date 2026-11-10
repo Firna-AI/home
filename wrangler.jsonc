@@ -1,0 +1,23 @@
+// The Cloudflare Worker that serves the static site. It has no script: it
+// serves the files of `dist/` as static assets. docs/protocol/deploy.md
+// gives the rules, and docs/deploy-setup.md gives the setup.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // The name of the Worker in Cloudflare. It must match the Worker that the
+  // Git connection builds.
+  "name": "home",
+  "compatibility_date": "2026-11-10",
+  // The workers.dev address, and a preview address for each version that a
+  // branch other than main uploads.
+  "workers_dev": true,
+  "preview_urls": true,
+  "build": {
+    // Wrangler runs the build before each deploy and each version upload.
+    "command": "npm run build",
+  },
+  "assets": {
+    "directory": "./dist",
+    // An address with no file gets dist/404.html with status 404.
+    "not_found_handling": "404-page",
+  },
+}

@@ -92,9 +92,9 @@ skill at that moment instead of guessing the rule.
 
 ## Repository rules
 
-- Never commit `node_modules/`, `dist/`, `.astro/`, `mokly-static/`, or
-  `.mokly-export-reservations/`. Tools write them, and `.gitignore` lists
-  each one.
+- Never commit `node_modules/`, `dist/`, `.astro/`, `mokly-static/`,
+  `.mokly-export-reservations/`, or `.wrangler/`. Tools write them, and
+  `.gitignore` lists each one.
 - Keep TypeScript on 6.0, as `package.json` pins it. `typescript-eslint`
   and the Astro check do not support TypeScript 7.
 
@@ -123,6 +123,6 @@ skill at that moment instead of guessing the rule.
 
 ## Status
 
-- The site is not live yet. It goes live at `https://firna.dev` when the
-  user connects this repository to Cloudflare Pages. Until then, a push to
-  `main` deploys nothing.
+- The site is not live yet. The repository is connected to the Cloudflare
+  Worker `home`, which `wrangler.jsonc` configures. The site goes live at
+  `https://firna.dev` when the user adds the domain to the Worker.

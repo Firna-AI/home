@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 
-import { BookfolioMark } from "./logos/BookfolioMark";
 import { BowserMark } from "./logos/BowserMark";
+import { ConductiveMark } from "./logos/ConductiveMark";
 import { FirnaUiMark } from "./logos/FirnaUiMark";
 import type { MarkProps } from "./logos/markProps";
 import { MoklyMark } from "./logos/MoklyMark";
@@ -33,6 +33,16 @@ export interface Project {
  */
 export const projects: readonly Project[] = [
   {
+    name: "Conductive",
+    kind: "Coding tool",
+    line: "Coding agents on cloud computers, in your browser or the Mac app.",
+    keepTogether: ["Mac app"],
+    href: "https://conductive.build",
+    linkLabel: "conductive.build",
+    color: "#2c2f35",
+    logo: ConductiveMark,
+  },
+  {
     name: "Mokly",
     kind: "Design tool",
     line: "Mock up your whole app, so that AI agents build what you designed.",
@@ -40,15 +50,6 @@ export const projects: readonly Project[] = [
     linkLabel: "mokly.ai",
     color: "#2f5945",
     logo: MoklyMark,
-  },
-  {
-    name: "Bookfolio",
-    kind: "Accounting software",
-    line: "UK accounting made simple: books, VAT, payroll, and tax returns, with accountants on hand.",
-    href: "https://bookfolio.net",
-    linkLabel: "bookfolio.net",
-    color: "#4f7864",
-    logo: BookfolioMark,
   },
   {
     name: "Firna UI",

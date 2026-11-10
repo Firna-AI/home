@@ -3,13 +3,37 @@
  * as --logo-color. The hover tint uses it, and the grain field draws the
  * card's outline in it.
  */
+/*
+ * Each row of the grid holds the same number of cards. The column counts
+ * divide the six projects: one column on a phone, then two, three, and six.
+ * A new number of projects needs new column counts.
+ */
 .grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(212px, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 20px;
+}
+
+@media (min-width: 601px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Six cards of 200 px and their five gaps need 1300 px, and the side margins add 96 px. */
+@media (min-width: 1396px) {
+  .grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
 }
 
 .card {

@@ -90,6 +90,7 @@ The homepage lists these projects, in this order:
 
 | Project | Link | Logo |
 | --- | --- | --- |
+| Conductive | `https://conductive.build` | The real Conductive logo |
 | Mokly | `https://mokly.ai` | The real Mokly logo |
 | Bookfolio | `https://bookfolio.net` | The real Bookfolio logo |
 | Firna UI | `https://github.com/futex-ai/ui` | A white switch on blue |
@@ -101,10 +102,18 @@ The homepage lists these projects, in this order:
 - Each card also shows a short label for its link.
 - The whole card is one link to the project.
 - The kind and the line come from the project's own site or README.
+- At every page width, each row of the project list holds the same number
+  of cards.
 
-**Decision:** the user chose these five projects, in this order. The user
-rejected the list without Firna UI, and a card for the Firna product of
-`firna.ai`.
+**Decision:** the user chose these six projects, in this order, with
+Conductive, the newest project, first. The user rejected Conductive in
+second, third, or last place, the projects in two groups under headings,
+the list without Firna UI, and a card for the Firna product of `firna.ai`.
+
+**Decision:** the rows of cards stay even, so that no card sits alone on a
+row. The user chose this over a grid that fits as many cards as it can,
+narrower cards that fill one row only on wide screens, and three columns
+on every desktop screen.
 
 ## Contact
 

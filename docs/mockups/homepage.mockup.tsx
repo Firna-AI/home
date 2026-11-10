@@ -12,7 +12,7 @@ import { StillField } from "./StillField";
  */
 const fieldSize = {
   desktop: { width: 1440, height: 900 },
-  mobile: { width: 390, height: 1193 },
+  mobile: { width: 390, height: 1399 },
 } as const;
 
 export const homepage = defineScreen({
@@ -20,7 +20,7 @@ export const homepage = defineScreen({
   description:
     "The Firna homepage: the Firna logo and the contact email, the projects as frosted cards on the grain field, and the legal footer.",
   rationale:
-    "The catalogue runs no scripts, so this screen draws the grain field once, at rest, from the field's own layout. On the site the field moves: the pointer pushes the grains aside, and a hovered or focused card gathers an outline of grains in its logo colour. The still field is the site's field at rest on a 1440 × 900 desktop page and on a 390 px wide phone page, and it repeats on a larger page. The catalogue's desktop frame is narrower than 1440 px, so the five cards wrap there. At 1440 px they sit in one row.",
+    "The catalogue runs no scripts, so this screen draws the grain field once, at rest, from the field's own layout. On the site the field moves: the pointer pushes the grains aside, and a hovered or focused card gathers an outline of grains in its logo colour. The still field is the site's field at rest on a 1440 × 900 desktop page and on a 390 px wide phone page, and it repeats on a larger page. The catalogue's desktop frame is narrower than 1396 px, so the six cards sit there in two rows of three. At 1440 px they sit in one row.",
   relatedDocs: ["docs/protocol/homepage.md"],
   address: "https://firna.dev/",
   render: (_props, context) => (

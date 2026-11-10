@@ -81,9 +81,14 @@ at rest.
    [docs/protocol/homepage.md](docs/protocol/homepage.md#projects). That
    list of the projects and their order is a requirement, so it changes
    with the homepage.
-5. Run `npm run mockups`, and check the Homepage screen at both sizes.
-6. Run `npm run format`.
-7. Run `npm run gate`.
+5. Make each column count of the grid in `src/styles/cards.css` divide the
+   new number of projects. Then each row holds the same number of cards,
+   as the protocol doc requires.
+6. Add the project to `expectedProjects` in `tests/helpers/content.ts`, and
+   its name to the homepage description in `tests/page-metadata.spec.ts`.
+7. Run `npm run mockups`, and check the Homepage screen at both sizes.
+8. Run `npm run format`.
+9. Run `npm run gate`.
 
 ## Deploy
 
@@ -166,7 +171,8 @@ the checks of the setup.
 - `tests/page-metadata.spec.ts`: the metadata and icon requests of both
   built pages, and the SVG favicon's colours in light and dark themes.
 - `tests/homepage.browser.spec.ts`: the grain field, reduced motion,
-  the page without JavaScript, and requests to the page's own origin.
+  the page without JavaScript, requests to the page's own origin, and the
+  even rows of the project list.
 - `tests/site.browser.spec.ts`: the not-found page at an unknown address,
   with status 404 and its link to the homepage. It also checks that both
   pages set no cookie and write no other site data.

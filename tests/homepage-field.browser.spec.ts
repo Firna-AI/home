@@ -33,10 +33,11 @@ async function focusMokly(page: Page) {
   await expect(
     page.getByRole("link", { name: "hello@firna.ai", exact: true }),
   ).toBeFocused();
-  await page.keyboard.press("Tab");
-  await expect(
-    page.getByRole("link", { name: "Mokly", exact: true }),
-  ).toBeFocused();
+  // Conductive is the first card, so Mokly takes two more presses.
+  for (const name of ["Conductive", "Mokly"]) {
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("link", { name, exact: true })).toBeFocused();
+  }
   await expectOutline(page, "Mokly");
 }
 
@@ -89,10 +90,11 @@ test("Bookfolio's hover outline returns after keyboard focus leaves the cards", 
   await focusMokly(page);
   expect(await outlinePixels(page, "Bookfolio")).toBe(0);
 
-  await page.keyboard.press("Shift+Tab");
-  await expect(
-    page.getByRole("link", { name: "hello@firna.ai", exact: true }),
-  ).toBeFocused();
+  // Focus leaves the cards through Conductive, the first card.
+  for (const name of ["Conductive", "hello@firna.ai"]) {
+    await page.keyboard.press("Shift+Tab");
+    await expect(page.getByRole("link", { name, exact: true })).toBeFocused();
+  }
   await expectOutline(page, "Bookfolio");
   expect(await outlinePixels(page, "Mokly")).toBe(0);
 });

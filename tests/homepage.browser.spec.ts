@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator } from "@playwright/test";
 
 import { expectedLegalDetails, expectedProjects } from "./helpers/content";
 import {
@@ -100,4 +100,38 @@ test("The page loads every resource from its own origin", async ({
   expect(requests.map(({ type }) => type)).toEqual(
     expect.arrayContaining(["document", "script", "stylesheet", "font"]),
   );
+});
+
+/** The number of cards in each row of the list, from the top row down. */
+async function rowSizes(cards: Locator): Promise<number[]> {
+  const sizes = new Map<number, number>();
+  for (const card of await cards.all()) {
+    const box = await card.boundingBox();
+    if (!box) throw new Error("Each project card needs a visible box.");
+    const top = Math.round(box.y);
+    sizes.set(top, (sizes.get(top) ?? 0) + 1);
+  }
+  return [...sizes.values()];
+}
+
+test("The project cards fill even rows at each page width", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const cards = page
+    .getByRole("list", { name: "Projects" })
+    .getByRole("listitem");
+  // Hand-worked from the homepage design: one column on a phone, then two,
+  // three, and six.
+  for (const { width, rows } of [
+    { width: 390, rows: [1, 1, 1, 1, 1, 1] },
+    { width: 768, rows: [2, 2, 2] },
+    { width: 1280, rows: [3, 3] },
+    { width: 1440, rows: [6] },
+  ]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect
+      .poll(() => rowSizes(cards), { message: `rows at ${width} px` })
+      .toEqual(rows);
+  }
 });

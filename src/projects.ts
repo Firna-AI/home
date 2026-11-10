@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 
 import { BookfolioMark } from "./logos/BookfolioMark";
 import { BowserMark } from "./logos/BowserMark";
+import { ConductiveMark } from "./logos/ConductiveMark";
 import { FirnaUiMark } from "./logos/FirnaUiMark";
 import type { MarkProps } from "./logos/markProps";
 import { MoklyMark } from "./logos/MoklyMark";
@@ -29,9 +30,19 @@ export interface Project {
 
 /**
  * The projects, in the order that the page shows them. A new project is one
- * entry here and one logo in `src/logos/`.
+ * entry here and one logo in `src/logos/`. The column counts of the grid in
+ * `src/styles/cards.css` fit the number of projects, so check them too.
  */
 export const projects: readonly Project[] = [
+  {
+    name: "Conductive",
+    kind: "Coding tool",
+    line: "Give every coding task its own cloud computer, with agents powered by Claude and Codex.",
+    href: "https://conductive.build",
+    linkLabel: "conductive.build",
+    color: "#2c2f35",
+    logo: ConductiveMark,
+  },
   {
     name: "Mokly",
     kind: "Design tool",

@@ -1,7 +1,7 @@
 # Deploy setup
 
 This doc gives the one-time setup of the deploy. The setup connects this
-repository, `Firna-AI/home`, to Cloudflare Pages, adds the domains
+repository, `Firna-AI/home`, to a Cloudflare Worker, adds the domains
 `firna.dev` and `www.firna.dev`, and protects `main` in GitHub. The
 [Deploy](../README.md#deploy) section of the README says how a change goes
 live after the setup. The protocol doc
@@ -17,27 +17,35 @@ on `main`, because Cloudflare builds `main` as soon as you connect it. The
 setup needs no API token. In Cloudflare, a zone is a domain with its DNS
 records and its settings.
 
-## 1. Create the Pages project
+## 1. Connect the Worker
+
+The Worker `home` serves the site. [wrangler.jsonc](../wrangler.jsonc)
+holds its configuration, so the dashboard needs only the values below.
 
 1. Sign in to the Cloudflare account that holds the zone `firna.dev`.
-   Pages can serve a bare domain only from a zone in its own account.
-2. Open **Workers & Pages**. Select **Create application**, the **Pages**
-   tab, and **Import an existing Git repository**.
+   A Worker can serve a custom domain only from a zone in its own account.
+2. Open **Workers & Pages**. Select **Create application**, then
+   **Import a repository**.
 3. Select GitHub. Give the GitHub app **Cloudflare Workers and Pages**
    access to `Firna-AI/home`. Cloudflare advises access to selected
    repositories only.
-4. Select `Firna-AI/home`, then **Begin setup**. Enter these values:
-   - Project name: `firna-home`. The project then also answers at
-     `https://firna-home.pages.dev`.
-   - Production branch: `main`.
-   - Build command: `npm run build`.
-   - Build output directory: `dist`.
+4. Select `Firna-AI/home`. Enter these values:
+   - Project name: `home`. It must be the same as `name` in
+     `wrangler.jsonc`, or the build fails.
+   - Build command: leave it empty. Wrangler runs `npm run build` before
+     each deploy, because `wrangler.jsonc` sets it.
+   - Deploy command: `npx wrangler deploy`.
+   - Non-production branch deploy command: `npx wrangler versions upload`.
+   - Path: `/`.
 5. Add no environment variable. The build image reads the Node version
    from `.nvmrc`.
-6. Select **Save and Deploy**. Cloudflare builds and deploys `main`.
-7. In the project, open **Settings** > **Builds** > **Branch control**.
-   Keep the automatic production deployments on. Keep the preview
-   branches at **All non-Production branches**.
+6. Select **Deploy**. Cloudflare builds and deploys `main`.
+7. In the Worker, open **Settings** > **Build** > **Branch control**. Set
+   the production branch to `main`, and turn on
+   **Builds for non-production branches**.
+
+If the Worker `home` exists already, open **Settings** > **Build** in it,
+and check the values of steps 4 and 7.
 
 ## 2. Check the zone settings
 
@@ -55,8 +63,8 @@ these in the zone `firna.dev` before you add the domains:
 3. **Speed** > **Settings** > **Content Optimization**: keep
    **Rocket Loader** off. It loads the page's script through a script of
    its own.
-4. Keep Web Analytics off. Do not enable it under **Metrics** in the
-   Pages project, and add no site for `firna.dev` under **Web Analytics**.
+4. Keep Web Analytics off. Add no site for `firna.dev` under
+   **Web Analytics**.
    It adds a script from another origin.
 5. Turn on no other feature that adds a script or a cookie, such as
    Zaraz.
@@ -65,14 +73,14 @@ these in the zone `firna.dev` before you add the domains:
 
 ## 3. Add the domains
 
-Pages cannot redirect one domain to another. So a Bulk Redirect of the
+The Worker serves only the files of the site. So a Bulk Redirect of the
 Cloudflare account sends `www.firna.dev` to `https://firna.dev`. The
 redirect steps follow Cloudflare's guide
 [Redirecting www to domain apex](https://developers.cloudflare.com/pages/how-to/www-redirect/).
 
-1. In the Pages project, open **Custom domains**, and select
-   **Set up a domain**. Enter `firna.dev`, and select **Continue**.
-   Cloudflare adds the DNS record. Wait until the domain is **Active**.
+1. In the Worker, open **Settings** > **Domains & Routes**, and select
+   **Add** > **Custom domain**. Enter `firna.dev`, and select
+   **Add domain**. Cloudflare adds the DNS record and the certificate. Wait until the domain is **Active**.
 2. In the zone `firna.dev`, open **Rules** > **Settings**, and select the
    **Bulk Redirects** tab. Select **Create Bulk Redirect List**.
 3. Give the list a name. Add one URL redirect manually:
@@ -128,9 +136,10 @@ before `gate` passed.
 
 ## 5. Check the setup
 
-1. In **Deployments** of the project, the first production build passed.
+1. In the Worker, under **Deployments**, the first production build passed.
    Its log shows the Node version of `.nvmrc`.
-2. `https://firna-home.pages.dev/` shows the homepage.
+2. The `workers.dev` address of the Worker, under **Settings** >
+   **Domains & Routes**, shows the homepage.
 3. `curl -sI https://firna.dev/` shows status 200 and no `set-cookie`
    header.
 4. `curl -sI https://firna.dev/no-such-page` shows status 404 and no

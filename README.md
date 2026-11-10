@@ -20,8 +20,8 @@ The protocol docs hold the requirements and the decisions in force.
 and [docs/protocol/deploy.md](docs/protocol/deploy.md) covers the hosting
 and the deploy.
 
-The site is not live yet. A push deploys nothing until someone connects
-this repository to Cloudflare Pages.
+The site is not live yet at `https://firna.dev`. It goes live there when
+the owner adds the domain to the Cloudflare Worker that deploys it.
 
 ## Get started
 
@@ -87,7 +87,9 @@ at rest.
 
 ## Deploy
 
-Cloudflare Pages hosts the site. A change goes live in three steps:
+A Cloudflare Worker named `home` hosts the site. It has no script: it
+serves the built files as static assets. [wrangler.jsonc](wrangler.jsonc)
+configures it. A change goes live in three steps:
 
 1. A pull request runs the GitHub Actions workflow "Gate" in
    [.github/workflows/gate.yml](.github/workflows/gate.yml). It runs
@@ -95,19 +97,20 @@ Cloudflare Pages hosts the site. A change goes live in three steps:
 2. GitHub merges the pull request into `main` only after `gate` passed.
    A ruleset of the repository holds this rule, and it blocks direct
    pushes to `main`. The owner of the repository can bypass the ruleset.
-3. Cloudflare's Git connection builds the new `main` with `npm run build`,
-   and deploys `dist/` to `https://firna.dev`. The workflow also runs on
+3. Cloudflare's Git connection runs `npx wrangler deploy` on the new
+   `main`. Wrangler builds the site with `npm run build`, and it deploys
+   `dist/` to `https://firna.dev`. The workflow also runs on
    that push, and it reports its result on the commit.
 
 Cloudflare's build runs no checks. When it fails, the live site stays as
-it was. Cloudflare also builds a preview of each other branch at a
-`pages.dev` address, and it links the preview on the pull request. The
+it was. Cloudflare also uploads a preview of each other branch at a
+`workers.dev` address, and it links the preview on the pull request. The
 protocol doc [docs/protocol/deploy.md](docs/protocol/deploy.md) gives the
 rules and the decisions.
 
 The owner of the repository does a one-time setup in Cloudflare and
 GitHub. [docs/deploy-setup.md](docs/deploy-setup.md) gives its steps: the
-Pages project, the zone settings, the domains, the ruleset for `main`, and
+Worker, the zone settings, the domains, the ruleset for `main`, and
 the checks of the setup.
 
 ## Key code
@@ -174,6 +177,8 @@ the checks of the setup.
   pointer and the keyboard focus, after each input and a resize, and the
   wind outside the card that holds the outline.
 - `playwright.config.ts`: the test runner and the preview server.
+- `wrangler.jsonc`: the Cloudflare Worker that serves `dist/`, its build
+  command, and its not-found page.
 - `.github/workflows/gate.yml`: the GitHub Actions workflow "Gate". It runs
   `npm run gate` on each pull request and each push to `main`.
 
@@ -184,7 +189,7 @@ the checks of the setup.
 - [docs/protocol/deploy.md](docs/protocol/deploy.md): the requirements and
   the decisions in force for the hosting and the deploy.
 - [docs/deploy-setup.md](docs/deploy-setup.md): the one-time setup of
-  Cloudflare Pages, the domains, and the ruleset for `main`.
+  the Cloudflare Worker, the domains, and the ruleset for `main`.
 - [src/README.md](src/README.md): the rules for work on the code.
 - [src/logos/README.md](src/logos/README.md): the source of each logo.
 - [AGENTS.md](AGENTS.md): the rules for agents in this repository.

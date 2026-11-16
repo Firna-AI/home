@@ -7,7 +7,7 @@ const reactIntegration = react();
 const setupReact = reactIntegration.hooks["astro:config:setup"];
 
 export default defineConfig({
-  site: "https://firna.dev/",
+  site: "https://firna.ai/",
   output: "static",
   vite: {
     build: {

@@ -1,7 +1,7 @@
 # A guide for agents
 
 This repository, `Firna-AI/home`, holds the static site of Firna Ltd at
-`https://firna.dev`. The homepage lists Firna's projects. At every address
+`https://firna.ai`. The homepage lists Firna's projects. At every address
 with no page or file, the site shows the not-found page with status 404.
 
 The stack uses Astro, TypeScript, and React. Astro renders the React
@@ -92,9 +92,9 @@ skill at that moment instead of guessing the rule.
 
 ## Repository rules
 
-- Never commit `node_modules/`, `dist/`, `.astro/`, `mokly-static/`, or
-  `.mokly-export-reservations/`. Tools write them, and `.gitignore` lists
-  each one.
+- Never commit `node_modules/`, `dist/`, `.astro/`, `mokly-static/`,
+  `.mokly-export-reservations/`, or `.wrangler/`. Tools write them, and
+  `.gitignore` lists each one.
 - Keep TypeScript on 6.0, as `package.json` pins it. `typescript-eslint`
   and the Astro check do not support TypeScript 7.
 
@@ -123,6 +123,7 @@ skill at that moment instead of guessing the rule.
 
 ## Status
 
-- The site is not live yet. It goes live at `https://firna.dev` when the
-  user connects this repository to Cloudflare Pages. Until then, a push to
-  `main` deploys nothing.
+- The site is live at `https://firna.ai`. The Cloudflare Worker `home`
+  serves it, from a version that the user uploaded with Wrangler on
+  2026-11-06. Cloudflare's build of each push fails, so a push to `main`
+  deploys nothing yet.

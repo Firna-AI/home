@@ -122,18 +122,15 @@ export async function canvasState(page: Page, remember = false) {
   }, remember);
 }
 
-export function projectCard(page: Page, project: "Mokly" | "Bookfolio") {
+export function projectCard(page: Page, project: "Mokly" | "Firna UI") {
   return page.getByRole("listitem").filter({
     has: page.getByRole("link", { name: project, exact: true }),
   });
 }
 
-export async function outlinePixels(
-  page: Page,
-  project: "Mokly" | "Bookfolio",
-) {
+export async function outlinePixels(page: Page, project: "Mokly" | "Firna UI") {
   // Literal colours from the approved prototype, independent of product code.
-  const colours = { Mokly: "#2f5945", Bookfolio: "#4f7864" };
+  const colours = { Mokly: "#2f5945", "Firna UI": "#3f6290" };
   const box = await projectCard(page, project).boundingBox();
   if (!box) throw new Error(`${project} needs a visible card.`);
 

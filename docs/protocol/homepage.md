@@ -1,7 +1,7 @@
 # Homepage
 
 This doc holds the requirements and the decisions in force for the site of
-Firna Ltd at `firna.dev`: the homepage and the not-found page. Each
+Firna Ltd at `firna.ai`: the homepage and the not-found page. Each
 decision gives the choice, the rejected alternatives, and the reason. The
 [deploy doc](deploy.md) holds the requirements and the decisions for the
 hosting and the deploy of the site.
@@ -28,16 +28,26 @@ hosting and the deploy of the site.
 
 ## Address
 
-- The site lives at `https://firna.dev`.
-- `https://www.firna.dev` redirects to `https://firna.dev`.
-- The homepage is at `https://firna.dev/`.
+- The site lives at `https://firna.ai`.
+- The homepage is at `https://firna.ai/`.
+- `https://www.firna.ai` redirects to `https://firna.ai`.
+- `https://firna.dev` and `https://www.firna.dev` redirect to
+  `https://firna.ai`.
+- Each redirect keeps the path and the query of the address.
+- A request over plain HTTP gets a redirect to HTTPS.
 - An address with no page or file of the site answers with status 404 and
   shows the not-found page.
 
-**Decision:** the homepage lives at `firna.dev`, because `firna.ai` serves
-the Firna product site, and the homepage must not replace it. The user
-rejected a subdomain or a path of `firna.ai`, another domain, and a move of
-the product away from `firna.ai`.
+**Decision:** the homepage lives at `firna.ai`. On 2026-11-16 the user
+found the homepage already served there, and chose to keep it. So the
+homepage replaces the Firna product site at `firna.ai`. The user rejected
+a move of the homepage to `firna.dev`, the address of an earlier decision,
+and the product site back at `firna.ai`.
+
+**Decision:** `www.firna.ai`, `firna.dev`, and `www.firna.dev` redirect
+to `https://firna.ai`, so that a typed `www` and a link to the old
+address both reach the site. The user chose this on 2026-11-16, and
+rejected no answer at `www.firna.ai` and an unused `firna.dev`.
 
 **Decision:** an address with no page or file gets the not-found page with
 status 404. So a visitor and a search engine both learn that the address
@@ -91,7 +101,7 @@ The homepage lists these projects, in this order:
 | Project | Link | Logo |
 | --- | --- | --- |
 | Mokly | `https://mokly.ai` | The real Mokly logo |
-| Bookfolio | `https://bookfolio.net` | The real Bookfolio logo |
+| Conductive | `https://conductive.build` | The real Conductive logo |
 | Firna UI | `https://github.com/futex-ai/ui` | A white switch on blue |
 | Redloop | `https://github.com/futex-ai/redloop` | A loop around a job, on brick red |
 | Bowser | `https://github.com/futex-ai/bowser` | A command prompt, on plum |
@@ -102,9 +112,10 @@ The homepage lists these projects, in this order:
 - The whole card is one link to the project.
 - The kind and the line come from the project's own site or README.
 
-**Decision:** the user chose these five projects, in this order. The user
+**Decision:** the user chose these projects, in this order. The user
 rejected the list without Firna UI, and a card for the Firna product of
-`firna.ai`.
+`firna.ai`. The user later removed Bookfolio from the list, and added
+Conductive in its place.
 
 ## Contact
 
@@ -138,7 +149,7 @@ number. The user confirmed the registration and gave the number.
 
 - The homepage has a title and a description.
 - The title and the description make no statement about Firna.
-- The canonical address of the homepage is `https://firna.dev/`.
+- The canonical address of the homepage is `https://firna.ai/`.
 - The favicon of each page is the Close-off mark in ink.
 - When the browser uses a dark theme, the favicon is light.
 - A browser that cannot change a favicon with its theme shows the mark in

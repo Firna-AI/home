@@ -30,10 +30,13 @@ configuration, so the dashboard needs only the commands.
    problem with the connection, connect the repository again. Give the
    GitHub app **Cloudflare Workers and Pages** access to `Firna-AI/home`.
 3. Set **Build configuration** to these values:
-   - Build command: empty. Wrangler runs `npm run build`, as
-     `wrangler.jsonc` says.
+   - Build command: `npm run build`. Wrangler also runs it before each
+     deploy, as `wrangler.jsonc` says, so the build runs twice. That
+     costs about one second, and an empty build command also works.
    - Deploy command: `npx wrangler deploy`.
-   - Non-production branch deploy command: `npx wrangler versions upload`.
+   - Non-production branch deploy command: `npx wrangler preview`. It
+     makes a Preview of the branch, and it needs the `previews` block of
+     `wrangler.jsonc`.
    - Root directory: `/`.
 4. Under **Branch control**, set the production branch to `main`, and
    turn on the builds for non-production branches.

@@ -37,8 +37,8 @@ the site.
   merge before the gate passed.
 - A change through the bypass goes live without a passed gate. GitHub
   still runs the complete gate on it and reports the result.
-- Cloudflare uploads a version of each other branch, with a preview
-  address on `workers.dev`. It does not deploy that version.
+- Cloudflare makes a Preview of each other branch, with its own address
+  on `workers.dev`. A Preview does not change the live site.
 
 **Decision:** a Cloudflare Worker with static assets, built by Workers
 Builds. On 2026-11-16 the user found that the Worker `home` already serves

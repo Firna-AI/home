@@ -11,6 +11,9 @@
   // branch other than main uploads.
   "workers_dev": true,
   "preview_urls": true,
+  // Workers Builds runs `wrangler preview` for each branch other than main.
+  // That command needs this block. Empty means the settings above apply.
+  "previews": {},
   // The live address. A deploy keeps this custom domain on the Worker.
   "routes": [{ "pattern": "firna.ai", "custom_domain": true }],
   "build": {

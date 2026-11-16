@@ -107,10 +107,10 @@ goes live in three steps:
    that push, and it reports its result on the commit.
 
 Cloudflare's build runs no checks. When it fails, the live site stays as
-it was. For each other branch, Cloudflare runs `npx wrangler versions
-upload`. It uploads a version with a preview address on `workers.dev`,
-and it does not deploy it. Its check on the pull request is named
-"Workers Builds: home". The protocol doc
+it was. For each other branch, Cloudflare runs `npx wrangler preview`.
+It makes a Preview of the branch with its own address on `workers.dev`,
+and the live site does not change. Its check on the pull request is
+named "Workers Builds: home". The protocol doc
 [docs/protocol/deploy.md](docs/protocol/deploy.md) gives the rules and
 the decisions.
 

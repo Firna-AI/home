@@ -52,8 +52,10 @@ these in the zone `firna.ai`:
 
 1. **Security** > **Settings**: turn **Email Address Obfuscation** off.
    It hides the mail address, and it adds a script that decodes it. The
-   mail link then needs JavaScript. On 2026-11-16 the live page had no
-   such script.
+   mail link then needs JavaScript. On 2026-11-16 the setting was on in
+   both zones, but the pages of the Worker still had a plain mail link
+   and no such script. The zone `firna.ai` also serves the Firna product
+   at `platform.firna.ai`, so this change affects the product too.
 2. **Security** > **Settings**: keep **Bot Fight Mode** off. It adds a
    script and the cookies `__cf_bm` and `cf_clearance`.
 3. **Speed** > **Settings** > **Content Optimization**: keep
@@ -65,46 +67,46 @@ these in the zone `firna.ai`:
 5. Turn on no other feature that adds a script or a cookie, such as
    Zaraz.
 6. **SSL/TLS** > **Edge Certificates**: turn **Always Use HTTPS** on. A
-   request over plain HTTP then gets a redirect to HTTPS. On 2026-11-16,
-   `http://firna.ai/` answered with status 200 and no redirect.
-
-Turn **Always Use HTTPS** on in the zone `firna.dev` too.
+   request over plain HTTP then gets a redirect to HTTPS. Turn it on in
+   the zone `firna.dev` too. Both were turned on on 2026-11-16.
 
 ## 3. Add the redirects
 
 `wrangler.jsonc` keeps the custom domain `firna.ai` on the Worker. Three
-other addresses redirect to it with status 301. A redirect rule needs a
-proxied DNS record for its host, so that the request reaches Cloudflare.
-The records below point to `192.0.2.1`, a placeholder address. Cloudflare
-answers each request with the redirect, so no request reaches the
-address.
+other addresses redirect to it with status 301, and keep the path and the
+query. A redirect rule needs a proxied DNS record for its host, so that
+the request reaches Cloudflare. Cloudflare answers the request with the
+redirect, so no request reaches the address of the record. These steps
+were done on 2026-11-16.
 
 ### `www.firna.ai`
 
-1. In **DNS** > **Records** of the zone `firna.ai`, add this record:
-   type `A`, name `www`, IPv4 address `192.0.2.1`, proxy status
-   **Proxied**. On 2026-11-16, `www.firna.ai` had no record.
+1. In **DNS** > **Records** of the zone `firna.ai`, check that `www` has
+   a proxied record. On 2026-11-16 it pointed to `34.29.25.72`, the
+   server of `platform.firna.ai`. Keep it. If it is missing, add type
+   `A`, IPv4 address `192.0.2.1`, proxy status **Proxied**.
 2. Open **Rules** > **Overview**, and select **Create rule** >
-   **Redirect Rule**. Select the template **Redirect from WWW to root**.
-3. Check that the rule sends `https://www.*` to `https://${1}`, with
-   status 301, and keeps the query string. Select **Deploy**.
-
-### `firna.dev` and `www.firna.dev`
-
-1. In **DNS** > **Records** of the zone `firna.dev`, give `www` this
-   record: type `A`, IPv4 address `192.0.2.1`, proxy status **Proxied**.
-   First check that no service still uses the old record. On 2026-11-16,
-   `www` pointed to `35.255.149.11`, an address that did not answer.
-   Keep the proxied record of `firna.dev` itself.
-2. Open **Rules** > **Overview**, and select **Create rule** >
-   **Redirect Rule**. Give it the name `firna.dev to firna.ai`.
-3. Under **If incoming requests match**, select **All incoming requests**.
+   **Redirect Rule**. Give it the name `www.firna.ai to firna.ai`.
+3. Under **If incoming requests match**, select **Custom filter
+   expression**, and enter `(http.host eq "www.firna.ai")`.
 4. Under **Then**, set these values:
    - Type: **Dynamic**.
    - Expression: `concat("https://firna.ai", http.request.uri.path)`.
    - Status code: `301`.
    - Select **Preserve query string**.
 5. Select **Deploy**.
+
+### `firna.dev` and `www.firna.dev`
+
+1. In **DNS** > **Records** of the zone `firna.dev`, add two records:
+   type `A`, names `firna.dev` and `www`, IPv4 address `192.0.2.1`, proxy
+   status **Proxied**. The address is a placeholder. Keep the wildcard
+   records `*.firna.dev` and `*.preview.firna.dev`. The `www` record
+   overrides the wildcard only for `www`.
+2. Create a Redirect Rule with the name `firna.dev to firna.ai`, as for
+   `www.firna.ai`. Its expression is
+   `(http.host in {"firna.dev" "www.firna.dev"})`. The other values are
+   the same.
 
 ## 4. Protect `main` in GitHub
 

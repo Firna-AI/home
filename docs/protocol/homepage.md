@@ -1,7 +1,7 @@
 # Homepage
 
 This doc holds the requirements and the decisions in force for the site of
-Firna Ltd at `firna.dev`: the homepage and the not-found page. Each
+Firna Ltd at `firna.ai`: the homepage and the not-found page. Each
 decision gives the choice, the rejected alternatives, and the reason. The
 [deploy doc](deploy.md) holds the requirements and the decisions for the
 hosting and the deploy of the site.
@@ -28,16 +28,16 @@ hosting and the deploy of the site.
 
 ## Address
 
-- The site lives at `https://firna.dev`.
-- `https://www.firna.dev` redirects to `https://firna.dev`.
-- The homepage is at `https://firna.dev/`.
+- The site lives at `https://firna.ai`.
+- The homepage is at `https://firna.ai/`.
 - An address with no page or file of the site answers with status 404 and
   shows the not-found page.
 
-**Decision:** the homepage lives at `firna.dev`, because `firna.ai` serves
-the Firna product site, and the homepage must not replace it. The user
-rejected a subdomain or a path of `firna.ai`, another domain, and a move of
-the product away from `firna.ai`.
+**Decision:** the homepage lives at `firna.ai`. On 2026-11-16 the user
+found the homepage already served there, and chose to keep it. So the
+homepage replaces the Firna product site at `firna.ai`. The user rejected
+a move of the homepage to `firna.dev`, the address of an earlier decision,
+and the product site back at `firna.ai`.
 
 **Decision:** an address with no page or file gets the not-found page with
 status 404. So a visitor and a search engine both learn that the address
@@ -139,7 +139,7 @@ number. The user confirmed the registration and gave the number.
 
 - The homepage has a title and a description.
 - The title and the description make no statement about Firna.
-- The canonical address of the homepage is `https://firna.dev/`.
+- The canonical address of the homepage is `https://firna.ai/`.
 - The favicon of each page is the Close-off mark in ink.
 - When the browser uses a dark theme, the favicon is light.
 - A browser that cannot change a favicon with its theme shows the mark in

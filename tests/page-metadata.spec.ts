@@ -15,7 +15,7 @@ test("Both built pages keep their required metadata and reachable favicons", asy
       descriptions: [
         "Firna's projects: Mokly, Conductive, Firna UI, Redloop, and Bowser.",
       ],
-      canonicals: ["https://firna.dev/"],
+      canonicals: ["https://firna.ai/"],
     },
     {
       path: unknownAddress,

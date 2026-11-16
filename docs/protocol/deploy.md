@@ -1,7 +1,7 @@
 # Deploy
 
 This doc holds the requirements and the decisions in force for the hosting
-and the deploy of the site of Firna Ltd at `firna.dev`. Each decision
+and the deploy of the site of Firna Ltd at `firna.ai`. Each decision
 gives the choice, the rejected alternatives, and the reason. The
 [homepage doc](homepage.md) holds all other requirements and decisions of
 the site.

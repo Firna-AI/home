@@ -1,6 +1,6 @@
 # Firna homepage
 
-This repository holds the static site of Firna Ltd at `https://firna.dev`.
+This repository holds the static site of Firna Ltd at `https://firna.ai`.
 It has two pages. The homepage shows the Firna logo, the contact email, the
 list of Firna's projects, and the legal details of the company. At every
 address with no page or file, the site shows the not-found page with
@@ -20,8 +20,10 @@ The protocol docs hold the requirements and the decisions in force.
 and [docs/protocol/deploy.md](docs/protocol/deploy.md) covers the hosting
 and the deploy.
 
-The site is not live yet. A push deploys nothing until someone connects
-this repository to Cloudflare Pages.
+The site is live at `https://firna.ai`. The Cloudflare Worker `home`
+serves it, from a version that the owner uploaded with Wrangler on
+2026-11-06. Cloudflare's build of each push fails, so a push deploys
+nothing yet.
 
 ## Get started
 
@@ -96,7 +98,7 @@ Cloudflare Pages hosts the site. A change goes live in three steps:
    A ruleset of the repository holds this rule, and it blocks direct
    pushes to `main`. The owner of the repository can bypass the ruleset.
 3. Cloudflare's Git connection builds the new `main` with `npm run build`,
-   and deploys `dist/` to `https://firna.dev`. The workflow also runs on
+   and deploys `dist/` to `https://firna.ai`. The workflow also runs on
    that push, and it reports its result on the commit.
 
 Cloudflare's build runs no checks. When it fails, the live site stays as

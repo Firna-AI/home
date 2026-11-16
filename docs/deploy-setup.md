@@ -1,8 +1,8 @@
 # Deploy setup
 
 This doc gives the one-time setup of the deploy. The setup connects this
-repository, `Firna-AI/home`, to Cloudflare Pages, adds the domains
-`firna.dev` and `www.firna.dev`, and protects `main` in GitHub. The
+repository, `Firna-AI/home`, to the Cloudflare Worker `home`, adds the
+redirects to `firna.ai`, and protects `main` in GitHub. The
 [Deploy](../README.md#deploy) section of the README says how a change goes
 live after the setup. The protocol doc
 [docs/protocol/deploy.md](protocol/deploy.md) gives the rules and the
@@ -10,87 +10,101 @@ decisions.
 
 In this doc, "the workflow" is the GitHub Actions workflow "Gate", in
 [.github/workflows/gate.yml](../.github/workflows/gate.yml). Its check is
-named `gate`.
+named `gate`. In Cloudflare, a zone is a domain with its DNS records and
+its settings.
 
-The owner of the repository does this setup once. Do it after the site is
-on `main`, because Cloudflare builds `main` as soon as you connect it. The
-setup needs no API token. In Cloudflare, a zone is a domain with its DNS
-records and its settings.
+The owner of the repository does this setup once, in the Cloudflare
+account that holds the zones `firna.ai` and `firna.dev`. The setup needs
+no API token. A Wrangler login cannot do these steps: it can read a zone,
+but not change it, and it cannot see Workers Builds.
 
-## 1. Create the Pages project
+## 1. Check the build settings of the Worker
 
-1. Sign in to the Cloudflare account that holds the zone `firna.dev`.
-   Pages can serve a bare domain only from a zone in its own account.
-2. Open **Workers & Pages**. Select **Create application**, the **Pages**
-   tab, and **Import an existing Git repository**.
-3. Select GitHub. Give the GitHub app **Cloudflare Workers and Pages**
-   access to `Firna-AI/home`. Cloudflare advises access to selected
-   repositories only.
-4. Select `Firna-AI/home`, then **Begin setup**. Enter these values:
-   - Project name: `firna-home`. The project then also answers at
-     `https://firna-home.pages.dev`.
-   - Production branch: `main`.
-   - Build command: `npm run build`.
-   - Build output directory: `dist`.
-5. Add no environment variable. The build image reads the Node version
-   from `.nvmrc`.
-6. Select **Save and Deploy**. Cloudflare builds and deploys `main`.
-7. In the project, open **Settings** > **Builds** > **Branch control**.
-   Keep the automatic production deployments on. Keep the preview
-   branches at **All non-Production branches**.
+The Worker `home` exists, and its Git connection to `Firna-AI/home` is
+on. [wrangler.jsonc](../wrangler.jsonc) holds the rest of the
+configuration, so the dashboard needs only the commands.
+
+1. Open **Workers & Pages**, select the Worker `home`, and open
+   **Settings** > **Build**.
+2. Check **Git repository**: `Firna-AI/home`. If Cloudflare shows a
+   problem with the connection, connect the repository again. Give the
+   GitHub app **Cloudflare Workers and Pages** access to `Firna-AI/home`.
+3. Set **Build configuration** to these values:
+   - Build command: empty. Wrangler runs `npm run build`, as
+     `wrangler.jsonc` says.
+   - Deploy command: `npx wrangler deploy`.
+   - Non-production branch deploy command: `npx wrangler versions upload`.
+   - Root directory: `/`.
+4. Under **Branch control**, set the production branch to `main`, and
+   turn on the builds for non-production branches.
+5. Add no build variable. The build image reads the Node version from
+   `.nvmrc`.
+6. When a build fails, open the build from the check
+   "Workers Builds: home" on GitHub, or from **Deployments** of the
+   Worker. The log names the failed step.
 
 ## 2. Check the zone settings
 
 Some Cloudflare features change a page on its way to a visitor. They
 break the rules of [docs/protocol/homepage.md](protocol/homepage.md)
 on scripts, cookies, other origins, and pages without JavaScript. Set
-these in the zone `firna.dev` before you add the domains:
+these in the zone `firna.ai`:
 
 1. **Security** > **Settings**: turn **Email Address Obfuscation** off.
-   Cloudflare turns it on in each new zone. It hides the mail address,
-   and it adds a script that decodes it. The mail link then needs
-   JavaScript.
+   It hides the mail address, and it adds a script that decodes it. The
+   mail link then needs JavaScript. On 2026-11-16 the live page had no
+   such script.
 2. **Security** > **Settings**: keep **Bot Fight Mode** off. It adds a
    script and the cookies `__cf_bm` and `cf_clearance`.
 3. **Speed** > **Settings** > **Content Optimization**: keep
    **Rocket Loader** off. It loads the page's script through a script of
    its own.
-4. Keep Web Analytics off. Do not enable it under **Metrics** in the
-   Pages project, and add no site for `firna.dev` under **Web Analytics**.
-   It adds a script from another origin.
+4. Keep Web Analytics off. Do not enable it on the Worker, and add no
+   site for `firna.ai` under **Web Analytics**. It adds a script from
+   another origin.
 5. Turn on no other feature that adds a script or a cookie, such as
    Zaraz.
 6. **SSL/TLS** > **Edge Certificates**: turn **Always Use HTTPS** on. A
-   request over plain HTTP then gets a redirect to HTTPS.
+   request over plain HTTP then gets a redirect to HTTPS. On 2026-11-16,
+   `http://firna.ai/` answered with status 200 and no redirect.
 
-## 3. Add the domains
+Turn **Always Use HTTPS** on in the zone `firna.dev` too.
 
-Pages cannot redirect one domain to another. So a Bulk Redirect of the
-Cloudflare account sends `www.firna.dev` to `https://firna.dev`. The
-redirect steps follow Cloudflare's guide
-[Redirecting www to domain apex](https://developers.cloudflare.com/pages/how-to/www-redirect/).
+## 3. Add the redirects
 
-1. In the Pages project, open **Custom domains**, and select
-   **Set up a domain**. Enter `firna.dev`, and select **Continue**.
-   Cloudflare adds the DNS record. Wait until the domain is **Active**.
-2. In the zone `firna.dev`, open **Rules** > **Settings**, and select the
-   **Bulk Redirects** tab. Select **Create Bulk Redirect List**.
-3. Give the list a name. Add one URL redirect manually:
-   - Source URL: `www.firna.dev`
-   - Target URL: `https://firna.dev`
-   - Status: `301`
-   - Under **Edit parameters**, select **Preserve query string** and
-     **Subpath matching**. Keep **Preserve path suffix** selected.
-4. Select **Next** until you see **Continue to Redirect Rules**, and
-   select it. Create a Bulk Redirect Rule that uses the list, and select
-   **Save and Deploy**.
-5. In **DNS** > **Records** of the zone, give `www` this record: type `A`,
-   IPv4 address `192.0.2.1`, and proxy status **Proxied**. If a `www`
-   record exists, first check that no service still uses it. On
-   2026-11-06, `www` pointed to `35.255.149.11`, an address that did not
-   answer. Then change the record to these values. The address is a
-   placeholder. Cloudflare answers each request for `www` with the
-   redirect, so no request reaches the address.
+`wrangler.jsonc` keeps the custom domain `firna.ai` on the Worker. Three
+other addresses redirect to it with status 301. A redirect rule needs a
+proxied DNS record for its host, so that the request reaches Cloudflare.
+The records below point to `192.0.2.1`, a placeholder address. Cloudflare
+answers each request with the redirect, so no request reaches the
+address.
+
+### `www.firna.ai`
+
+1. In **DNS** > **Records** of the zone `firna.ai`, add this record:
+   type `A`, name `www`, IPv4 address `192.0.2.1`, proxy status
+   **Proxied**. On 2026-11-16, `www.firna.ai` had no record.
+2. Open **Rules** > **Overview**, and select **Create rule** >
+   **Redirect Rule**. Select the template **Redirect from WWW to root**.
+3. Check that the rule sends `https://www.*` to `https://${1}`, with
+   status 301, and keeps the query string. Select **Deploy**.
+
+### `firna.dev` and `www.firna.dev`
+
+1. In **DNS** > **Records** of the zone `firna.dev`, give `www` this
+   record: type `A`, IPv4 address `192.0.2.1`, proxy status **Proxied**.
+   First check that no service still uses the old record. On 2026-11-16,
+   `www` pointed to `35.255.149.11`, an address that did not answer.
+   Keep the proxied record of `firna.dev` itself.
+2. Open **Rules** > **Overview**, and select **Create rule** >
+   **Redirect Rule**. Give it the name `firna.dev to firna.ai`.
+3. Under **If incoming requests match**, select **All incoming requests**.
+4. Under **Then**, set these values:
+   - Type: **Dynamic**.
+   - Expression: `concat("https://firna.ai", http.request.uri.path)`.
+   - Status code: `301`.
+   - Select **Preserve query string**.
+5. Select **Deploy**.
 
 ## 4. Protect `main` in GitHub
 
@@ -128,18 +142,22 @@ before `gate` passed.
 
 ## 5. Check the setup
 
-1. In **Deployments** of the project, the first production build passed.
-   Its log shows the Node version of `.nvmrc`.
-2. `https://firna-home.pages.dev/` shows the homepage.
-3. `curl -sI https://firna.dev/` shows status 200 and no `set-cookie`
+1. In **Deployments** of the Worker `home`, the last build of `main`
+   passed. The check "Workers Builds: home" on the next pull request
+   passes too.
+2. `https://home.firna.workers.dev/` shows the homepage.
+3. `curl -sI https://firna.ai/` shows status 200 and no `set-cookie`
    header.
-4. `curl -sI https://firna.dev/no-such-page` shows status 404 and no
+4. `curl -sI https://firna.ai/no-such-page` shows status 404 and no
    `set-cookie` header.
-5. `curl -sI https://www.firna.dev/` shows status 301 and a `location`
-   header that points to `https://firna.dev`.
-6. `curl -sI http://firna.dev/` shows a redirect to `https://firna.dev/`.
-7. `curl -s https://firna.dev/ | grep -o '<script[^>]*>'` prints one
+5. `curl -sI https://www.firna.ai/a?b=c` shows status 301 and a
+   `location` header of `https://firna.ai/a?b=c`.
+6. `curl -sI http://firna.ai/` shows a redirect to `https://firna.ai/`.
+7. `curl -sI https://firna.dev/a?b=c` and
+   `curl -sI https://www.firna.dev/a?b=c` each show status 301 and a
+   `location` header of `https://firna.ai/a?b=c`.
+8. `curl -s https://firna.ai/ | grep -o '<script[^>]*>'` prints one
    line: the script of the grain field, under `/_astro/`.
-8. `curl -s https://firna.dev/ | grep -o 'href="mailto:[^"]*"'` prints
+9. `curl -s https://firna.ai/ | grep -o 'href="mailto:[^"]*"'` prints
    `href="mailto:hello@firna.ai"`.
-9. The next pull request lists `gate` as a required check.
+10. The next pull request lists `gate` as a required check.

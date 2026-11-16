@@ -6,3 +6,4 @@ mokly-static/
 .mokly-export-reservations/
 test-results/
 playwright-report/
+.wrangler/

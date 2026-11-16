@@ -30,6 +30,11 @@ hosting and the deploy of the site.
 
 - The site lives at `https://firna.ai`.
 - The homepage is at `https://firna.ai/`.
+- `https://www.firna.ai` redirects to `https://firna.ai`.
+- `https://firna.dev` and `https://www.firna.dev` redirect to
+  `https://firna.ai`.
+- Each redirect keeps the path and the query of the address.
+- A request over plain HTTP gets a redirect to HTTPS.
 - An address with no page or file of the site answers with status 404 and
   shows the not-found page.
 
@@ -38,6 +43,11 @@ found the homepage already served there, and chose to keep it. So the
 homepage replaces the Firna product site at `firna.ai`. The user rejected
 a move of the homepage to `firna.dev`, the address of an earlier decision,
 and the product site back at `firna.ai`.
+
+**Decision:** `www.firna.ai`, `firna.dev`, and `www.firna.dev` redirect
+to `https://firna.ai`, so that a typed `www` and a link to the old
+address both reach the site. The user chose this on 2026-11-16, and
+rejected no answer at `www.firna.ai` and an unused `firna.dev`.
 
 **Decision:** an address with no page or file gets the not-found page with
 status 404. So a visitor and a search engine both learn that the address

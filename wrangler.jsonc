@@ -1,0 +1,25 @@
+// The Cloudflare Worker that serves the site. It has no script: it serves
+// the files of `dist/` as static assets. docs/protocol/deploy.md gives the
+// rules, and docs/deploy-setup.md gives the setup in Cloudflare.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // The name of the Worker in Cloudflare. Workers Builds builds the Worker
+  // with this name, so the two must match.
+  "name": "home",
+  "compatibility_date": "2026-11-01",
+  // The workers.dev address, and a preview address for each version that a
+  // branch other than main uploads.
+  "workers_dev": true,
+  "preview_urls": true,
+  // The live address. A deploy keeps this custom domain on the Worker.
+  "routes": [{ "pattern": "firna.ai", "custom_domain": true }],
+  "build": {
+    // Wrangler builds the site before each deploy and each version upload.
+    "command": "npm run build",
+  },
+  "assets": {
+    "directory": "./dist",
+    // An address with no file gets dist/404.html with status 404.
+    "not_found_handling": "404-page",
+  },
+}

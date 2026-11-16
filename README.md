@@ -89,7 +89,11 @@ at rest.
 
 ## Deploy
 
-Cloudflare Pages hosts the site. A change goes live in three steps:
+The Cloudflare Worker `home` hosts the site. It serves the files of
+`dist/` as static assets, and it runs no script of its own.
+[wrangler.jsonc](wrangler.jsonc) holds its configuration: the name, the
+custom domain `firna.ai`, the build command, and the 404 page. A change
+goes live in three steps:
 
 1. A pull request runs the GitHub Actions workflow "Gate" in
    [.github/workflows/gate.yml](.github/workflows/gate.yml). It runs
@@ -97,25 +101,34 @@ Cloudflare Pages hosts the site. A change goes live in three steps:
 2. GitHub merges the pull request into `main` only after `gate` passed.
    A ruleset of the repository holds this rule, and it blocks direct
    pushes to `main`. The owner of the repository can bypass the ruleset.
-3. Cloudflare's Git connection builds the new `main` with `npm run build`,
+3. Workers Builds, the Git connection of Cloudflare Workers, runs
+   `npx wrangler deploy` on the new `main`. Wrangler runs `npm run build`
    and deploys `dist/` to `https://firna.ai`. The workflow also runs on
    that push, and it reports its result on the commit.
 
 Cloudflare's build runs no checks. When it fails, the live site stays as
-it was. Cloudflare also builds a preview of each other branch at a
-`pages.dev` address, and it links the preview on the pull request. The
-protocol doc [docs/protocol/deploy.md](docs/protocol/deploy.md) gives the
-rules and the decisions.
+it was. For each other branch, Cloudflare runs `npx wrangler versions
+upload`. It uploads a version with a preview address on `workers.dev`,
+and it does not deploy it. Its check on the pull request is named
+"Workers Builds: home". The protocol doc
+[docs/protocol/deploy.md](docs/protocol/deploy.md) gives the rules and
+the decisions.
+
+To check the Worker configuration locally, run
+`npx wrangler deploy --dry-run`. It builds the site and reads `dist/`,
+and it uploads nothing.
 
 The owner of the repository does a one-time setup in Cloudflare and
 GitHub. [docs/deploy-setup.md](docs/deploy-setup.md) gives its steps: the
-Pages project, the zone settings, the domains, the ruleset for `main`, and
-the checks of the setup.
+build settings of the Worker, the zone settings, the redirects, the
+ruleset for `main`, and the checks of the setup.
 
 ## Key code
 
 - `astro.config.mjs`: the site address, static output, the browsers that
   the built CSS supports, and the React renderer for static HTML.
+- `wrangler.jsonc`: the Cloudflare Worker `home` that serves `dist/` at
+  `https://firna.ai`, with `dist/404.html` for every address with no file.
 - `src/layouts/Page.astro`: the layout of each page. It holds the document
   of the page: the head, the shared stylesheet, the body, and the grain
   field as the only script. Each page gives the layout its own title. A
